@@ -10,7 +10,6 @@ function save() {
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
-      Swal.fire("Guardado Exitosamente!", "", "success");
       document.getElementById("form-ahorro").submit();
     } else if (result.isDenied) {
       Swal.fire("Cambios no Guardados", "", "info");
@@ -92,8 +91,8 @@ window.addEventListener("scroll", function (event) {
 });
 function texto() {
   return (
-    '<p class="navbar-brand d-xl-inline-block" id="logo-text">' +
+    '<span class="navbar-brand d-xl-inline-block text-white" id="logo-text">' +
     "<b>COOPACFI</b>" +
-    "</p>"
+    "</span>"
   );
 }

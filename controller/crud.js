@@ -100,72 +100,6 @@ exports.save_ahorro = (req, res) => {
   }
   res.redirect("/buscar/" + id);
 };
-exports.save_users = (req, res) => {
-  //informacion personal
-  const nombre = req.body.nombre;
-  const apellido = req.body.apellido;
-  const correo = req.body.correo;
-  const fecha_n = req.body.fecha_n;
-  const estado = req.body.estado;
-  const profeccion = req.body.profeccion;
-  const telefono = req.body.telefono;
-  const celular = req.body.celular;
-  const genero = req.body.genero;
-  const cuotas = req.body.cuotas;
-  const id_identidad = req.body.id_identidad;
-  const cedula = req.body.cedula;
-  //direcciones
-  const direccion = req.body.direccion;
-  const sector = req.body.sector;
-  const ciudad = req.body.ciudad;
-  const pais = req.body.pais;
-  const nacionalidad = req.body.nacionalidad;
-  //info laboral
-  const empresa = req.body.empresa;
-  const puesto = req.body.puesto;
-  const tiempo = req.body.tiempo;
-  const salario = req.body.salario;
-  const pose = req.body.pose;
-  if (pose ==1) {
-    var name_bank = req.body.banco;
-    var no_cuenta = req.body.no_cuenta;
-  }else{
-    var name_bank = "No posee";
-    var no_cuenta = "No posee";
-  }
-  conexion.query("INSERT INTO registro SET ?", {
-    id_identificacion: id_identidad,
-    cedula: cedula,
-    nombre: nombre,
-    apellido: apellido,
-    correo: correo,
-    telefono: telefono,
-    celular: celular,
-    estado_civil: estado,
-    fecha_nacimiento: fecha_n,
-    direccion: direccion,
-    sector: sector,
-    ciudad: ciudad,
-    nacionalidad: nacionalidad,
-    pais: pais,
-    profecion: profeccion,
-    fecha_entrada: fulldate,
-    empresa: empresa,
-    posicion: puesto,
-    tiempo: tiempo,
-    salario: salario,
-    banco: name_bank,
-    no_cuenta: no_cuenta,
-    cuota: cuotas,
-    genero: genero
-  }, (error, resurt) => {
-    if (error) {
-      throw error;
-    }
-  });
-  res.redirect("/public/login/registro.html");
-};
-
 exports.debitar = (req, res) => {
  const id = req.params.id;
  const fecha = req.body.fecha;
@@ -205,3 +139,4 @@ exports.debitar = (req, res) => {
   });
   res.redirect("/buscar/" + id);
 }
+

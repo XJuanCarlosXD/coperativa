@@ -1,185 +1,477 @@
 <% filas.forEach((user)=> {
-    if(user.contar == 0){ %>
-    <script>
-      window.location = "/error-page";
-    </script>
-    <% } else{ let date=user.fecha_entrada; const formatDate=(date)=>{
-      let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-      return formatted_date; }
-      const currency = function(number){
-      return new Intl.NumberFormat('en-EU', {style: 'currency',currency: 'USD', minimumFractionDigits: 2}).format(number);
-      }; %>
-      <!DOCTYPE html>
-      <html lang="es">
-  
-      <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Dashboard</title>
-        <!-- plugins:css -->
-        <link rel="stylesheet" href="../public/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
-        <link rel="stylesheet" href="../public/assets/vendors/iconfonts/ionicons/dist/css/ionicons.css" />
-        <link rel="stylesheet" href="../public/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css" />
-        <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.base.css" />
-        <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.addons.css" />
-        <link rel="stylesheet" href="../public/css/table.min.css" />
-        <link rel="stylesheet" href="../public/css/table.css" />
-        <link rel="stylesheet" href="../public/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="../public/assets/css/shared/style.css" />
-        <link rel="stylesheet" href="../public/assets/css/demo_1/style.css" />
-        <link rel="stylesheet" href="../public/css/custom.css" />
-        <link rel="shortcut icon" href="../public/img/logo_d.svg" />
-      </head>
-  
-      <body>
-        <div class="loader-page" id="loader-page"></div>
-        <div class="container-scroller" id="contener">
-          <!-- partial:public/public/partials/_navbar.html -->
-          <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div id="div-logo" class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-              <a class="navbar-brand brand-logo" href="/">
-                <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
-                <div id="logo-text"></div>
-              </a>
-              <a class="navbar-brand brand-logo-mini" href="/">
-                <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
-              </a>
-            </div>
-  
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-              <div class="col-12">
-                <div class="page">
-                  <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
-                    <ul class="quick-links">
-                      <li>
-                        <h4 class="page-title d-none d-xl-inline-block bg-light">
-                          <b>Dashboard de Soccios</b>
-                        </h4>
-                      </li>
-                    </ul>
-                    <div class="btn-sm row quick-links ml-auto" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-search"></i><a class="d-none d-xl-inline-block"> Buscar</a>
+  if(user.contar == 0){ %>
+  <script>
+    window.location = "/error-page";
+  </script>
+  <% } else{
+    if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" }
+    const formatDate=(date)=>{
+    let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    return formatted_date; }
+    const currency = function(number){
+    return new Intl.NumberFormat('en-EU', {style: 'currency',currency: 'USD', minimumFractionDigits: 2}).format(number);
+    }; %>
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <title>Configuracion Soccios</title>
+      <!-- plugins:css -->
+      <link rel="stylesheet" href="../public/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+      <link rel="stylesheet" href="../public/assets/vendors/iconfonts/ionicons/dist/css/ionicons.css" />
+      <link rel="stylesheet" href="../public/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css" />
+      <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.base.css" />
+      <link rel="stylesheet" href="../public/assets/vendors/css/vendor.bundle.addons.css" />
+      <link rel="stylesheet" href="../public/css/table.min.css" />
+      <link rel="stylesheet" href="../public/css/table.css" />
+      <link rel="stylesheet" href="../public/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="../public/assets/css/shared/style.css" />
+      <link rel="stylesheet" href="../public/assets/css/demo_1/style.css" />
+      <link rel="stylesheet" href="../public/css/custom.css" />
+      <link rel="shortcut icon" href="../public/img/logo_d.svg" />
+    </head>
+
+    <body>
+      <div class="loader-page" id="loader-page"></div>
+      <div class="container-scroller" id="contener">
+        <!-- partial:public/public/partials/_navbar.html -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+          <div id="div-logo" class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+            <a class="navbar-brand brand-logo" href="/">
+              <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
+              <div id="logo-text"></div>
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="/">
+              <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
+            </a>
+          </div>
+
+          <div class="navbar-menu-wrapper d-flex align-items-center">
+            <div class="col-12">
+              <div class="page">
+                <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
+                  <ul class="quick-links">
+                    <li>
+                      <h4 class="page-title d-none d-xl-inline-block bg-light"><b>Inicio</b></h4>
+                    </li>
+                  </ul>
+                  <div class="btn-sm row quick-links ml-auto" role="group" aria-label="Basic example">
+                    <% if(role==1){ %>
+                      <button type="button" class="btn btn-light d-sm-block d-lg-none" data-toggle="collapse"
+                        data-target="#card_buscar">
+                        <i class=" fa fa-search"></i><span class="small d-none d-sm-block"> Buscar</span>
                       </button>
-                      <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#card_buscar">
-                        <i class="fa fa-history"></i><a class="d-none d-xl-inline-block"> Historico</a>
-                      </button>
-                      <button type="button" class="btn btn-light">
-                        <i class="fa fa-cog"></i><a class="d-none d-xl-inline-block"> Configuracion</a>
-                      </button>
-                    </div>
-                    <ul class="navbar-nav quick-links">
-                      <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
-                          aria-expanded="false">
-                          <img class="img-xs rounded-circle" src="../public/img/avatar1.png" alt="Profile image" />
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                          <div class="dropdown-header text-center">
-                            <img class="img-md rounded-circle" src="../public/img/avatar1.png" alt="Profile image" />
-                            <p class="mb-1 mt-3 font-weight-semibold">
-                              Juan Carlos Abreu Paulino
-                            </p>
-                            <p class="font-weight-light text-muted mb-0">
-                              juancarlos192003@gmail.com
-                            </p>
-                          </div>
-                          <a class="dropdown-item">Mi Perfil
-                            <span class="badge badge-pill badge-danger">1</span><i
-                              class="dropdown-item-icon ti-dashboard"></i></a>
-                          <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                          <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
-                          <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-                          <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
-                        </div>
-                      </li>
-                    </ul>
+                      <%} else{ %>
+                        <a class="btn btn-light d-block d-sm-block d-lg-none" href="/buscar/<%= idusers %>"><i
+                            class=" fa fa-bank"></i><span class="small"> Transacciones</span></a>
+                        <button type="button" class="btn btn-light d-block d-sm-block d-lg-none" data-toggle="modal"
+                          data-target=".modal_info">
+                          <i class="fa fa-history"></i><span class="small"> Historico</span>
+                        </button>
+                        <% } %>
+                          <% if(role==1){ %>
+                            <div class="dropdown">
+                              <button type="button" class="btn btn-light dropdown-toggle d-sm-block d-lg-none"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog"></i><span class="small d-none d-sm-block"> Configuracion</span>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" data-toggle="collapse" data-target="#create-users" href="#"><i
+                                    class="fa fa-user-circle"></i> Crear Usuario</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-vcard"></i> Administrar Roles</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-window-maximize"></i> Ajustar
+                                  Caracteristica</a>
+                              </div>
+                            </div>
+                            <a type="button" class="btn btn-light d-sm-block d-lg-none" href="/exit">
+                              <i class="bi bi-box-arrow-in-right"></i><span class="small d-none d-sm-block"> Salir</span>
+                            </a>
+                            <% } %>
                   </div>
+                  <ul class="navbar-nav quick-links justify-content-end">
+                    <li class="nav-item dropdown user-dropdown">
+                      <a class="nav-link dropdown-toggle d-none d-xl-inline-block" id="UserDropdown" href="#"
+                        data-toggle="dropdown" aria-expanded="false">
+                        <img class="img-xs rounded-circle" src="../public/img/avatar1.png" alt="Profile image"> </a>
+                      <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                        <div class="dropdown-header text-center">
+                          <img class="img-md rounded-circle" src="../public/img/avatar1.png" alt="Profile image">
+                          <p class="mb-1 mt-3 font-weight-semibold">
+                            <%= name %>
+                          </p>
+                          <p class="font-weight-light text-muted mb-0">
+                            <%= email %>
+                          </p>
+                          <p class="font-weight-light text-muted mb-0">
+                            <%= rol %>
+                          </p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item"><i class="fa fa-user-circle"></i> Mi Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item"><i class="bi bi-chat-dots"></i> Soporte</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/exit"><i class="bi bi-box-arrow-in-right"></i> Salir</a>
+                        <div class="dropdown-divider"></div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
+          </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+          <!-- partial:partials/_sidebar.html -->
+          <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+              <li class="mb-5">
+                <a class="nav-link mb-4">
+                  <div class="profile-image">
+                    <div class="dot-indicator"></div>
+                  </div>
+                  <div class="text-wrapper">
+                    <p class="profile-name"></p>
+                    <p class="designation"></p>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+              <% if(role==1){ %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" data-target="#card_buscar">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" data-toggle="collapse" data-target="#card_buscar">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+                  </a>
+                </li>
+                <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
+                    <i class="menu-icon typcn typcn-coffee"></i>
+                    <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                    <i class="menu-arrow"></i>
+                  </a>
+                  <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
+                          <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
+                            class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
+                          Caracteristica</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" href="/exit">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                  </a>
+                </li>
+                <% }else{ %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/buscar/<%= idusers %>">
+                      <i class="menu-icon typcn typcn-document-text"></i>
+                      <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <i class="menu-icon typcn typcn-document-text"></i>
+                      <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                    </a>
+                  </li>
+                  <li class="nav-item mb-2">
+                    <a class="nav-link" href="/exit">
+                      <i class="menu-icon typcn typcn-document-text"></i>
+                      <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                    </a>
+                  </li>
+                  <% } %>
+            </ul>
           </nav>
           <!-- partial -->
-          <div class="container-fluid page-body-wrapper">
-            <!-- partial:public/public/partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-              <ul class="nav">
-                <li class="mb-5">
-                  <a class="nav-link mb-4">
-                    <div class="profile-image">
-                      <div class="dot-indicator"></div>
-                    </div>
-                    <div class="text-wrapper">
-                      <p class="profile-name"></p>
-                      <p class="designation"></p>
-                    </div>
-                  </a>
-                </li>
-                <li class="nav-item nav-category">Menu Principal</li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/registro">
-                    <i class="menu-icon typcn typcn-document-text"></i>
-                    <span class="menu-title">Registrar</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/">
-                    <i class="menu-icon typcn typcn-document-text"></i>
-                    <span class="menu-title">Buscar</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <!-- partial -->
-            <div class="main-panel" id="accordion">
-              <div class="content-wrapper">
-                
-                                    </div>
-                                  </div>
-                                  <!-- content-wrapper ends -->
-                          </div>
-                          <!-- partial:public/public/partials/_footer.html -->
-                          <footer class="footer">
-                            <div class="container-fluid clearfix">
-                              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
-                                ©Informatica
-                                Consulting Abreu y Paulino S.R.L</span>
-                              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                                Diseñando por
-                                <a href="#" target="_blank">Informatica Consulting Abreu y Paulino S.R.L</a></span>
-                            </div>
-                          </footer>
-                          <!-- partial -->
-                        </div>
-                        <!-- main-panel ends -->
+          <div class="main-panel" id="accordion">
+            <div class="content-wrapper">
+              <div class="container rounded bg-white mb-2">
+                <form method="POST" action="/edited/<%= user.id %>">
+                  <div class="row">
+                    <div class="col-md-4 border border-secondary">
+                      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                          class="rounded-circle mt-5" width="150px"
+                          src="https://bootdey.com/img/Content/avatar/avatar7.png"><span class="font-weight-bold">
+                          <%= user.nombre + ' ' + user.apellido %>
+                        </span>
+                        <span class="text-black-50">
+                          <%= user.profecion %>
+                        </span>
+                        <span class="text-black-50">
+                          <%= user.correo %>
+                        </span><br>
+                        <a class="btn btn-outline-danger" href="#"><i class="bi bi-x-octagon"></i> Renunciar</a>
                       </div>
-                      <!-- page-body-wrapper ends -->
                     </div>
-                    <!-- container-scroller -->
-                    <!-- plugins:js -->
-  
-                    <script src="../public/assets/vendors/js/vendor.bundle.addons.js"></script>
-                    <!-- endinject -->
-                    <!-- Plugin js for this page-->
-                    <!-- End plugin js for this page-->
-                    <!-- inject:js -->
-                    <script src="../public/assets/js/shared/off-canvas.js"></script>
-                    <script src="../public/assets/js/shared/misc.js"></script>
-                    <!-- endinject -->
-                    <!-- Custom js for this page-->
-                    <script src="../public/js/buscar.js" type="text/javascript"></script>
-                    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                    <script src="../public/js/save.js" type="text/javascript"></script>
-                    <script src="../public/js/formato.js" type="text/javascript"></script>
-                    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-                    <script src="../public/js/table.min.js"></script>
-                    <script src="../public/js/table.js"></script>
-                    <script src="../public/js/histori.js"></script>
-                    <!-- End custom js for this page-->
-      </body>
-  
-      </html>
-  
-      <% } }) %>
+                    <div class="col-md-8 border border-secondary">
+                      <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <span>Informacion Personal</span><span class="border px-3 p-1 add-experience"><button
+                              type="button" id="id-personal" onclick="personal();"
+                              class="btn btn-outline-primary btn-fw"><i class="bi bi-person-lines-fill"></i>
+                              Personal</button></span>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Nombre</label><input type="text"
+                              class="form-control personal" name="nombre" placeholder="Nombre" value="<%= user.nombre%>"
+                              disabled></div>
+                          <div class="col-md-6"><label class="labels">Apellido</label><input type="text"
+                              class="form-control personal" name="apellido" value="<%= user.apellido%>"
+                              placeholder="Apellido" disabled></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Telefono</label><input type="text"
+                              class="form-control personal" placeholder="Telefono" name="telefono"
+                              value="<%= user.telefono %>" disabled></div>
+                          <div class="col-md-6"><label class="labels">Celular</label><input type="text"
+                              class="form-control personal" placeholder="Celular" name="celular"
+                              value="<%= user.celular%>" disabled></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Correo</label><input type="email"
+                              class="form-control personal" placeholder="Email" name="email" value="<%= user.correo %>"
+                              disabled></div>
+                          <% var date=new Date(user.fecha_nacimiento); %>
+                            <div class="col-md-6"><label class="labels">F.Nacimiento</label><input type="text"
+                                class="form-control personal" placeholder="Fecha Nacimiento" name="f_nacimiento"
+                                value="<%= formatDate(date) %>" disabled></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Profeccion</label><input type="text"
+                              class="form-control personal" placeholder="Profeccion" name="profeccion"
+                              value="<%= user.profeccion %>" disabled></div>
+                          <div class="col-md-6"><label class="labels">Cuotas</label><input type="text"
+                              class="form-control personal" placeholder="Cuotas" name="cuotas"
+                              value="<%= currency(user.cuota) %>" disabled></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Genero</label>
+                            <select class="form-control personal" name="genero" autocomplete="off" disabled>
+                              <option value="0">Selecciona..</option>
+                              <option value="M">Masculino</option>
+                              <option value="F">Femenino</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6"><label class="labels">Estado Civil</label>
+                            <select class="form-control personal" name="estado" autocomplete="off" disabled>
+                              <option value="1">Soltero</option>
+                              <option value="2">Casado</option>
+                              <option value="3">Divorciado</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mt-3">
+                          <div class="col-md-12"><label class="labels" for="formFileSm">Subir Imagen</label>
+                            <input type="file" class="form-control form-control-sm personal" id="formFileSm" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    window.onload = function () {
+                      //CARGA
+                      let carga = document.getElementById("loader-page");
+                      carga.style.visibility = "hidden";
+                      carga.style.opacity = "0";
+                    }
+                    function personal() {
+                      var personal = document.querySelectorAll(".personal");
+                      var i;
+                      for (i = 0; i < personal.length; i++) {
+                        if (personal[i].disabled == true) {
+                          personal[i].disabled = false;
+                          personal[i].required = true;
+                        }
+                        else if (personal[i].disabled == false) {
+                          personal[i].disabled = true;
+                          personal[i].required = false;
+                        }
+                      }
+                    }
+                    function ubicacion() {
+                      var ubicacion = document.querySelectorAll(".ubicacion");
+                      var i;
+                      for (i = 0; i < ubicacion.length; i++) {
+                        if (ubicacion[i].disabled == true) {
+                          ubicacion[i].disabled = false;
+                          ubicacion[i].required = true;
+                        }
+                        else if (ubicacion[i].disabled == false) {
+                          ubicacion[i].disabled = true;
+                          ubicacion[i].required = false;
+                        }
+                      }
+                    }
+                    function laboral() {
+                      var laboral = document.querySelectorAll(".laboral");
+                      var i;
+                      for (i = 0; i < laboral.length; i++) {
+                        if (laboral[i].disabled == true) {
+                          laboral[i].disabled = false;
+                          laboral[i].required = true;
+                        }
+                        else if (laboral[i].disabled == false) {
+                          laboral[i].disabled = true;
+                          laboral[i].required = false;
+                        }
+                      }
+                    }
+                    window.addEventListener("scroll", function (event) {
+
+                      var scroll_y = this.scrollY;
+
+                      posicion = scroll_y;
+                      let logo = document.getElementById("logo");
+                      if (posicion >= 100.35088348388672) {
+                        logo.src = "../public/img/logo_2_w.svg";
+                        logo.style.width = "70px";
+                        document.getElementById("logo-text").innerHTML = texto();
+                      } else {
+                        logo.src = "../public/img/logo_w.svg";
+                        logo.removeAttribute("style");
+                        document.getElementById("logo-text").innerHTML = "";
+
+                      }
+                    });
+                    function texto() {
+                      return '<p class="navbar-brand d-xl-inline-block" id="logo-text">' +
+                        '<b>COOPACFI</b>' +
+                        '</p>';
+                    }
+                  </script>
+                  <div class="row">
+                    <div class="col-md-6 border border-secondary">
+                      <div class="p-3 py-4">
+                        <div class="d-flex justify-content-between align-items-center experience"><span>Editar
+                            Ubicacion</span><span class="border px-3 p-1 add-experience"><button type="button"
+                              onclick="ubicacion();" class="btn btn-outline-primary btn-fw"><i
+                                class="bi bi-geo-alt"></i>
+                              Ubicacion</button></span>
+                        </div><br>
+                        <div class="col-md-12"><label class="labels">Direccion</label><input type="text"
+                            class="form-control ubicacion" placeholder="experience" value="<%= user.direccion %>"
+                            name="direccion" disabled></div> <br>
+                        <div class="col-md-12"><label class="labels">Sector</label><input type="text"
+                            class="form-control ubicacion" placeholder="additional details" value="<%= user.sector %>"
+                            name="sector" disabled></div><br>
+                        <div class="col-md-12"><label class="labels">Ciudad</label><input type="text"
+                            class="form-control ubicacion" placeholder="additional details" value="<%= user.ciudad %>"
+                            name="ciudad" disabled></div><br>
+                        <div class="col-md-12"><label class="labels">Pais</label><input type="text"
+                            class="form-control ubicacion" placeholder="additional details" value="<%= user.pais %>"
+                            name="pais" disabled></div><br>
+                        <div class="col-md-12"><label class="labels">Nacionalidad</label><input type="text"
+                            class="form-control ubicacion" placeholder="additional details" name="nacionalidad"
+                            value="<%= user.nacionalidad %>" disabled></div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 border border-secondary">
+                      <div class="p-3 py-4">
+                        <div class="d-flex justify-content-between align-items-center experience"><span>Editar
+                            Informacion
+                            Laboral</span><span class="border px-3 p-1 add-experience"><button type="button"
+                              onclick="laboral();" class="btn btn-outline-primary btn-fw"><i
+                                class="bi bi-person-workspace"></i>
+                              Laboral</button></span>
+                        </div><br>
+                        <div class="col-md-12"><label class="labels">Nombre Empresa</label><input type="text"
+                            class="form-control laboral" placeholder="experience" name="empresa"
+                            value="<%= user.empresa %>" disabled></div> <br>
+                        <div class="col-md-12"><label class="labels">Puesto</label><input type="text"
+                            class="form-control laboral" placeholder="additional details" value="<%= user.posicion %>"
+                            name="puesto" disabled></div><br>
+                        <div class="col-md-12"><label class="labels">Tiempo Empresa</label><input type="text"
+                            class="form-control laboral" placeholder="additional details" value="<%= user.tiempo %>"
+                            name="tiempo" disabled></div><br>
+                        <div class="col-md-12"><label class="labels">Salario</label><input type="text"
+                            class="form-control laboral" placeholder="additional details"
+                            value="<%= currency(user.salario) %>" name="salario" disabled></div><br>
+                        <h4 class="text-left h5">Informacion Bancaria</h4>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Nombre</label><input type="text"
+                              class="form-control laboral" placeholder="additional details" value="<%= user.banco %>"
+                              name="banco" disabled></div>
+                          <div class="col-md-6"><label class="labels">Cuenta</label><input type="text"
+                              class="form-control laboral" placeholder="additional details"
+                              value="<%= user.no_cuenta %>" name="cuenta" disabled></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3 p-3 text-center"><button class="btn btn-primary profile-button" type="submit">Guardar
+                      Perfil de Soccio</button></div>
+              </div>
+              </form>
+              <!-- content-wrapper ends -->
+            </div>
+            <!-- partial:public/public/partials/_footer.html -->
+            <footer class="footer">
+              <div class="container-fluid clearfix">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
+                  ©Informatica
+                  Consulting Abreu y Paulino S.R.L</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                  Diseñando por
+                  <a href="#" target="_blank">Informatica Consulting Abreu y Paulino S.R.L</a></span>
+              </div>
+            </footer>
+            <!-- partial -->
+          </div>
+          <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+      </div>
+      <!-- container-scroller -->
+      <!-- plugins:js -->
+
+      <script src="../public/assets/vendors/js/vendor.bundle.addons.js"></script>
+      <!-- endinject -->
+      <!-- Plugin js for this page-->
+      <!-- End plugin js for this page-->
+      <!-- inject:js -->
+      <script src="../public/assets/js/shared/off-canvas.js"></script>
+      <script src="../public/assets/js/shared/misc.js"></script>
+      <!-- endinject -->
+      <!-- Custom js for this page-->
+      <script src="../public/js/buscar.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="../public/js/formato.js" type="text/javascript"></script>
+      <!-- End custom js for this page-->
+    </body>
+
+    </html>
+
+    <% } }) %>

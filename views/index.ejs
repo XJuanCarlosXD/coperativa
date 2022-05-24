@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<% if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } const currency=function(number){ return
+  new Intl.NumberFormat('en-EU', {style: 'currency' ,currency: 'USD' , minimumFractionDigits: 2}).format(number); }; %>
+  %>
+  <!DOCTYPE html>
+  <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,6 +15,12 @@
     <link rel="stylesheet" href="public/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="public/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="public/assets/vendors/css/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet"
+      type="text/css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css"
+      rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="public/css/table.min.css">
     <link rel="stylesheet" href="public/css/table.css">
 
@@ -25,8 +35,9 @@
     <link rel="stylesheet" href="public/assets/css/demo_1/style.css">
     <link rel="stylesheet" href="public/css/custom.css">
     <!-- End Layout styles -->
-    <link rel="shortcut icon" href="public/img/logo_d.svg" >
+    <link rel="shortcut icon" href="public/img/logo_d.svg">
   </head>
+
   <body>
     <div class="loader-page" id="loader-page"></div>
     <div class="container-scroller" id="contener">
@@ -34,133 +45,148 @@
       <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div id="div-logo" class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
           <a class="navbar-brand brand-logo" href="/">
-            <img id="logo" src="public/img/logo_w.svg" href="/" alt="logo" />
-            <div id="logo-text"></div>
-            </a>
-          <a class="navbar-brand brand-logo-mini" href="/">
-            <img src="public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
+            <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
+            <span id="logo-text"></span>
+          </a>
+          <a class="navbar-brand brand-logo-mini text-white" href="#" onclick="selecionar();">
+              <i class="fa fa-navicon ms-1 small" id="icon"><b>Menu</b></i>
           </a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
           <div class="col-12">
-            <div class="page">
-              <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
-                <ul class="quick-links">
+                <ul class="navbar-nav ml-auto justify-content-end">
                   <li>
-                    <h4 class="page-title d-none d-xl-inline-block bg-light"><b>Inicio</b></h4>
+                    <h4 class="page-title bg-light">
+                      <b>Inicio</b>
+                    </h4>
                   </li>
-                </ul>
-                <div class="btn-sm row quick-links ml-auto" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#card_buscar"">
-                    <i class="fa fa-search"></i><a class="d-none d-xl-inline-block"> Buscar</a>
-                  </button>
-                  <button type="button" class="btn btn-light" data-toggle="modal" data-target=".modal_info">
-                    <i class="fa fa-history"></i><a class="d-none d-xl-inline-block"> Historico</a>
-                  </button>
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-cog"></i><a class="d-none d-xl-inline-block"> Configuracion</a>
-                  </button>
-                </div>
-                <ul class="navbar-nav quick-links">
-                  <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                  <li class="nav-item dropdown user-dropdown">
+                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
+                      aria-expanded="false">
                       <img class="img-xs rounded-circle" src="public/img/avatar1.png" alt="Profile image"> </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                       <div class="dropdown-header text-center">
                         <img class="img-md rounded-circle" src="public/img/avatar1.png" alt="Profile image">
-                        <p class="mb-1 mt-3 font-weight-semibold">Juan Carlos Abreu Paulino</p>
-                        <p class="font-weight-light text-muted mb-0">juancarlos192003@gmail.com</p>
+                        <p class="mb-1 mt-3 font-weight-semibold">
+                          <%= name %>
+                        </p>
+                        <p class="font-weight-light text-muted mb-0">
+                          <%= email %>
+                        </p>
+                        <p class="font-weight-light text-muted mb-0">
+                          <%= rol %>
+                        </p>
                       </div>
-                      <a class="dropdown-item">Mi Perfil <span class="badge badge-pill badge-danger">1</span><i class="dropdown-item-icon ti-dashboard"></i></a>
-                      <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                      <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
-                      <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-                      <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item"><i class="fa fa-user-circle"></i> Mi Perfil</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item"><i class="bi bi-chat-dots"></i> Soporte</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/exit"><i class="bi bi-box-arrow-in-right"></i> Salir</a>
+                      <div class="dropdown-divider"></div>
                     </div>
                   </li>
                 </ul>
               </div>
             </div>
-          </div>
-        </div>
       </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <li class="mb-5">
-              <a class="nav-link mb-4">
-                <div class="profile-image">
-                  <div class="dot-indicator"></div>
-                </div>
-                <div class="text-wrapper">
-                  <p class="profile-name"></p>
-                  <p class="designation"></p>
+            <li class="mb-5" id="espacio1">                  
+              <a class="nav-link navbar-brand-wrapper d-sm-flex d-lg-none align-items-top justify-content-center" href="/index">
+                <img src="public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
+                </a>
+                <div class="text-wrapper mb-4" id="espacio2">
                 </div>
               </a>
             </li>
-            <li class="nav-item nav-category">Menu Principal</li>
-            <li class="nav-item">
-              <a class="nav-link" href="/register">
-                <i class="menu-icon typcn typcn-document-text"></i>
-                <span class="menu-title">Registrar Soccios</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="public/buscar.php">
-                <i class="menu-icon typcn typcn-document-text"></i>
-                <span class="menu-title">Buscar</span>
-              </a>
-            </li>
+            <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+            <% if(role==1){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">
+                  <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#card_buscar">
+                  <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" data-toggle="collapse" href="#">
+                  <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+                </a>
+              </li>
+              <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic">
+                  <i class="menu-icon typcn typcn-coffee"></i>
+                  <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
+                        <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
+                          class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
+                        Caracteristica</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="/exit">
+                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                </a>
+              </li>
+              <% }else{ %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/buscar/<%= idusers %>">
+                    <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" href="/exit">
+
+                    <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                  </a>
+                </li>
+                <% } %>
           </ul>
-        </nav> 
+        </nav>
         <!-- partial -->
         <div class="main-panel" id="accordion">
-          <div class="content-wrapper text-center bg-success"> 
-            <div class="collapse fade show" id="index" data-parent="#accordion" aria-labelledby="index">
-            <a class="navbar-brand brand-logo" href="#">
-            <img src="public/img/logo_w.svg" alt="logo"></a>
-          <h4 class="text-title text-white">Cooperativa de Ahorros, Creditos y Servicios Multiples la Fiduciaria</h4>
+          <div class="content-wrapper text-center bg-success">
+            <div class="collapse fade show mt-4" id="index" data-parent="#accordion" aria-labelledby="index">
+                <img class="img-fluid" src="public/img/logo_w.svg" alt="logo">
+                <h4 class="text-title text-white d-none d-lg-block"><b>Cooperativa de Ahorros, Creditos y Servicios Multiples la Fiduciaria</b></h4>
+              <h4 class="text-title text-white small d-sm-block d-lg-none"><b>Cooperativa de Ahorros, Creditos y Servicios Multiples la Fiduciaria</b></h4>
             </div>
             <!--buscar-->
-            <div class="collapse fade" id="card_buscar" data-parent="#accordion"  aria-labelledby="card_buscar">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-header col-lg-12 col-12 p-3">
-                    <h4 class="text-title text-dark">Buscar Soccios de la Cooperativa</h4>
-                  </div>
-                  <div class="card-body">
-                    <table id="tabla_cedula" class="table table-striped table-bordered" style="width:100%">
-                      <thead>
-                          <tr>
-                              <th>#</th>
-                              <th>Nombre</th>
-                              <th>Cedula</th>
-                              <th>Oficio</th>
-                              <th>Fecha Ingreso</th>
-                              <th>Buscar</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <% filas.forEach((user) => { 
-                          let date = user.fecha_entrada;
-                          const formatDate = (date)=>{
-                            let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-                             return formatted_date;
-                            } %>
-                          <tr>
-                              <td><%= user.id %></td>
-                              <td><%= user.cedula %></td>
-                              <td><%= user.nombre + ' ' + user.apellido %></td>
-                              <td><%= user.profecion %></td>
-                              <td class="fecha"><%= formatDate(date) %></td>
-                              <td><a class='btn btn-outline-primary' href="/buscar/<%= user.id %>"><i class='fa fa-search'></i></a>
-                                <a class='btn btn-outline-info' href="/edit/<%= user.id %>"><i class='fa fa-edit'></i></a></td>
-                          </tr>
-                          <% }) %>
-                      </tbody>
-                      <tfoot>
+            <% if(role==1){ %>
+              <div class="collapse fade" id="card_buscar" data-parent="#accordion" aria-labelledby="card_buscar">
+                  <div class="card">
+                    <div class="card-header col-lg-12 col-12 p-3">
+                      <h4 class="text-title text-dark">Buscar Soccios de la Cooperativa</h4>
+                    </div>
+                    <div class="card-body">
+                      <table id="tabla_cedula" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
                           <tr>
                             <th>#</th>
                             <th>Nombre</th>
@@ -169,53 +195,275 @@
                             <th>Fecha Ingreso</th>
                             <th>Buscar</th>
                           </tr>
-                      </tfoot>
-                  </table>
-               </div>
+                        </thead>
+                        <tbody>
+                          <% filas.forEach((user)=> {
+                            let date = user.fecha_entrada;
+                            const formatDate = (date)=>{
+                            let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+                            return formatted_date;
+                            } %>
+                            <tr>
+                              <td>
+                                <%= user.id %>
+                              </td>
+                              <td>
+                                <%= user.cedula %>
+                              </td>
+                              <td>
+                                <%= user.nombre + ' ' + user.apellido %>
+                              </td>
+                              <td>
+                                <%= user.profecion %>
+                              </td>
+                              <td class="fecha">
+                                <%= formatDate(date) %>
+                              </td>
+                              <td>
+                                <div class="btn-group" role="group">
+                                  <a class='btn btn-primary' href="/buscar/<%= user.id %>"><i
+                                      class='fa fa-search'></i></a>
+                                  <a class='btn btn-info' href="/edit/<%= user.id %>"><i class='fa fa-edit'></i></a>
+                                </div>
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Cedula</th>
+                            <th>Oficio</th>
+                            <th>Fecha Ingreso</th>
+                            <th>Buscar</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <!--end buscar-->
+              <!--Roles de usuarios-->
+              <div class="collapse fade" id="card_role" data-parent="#accordion" aria-labelledby="card_role">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-header col-lg-12 col-12 p-3">
+                      <h4 class="text-title text-dark"><i class="fa fa-vcard"></i> Mantenimiento Roles de Usuarios</h4>
+                    </div>
+                    <div class="card-body">
+                      <table id="userTable" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Rol</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% resurt.forEach((row)=> {
+                            if(row.idrole == 1){var Role = "Administrador"}else{var Role = "Digitador"}%>
+                            <tr>
+                              <td>
+                                <a class="btn btn-primary" href="/role/<%= row.id %>"><i class="fa fa-search"></i></a>
+                              </td>
+                              <td>
+                                <%= row.name %>
+                              </td>
+                              <td>
+                                <%= Role %>
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+              <% } %>
+                <!--MODAL CONFIG-->
+                <% if(role==1){ %>
+                  <div class="collapse fade" id="create-users" role="dialog" aria-labelledby="create-usersLabel"
+                    aria-hidden="true" data-parent="#accordion" aria-labelledby="card_buscar">
+                    <form action="/users-register" method="post">
+                      <div class="col-12 grid-margin">
+                        <div class="card">
+                          <div class="card-header col-lg-12 col-12 p-3">
+                            <h4 class="text-title text-dark" id="create-usersLabel"><i class="fa fa-user-circle"></i>
+                              Mantenimiento de Usuarios</h4>
+                          </div>
+                          <div class="card-body">
+                            <div id="smartwizard">
+                              <ul>
+                                <li><a href="#step-1">Paso 1<br /><small>Cuenta</small></a></li>
+                                <li><a href="#step-2">Paso 2<br /><small>Role</small></a></li>
+                                <li><a href="#step-3">Paso 3<br /><small>Verificacion</small></a></li>
+                              </ul>
+                              <div class="mt-4">
+                                <div id="step-1">
+                                  <div class="row">
+                                    <div class="col-md-6"> <input type="text" name="name" class="form-control"
+                                        placeholder="Name" required>
+                                    </div>
+                                    <div class="col-md-6"> <input type="text" name="email" class="form-control"
+                                        placeholder="Email" required>
+                                    </div>
+                                  </div>
+                                  <div class="row mt-3 mb-2">
+                                    <div class="col-md-6"> <input type="password" name="password" id="password"
+                                        class="form-control" placeholder="Contraseña" required> </div>
+                                    <div class="col-md-6"> <input type="password" name="passwordConfi"
+                                        id="passwordConfi" onkeydown="validar();" onkeyup="validar();"
+                                        class="form-control" placeholder="Repita Contraseña" required> </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 text-center"><span class="small text-danger d-none"
+                                        id="error">Contraseña no Coinciden</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div id="step-2" class="">
+                                  <div class="radio-group row justify-content-between px-3 text-center a">
+                                    <div class="col-auto mr-sm-2 mx-1 card-block  py-0 text-center radio selected ">
+                                      <div class="flex-row">
+                                        <div class="col">
+                                          <div class="pic"><input name="radio" type="radio" value="1"> <img
+                                              class="irc_mut img-fluid" src="./public/img/admin.png" width="100"
+                                              height="100"> </div>
+                                          <p>Administrador</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-auto ml-sm-2 mx-1 card-block  py-0 text-center radio  ">
+                                      <div class="flex-row">
+                                        <div class="col">
+                                          <div class="pic"><input name="radio" value="2" type="radio"><img
+                                              class="irc_mut img-fluid" src="./public/img/digita.png" width="100"
+                                              height="100"> </div>
+                                          <p>Digitardor</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div id="step-3" class="">
+                                  <div class="row mb-2">
+                                    <div class="col-md-10">
+                                      <span>Se Creara el usuario con las siguientes informaciones. Desea Continuar
+                                        ?</span>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <button class="btn btn-primary btn-faw" type="submit"><i
+                                          class="fa fa-user-circle-o"></i> Crear</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <% } %>
+                    <!--END MODAL CONFIG-->
+                    <script>
+                      window.onload = function () {
+                        $('#tabla_cedula').DataTable({
+                          order: [[0, 'asc']]
+                        });
+                        $('#userTable').DataTable({
+                          order: [[0, 'asc']]
+                        });
+                        let carga = document.getElementById("loader-page");
+                        carga.style.visibility = 'hidden';
+                        carga.style.opacity = '0';
+
+                        $('.radio-group .radio').click(function () {
+                          $('.selected .fa').removeClass('fa-check');
+                          $('.radio').removeClass('selected');
+                          $(this).addClass('selected');
+                        });
+                        $('#smartwizard').smartWizard({
+                          selected: 0,
+                          theme: 'arrows',
+                          autoAdjustHeight: true,
+                          transitionEffect: 'fade',
+                          showPasoURLhash: false,
+                        });
+                      };
+                      window.addEventListener("scroll", function (event) {
+
+                        var scroll_y = this.scrollY;
+
+                        posicion = scroll_y;
+                        let logo = document.getElementById("logo");
+                        if (posicion >= 100.35088348388672) {
+                          logo.src = "public/img/logo_2_w.svg";
+                          logo.style.width = "70px";
+                          document.getElementById("logo-text").innerHTML = texto();
+                        } else {
+                          logo.src = "public/img/logo_w.svg";
+                          logo.removeAttribute("style");
+                          document.getElementById("logo-text").innerHTML = "";
+
+                        }
+                      });
+                      function texto() {
+                        return '<p class="navbar-brand d-xl-inline-block" id="logo-text">' +
+                          '<b>COOPACFI</b>' +
+                          '</p>';
+                      }
+                      function validar() {
+                        let passwordConfi = document.getElementById("passwordConfi");
+                        let password = document.getElementById("password");
+                        let error = document.getElementById("error");
+                        console.log(password.value)
+                        if (password.value != passwordConfi.value) {
+                          error.classList.remove("d-none");
+                        } else {
+                          error.classList.add("d-none")
+                        }
+                      }
+                      function selecionar() {
+                        var menu = document.getElementById("sidebar");
+                        var espacio1 = document.getElementById("espacio1");
+                        var espacio2 = document.getElementById("espacio2");
+                        var icon = document.getElementById("icon");
+                        var icon2 = document.getElementById("div-logo");
+                        if (menu.classList.contains('fixed-top') == true) {
+                          menu.classList.remove("fixed-top");
+                          espacio1.classList.add("mb-5");
+                          espacio2.classList.add("mb-4");
+                          icon2.classList.remove("bg-danger");
+                          icon.classList.remove("fa-times-rectangle-o");
+                          icon.classList.add("fa-navicon");
+                          icon.innerHTML="<b>Menu</b>"
+                        } else {
+                          menu.classList.add("fixed-top");
+                          espacio1.classList.remove("mb-5");
+                          espacio2.classList.remove("mb-4");
+                          icon.classList.remove("fa-navicon");
+                          icon.classList.add("fa-times-rectangle-o");
+                          icon2.classList.add("bg-danger");
+                          icon.innerHTML="<b>Close</b>";
+                        }
+                      }   
+                    </script>
+                    <!-- content-wrapper ends -->
           </div>
-          
-         <!--end buscar-->
-<script> 
-      window.onload = function(){
-        $('#tabla_cedula').DataTable({
-          order: [[0, 'asc']]
-        });
-let carga = document.getElementById("loader-page");
-carga.style.visibility = 'hidden';
-carga.style.opacity = '0';
-   }; 
-   window.addEventListener("scroll", function(event) {
-
-var scroll_y = this.scrollY;
-
-posicion = scroll_y;
-let logo = document.getElementById("logo");
-if(posicion >= 100.35088348388672){
-  logo.src="public/img/logo_2_w.svg";
-  logo.style.width = "70px";
-  document.getElementById("logo-text").innerHTML = texto();
-}else{
-  logo.src="public/img/logo_w.svg";
-  logo.removeAttribute("style");
-  document.getElementById("logo-text").innerHTML = "";
-  
-}
-});
-function texto(){
-return '<p class="navbar-brand d-xl-inline-block" id="logo-text">'+
-'<b>COOPACFI</b>'+
-'</p>';
-}
-</script>
-          <!-- content-wrapper ends -->
-          </div>  
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="container-fluid clearfix">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©Informatica Consulting Abreu y Paulino S.R.L</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Diseñando por <a href="#" target="_blank">Informatica Consulting Abreu y Paulino S.R.L</a></span>
+              <span class="text-muted d-none d-xl-inline-block text-center text-sm-left">Copyright ©Informatica
+                Consulting Abreu y Paulino S.R.L</span>
+                <span class="text-muted d-sm-block d-lg-none small text-sm-center">Copyright ©Informatica
+                  Consulting Abreu y Paulino S.R.L</span>
+              <span class="float-none float-sm-right d-none d-xl-inline-block mt-1 mt-sm-0 text-center"> Diseñando por <a href="#"
+                  target="_blank">Informatica Consulting Abreu y Paulino S.R.L</a></span>
             </div>
           </footer>
           <!-- partial -->
@@ -236,10 +484,14 @@ return '<p class="navbar-brand d-xl-inline-block" id="logo-text">'+
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="public/js/buscar.js" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="public/js/formato.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="public/js/table.min.js"></script>
     <script src="public/js/table.js"></script>
+    <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
     <!-- End custom js for this page-->
   </body>
-</html>
+
+  </html>

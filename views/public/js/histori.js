@@ -1,11 +1,12 @@
 $(document).ready(function () {
   const id = document.getElementById('id').value;
-  const url = "http://localhost:3000/history/"+id;
+  const url = "/history/" + id;
   var t = $("#HistoryTable").DataTable({
     ajax: {
       url: url,
       dataSrc: "",
     },
+    scrollX: true,
     columns: [
       { data: "id" },
       { data: "id" },
@@ -17,11 +18,12 @@ $(document).ready(function () {
       { data: "id" },
     ],
     columnDefs: [
-      {targets: [0], searchable: false, className: "dt-control", orderable: false},
-      { targets: [3], render(v){ let date = new Date(v); return formatDate(date)} },
+      {targets: [0], responsivePriority: 1, searchable: false, className: "dt-control", orderable: false},
+      {targets: [2], responsivePriority: 1},
+      { targets: [3], responsivePriority: 1, render(v){ let date = new Date(v); return formatDate(date)} },
       { targets: [4], class: "text-primary", render(v){return currency(v)} },
       { targets: [5], class: "text-warning" ,render(v){return currency(v)} },
-      { targets: [6], class: "text-dark" ,render(v){return currency(v)} },
+      { targets: [6], responsivePriority: 1, class: "text-dark" ,render(v){return currency(v)} },
       { targets: [7], class: "d-none"},
     ],
     order: [[7, "desc"]],

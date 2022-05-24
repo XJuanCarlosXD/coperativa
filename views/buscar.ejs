@@ -9,6 +9,7 @@
     const currency = function(number){
     return new Intl.NumberFormat('en-EU', {style: 'currency',currency: 'USD', minimumFractionDigits: 2}).format(number);
     }; %>
+    <% if(role == 1){var rol = "Administrador"}else if(role == 2){var rol= "Digitardor"} %>
     <!DOCTYPE html>
     <html lang="es">
 
@@ -41,58 +42,40 @@
           <div id="div-logo" class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
             <a class="navbar-brand brand-logo" href="/">
               <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
-              <div id="logo-text"></div>
+              <span id="logo-text"></span>
             </a>
-            <a class="navbar-brand brand-logo-mini" href="/">
+            <a class="navbar-brand brand-logo-mini" href="#" onclick="selecionar();">
               <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
             </a>
           </div>
-
           <div class="navbar-menu-wrapper d-flex align-items-center">
             <div class="col-12">
               <div class="page">
                 <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
-                  <ul class="quick-links">
+                  <ul class="navbar-nav ml-auto justify-content-end">
                     <li>
-                      <h4 class="page-title d-none d-xl-inline-block bg-light">
-                        <b>Dashboard de Soccios</b>
+                      <h4 class="page-title d-sm-inline-text-center bg-light">
+                        <b>Dashboard</b> <b class="d-none d-xl-inline-block">de Soccios</b>
                       </h4>
                     </li>
-                  </ul>
-                  <div class="btn-sm row quick-links ml-auto" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
-                      <i class="fa fa-search"></i><a class="d-none d-xl-inline-block"> Buscar</a>
-                    </button>
-                    <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#card_buscar">
-                      <i class="fa fa-history"></i><a class="d-none d-xl-inline-block"> Historico</a>
-                    </button>
-                    <button type="button" class="btn btn-light">
-                      <i class="fa fa-cog"></i><a class="d-none d-xl-inline-block"> Configuracion</a>
-                    </button>
-                  </div>
-                  <ul class="navbar-nav quick-links">
-                    <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
+                    <li class="nav-item dropdown user-dropdown">
                       <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                         aria-expanded="false">
-                        <img class="img-xs rounded-circle" src="../public/img/avatar1.png" alt="Profile image" />
-                      </a>
+                        <img class="img-xs rounded-circle" src="../public/img/avatar1.png" alt="Profile image"> </a>
                       <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                         <div class="dropdown-header text-center">
-                          <img class="img-md rounded-circle" src="../public/img/avatar1.png" alt="Profile image" />
-                          <p class="mb-1 mt-3 font-weight-semibold">
-                            Juan Carlos Abreu Paulino
-                          </p>
-                          <p class="font-weight-light text-muted mb-0">
-                            juancarlos192003@gmail.com
-                          </p>
+                          <img class="img-md rounded-circle" src="../public/img/avatar1.png" alt="Profile image">
+                          <p class="mb-1 mt-3 font-weight-semibold"><%= name %></p>
+                          <p class="font-weight-light text-muted mb-0"><%= email %></p>
+                          <p class="font-weight-light text-muted mb-0"><%= rol %></p>
                         </div>
-                        <a class="dropdown-item">Mi Perfil
-                          <span class="badge badge-pill badge-danger">1</span><i
-                            class="dropdown-item-icon ti-dashboard"></i></a>
-                        <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                        <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
-                        <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-                        <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item"><i class="fa fa-user-circle"></i> Mi Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item"><i class="bi bi-chat-dots"></i> Soporte</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/exit" ><i class="bi bi-box-arrow-in-right"></i> Salir</a>
+                        <div class="dropdown-divider"></div>
                       </div>
                     </li>
                   </ul>
@@ -104,10 +87,10 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
           <!-- partial:public/public/partials/_sidebar.html -->
-          <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <nav class="sidebar default-layout sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-              <li class="mb-5">
-                <a class="nav-link mb-4">
+              <li class="mb-5" id="espacio1">
+                <a class="nav-link mb-4" id="espacio2">
                   <div class="profile-image">
                     <div class="dot-indicator"></div>
                   </div>
@@ -117,19 +100,80 @@
                   </div>
                 </a>
               </li>
-              <li class="nav-item nav-category">Menu Principal</li>
+              <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+              <% if(role == 1){ %>
               <li class="nav-item">
-                <a class="nav-link" href="/registro">
+                <a class="nav-link" href="/register">
                   <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title">Registrar</span>
+                  <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" data-toggle="collapse" data-target="#card_buscar">
                   <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title">Buscar</span>
+                  <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" data-target="#card_history" >
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="#">
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+                </a>
+              </li>
+              <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                  <i class="menu-icon typcn typcn-coffee"></i>
+                  <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users" >
+                        <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar Caracteristica</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="/exit">
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                </a>
+              </li>
+              <% }else{ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/buscar/<%= idusers %>">
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" data-target="#card_history">
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="/exit">
+                  <i class="menu-icon typcn typcn-document-text"></i>
+                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                </a>
+              </li>
+              <% } %>
             </ul>
           </nav>
           <!-- partial -->
@@ -220,23 +264,22 @@
                         <div class="row text-center">
                           <div class="col-md-12">
                             <div class="btn-group row" role="group" aria-label="Basic example">
-                              <button type="button" class="btn btn-light" onclick="disable();" id="btn_editar">
-                                <i class="fa fa-edit"></i><a class="d-none d-xl-inline-block">Editar</a>
-                              </button>
+                              <a class="btn btn-light" href="/edit/<%= user.id %>" id="btn_editar">
+                                <i class="fa fa-edit"></i> <span class="d-none d-xl-inline-block">Editar</span></a>
                               <button type="button" class="btn btn-light" data-toggle="collapse"
                                 data-target="#card_ahorrar" aria-expanded="false" aria-controls="card_ahorrar">
-                                <i class="text-success bi bi-piggy-bank"></i><a class="d-none d-xl-inline-block">Aporte a Capital</a>
+                                <i class="text-success bi bi-piggy-bank"></i><span class="d-none d-xl-inline-block">Aporte a Capital</span>
                               </button>
                               <button type="button" class="btn btn-light" data-toggle="collapse"
                                 data-target="#card_salida" aria-expanded="false" aria-controls="card_salida">
-                                <i class="text-danger fa fa-arrow-circle-o-down"></i><a class="d-none d-xl-inline-block">Ahorro Retirable</a>
+                                <i class="text-danger fa fa-arrow-circle-o-down"></i><span class="d-none d-xl-inline-block">Ahorro Retirable</span>
                               </button>
                               <button type="button" class="btn btn-light" data-toggle="collapse"
                                 data-target="#card_prestamos" aria-expanded="false" aria-controls="card_prestamo">
-                                <i class="text-info fa fa-dollar"></i><a class="d-none d-xl-inline-block">Prestamos</a>
+                                <i class="text-info fa fa-dollar"></i><span class="d-none d-xl-inline-block">Prestamos</span>
                               </button>
                               <button type="button" class="btn btn-light">
-                                <i class="text-primary fa fa-dollar"></i><a class="d-none d-xl-inline-block">Inversiones</a>
+                                <i class="text-primary fa fa-dollar"></i><span class="d-none d-xl-inline-block">Inversiones</span>
                               </button>
                             </div>
                           </div>
@@ -248,34 +291,33 @@
                   <!--id-->
            <input class="d-none" type="text" value="<%= user.id %>" id="id" disabled />
               <!--parte historico-->
-              <div class="collapse fade show" id="card_buscar" data-parent="#accordion"  aria-labelledby="card_buscar">
-                <div class="col-12 grid-margin">
+              <div class="collapse fade show" id="card_history" data-parent="#accordion"  aria-labelledby="card_history">
                   <div class="card">
-                    <div style="background-color: #8cc8f9;" class="card-header col-lg-12 p-3">
-                      <h4 class="text-title text-center text-dark">
+                    <div style="background-color: #8cc8f9;" class="card-header  p-3">
+                      <h4 class="text-title h5 text-dark">
                         <i class="fa fa-history"></i> Historico de Transacciones del Soccio
                       </h4>
                     </div>
                     <div class="card-body">
-                      <table id="HistoryTable" class="table table-striped table-bordered text-center" style="width:100%">
+                      <table id="HistoryTable" class="table table-striped table-sm table-bordered text-center" style="width:100%">
                         <thead class="table-primary">
                             <tr>
                                 <th>#</th>
-                                <th>No. Transaccion</th>
+                                <th>No.Transaccion</th>
                                 <th>Comentario</th>
                                 <th>Fecha</th>
                                 <th class="text-dark">Credito</th>
                                 <th class="text-dark">Debito</th>
-                                <th>Balance</th>  
+                                <th >Balance</th>  
                                 <th class="d-none">#</th>                             
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
-                        <tfoot>
+                        <tfoot class="table-primary">
                             <tr>
                               <th>#</th>
-                              <th>No. Transaccion</th>
+                              <th>No.Transaccion</th>
                               <th>Comentario</th>
                               <th>Fecha</th>
                               <th class="text-dark">Credito</th>
@@ -288,18 +330,32 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <script>    
+              <script>
+              function selecionar(){
+                var menu = document.getElementById("sidebar");
+                var espacio1 = document.getElementById("espacio1");
+                var espacio2 = document.getElementById("espacio2");
+                if(menu.classList.contains('fixed-top') == true){
+                menu.classList.remove("fixed-top");
+                espacio1.classList.add("mb-5");
+                espacio2.classList.add("mb-4");
+              }else{
+                menu.classList.add("fixed-top");
+                espacio1.classList.remove("mb-5");
+                espacio2.classList.remove("mb-4");
+              }
+            }    
               function validar(){
                 const monto = document.getElementById("monto_debito");
-                "<% resurt.forEach((row)=> { %>";  let balance = <%= row.retirable %>;
+                "<% resurt.forEach((row)=> { %>";  
+                let balance = <%= row.retirable %>;
                   if(balance < monto.value){
                     Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'No se puede retirar esta cantidad',
                     footer: '<span class="text-danger">Retirables Insuficientes!</span>',
-                   })
+                   }),
                     monto.value = "";
                   }
             "<%  }); %>"
@@ -355,17 +411,17 @@
                   var
                   out = ""; var filtro = "1234567890."; for (var i = 0; i < string.length; i++) if
                     (filtro.indexOf(string.charAt(i)) != -1) out += string.charAt(i); return out;
-                } </script>
+                }
+                 </script>
                                 <!--Ahorros-->
                                 <div class="collapse fade" id="card_ahorrar" data-parent="#accordion"
                                   aria-labelledby="headingOne">
                                   <form method="POST" action="/save_ahorros/<%= user.id %>" name="form-ahorro"
                                     id="form-ahorro">
-                                    <div class="col-12 grid-margin">
                                       <div class="card">
-                                        <div class="card-header text-center col-lg-12 col-12 p-3">
-                                          <h4 class="text-title text-dark">
-                                            <i class="bi bi-piggy-bank text-success"> </i>Registro de Aporte a Capital
+                                        <div style="background-color: #5cde87;" class="card-header  p-3">
+                                          <h4 class="text-title h5 text-dark">
+                                            <i class="bi bi-piggy-bank"> </i>Registro de Aporte a Capital
                                           </h4>
                                         </div>
                                         <div class="card-body">
@@ -442,7 +498,7 @@
                                                     placeholder="Comentario o Concepto de Transaccion"
                                                     autocomplete="off" name="comentario" required />
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-5 text-center">
                                                   <button type="button" onclick="require(event)"
                                                     class="btn btn-success btn-fw text-white" name="btn-ahorro"
                                                     id="btn-ahorro">
@@ -454,14 +510,12 @@
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
                                   </form>
                                 </div>
                                 <!-- end ahorro-->
                                 <!--salida-->
                                 <div class="collapse fade" id="card_salida" aria-labelledby="headingOne"
                                   data-parent="#accordion">
-                                  <div class="col-12 grid-margin">
                                     <div class="card h-100">
                                       <div class="card-header col-lg-12 col-12 p-3">
                                         <h4 class="text-title text-dark text-center">
@@ -533,7 +587,6 @@
                                         </form>
                                       </div>
                                     </div>
-                                  </div>
                                 </div>
                                 <!--Prestamos-->
                                 <div class="collapse fade" id="card_prestamos" aria-labelledby="headingOne"
