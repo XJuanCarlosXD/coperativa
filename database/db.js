@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 let conexion = mysql.createConnection({
-    host: 'localhost',
-    database: 'coperativa',
-    user: 'root',
-    password:''
+    host: 'mysql-coopafidb.alwaysdata.net',
+    database: 'coopafidb_coperativa',
+    user: 'coopafidb',
+    password:'AF2021!'
 });
 
 conexion.connect(function(error){
