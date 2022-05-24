@@ -24,5 +24,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XJuanCarlosXD/coperativa.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/XJuanCarlosXD/coperativa/issues"
+  },
+  "homepage": "https://github.com/XJuanCarlosXD/coperativa#readme"
 }
