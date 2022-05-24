@@ -1,0 +1,1 @@
+SELECT SUM(if(id_trasaccion=2,monto,0))AS retirable FROM ingresos WHERE id_identidad=1
