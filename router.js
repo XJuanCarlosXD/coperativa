@@ -87,7 +87,7 @@ router.get("/buscar/:id", (req, res) => {
       if (error) {
         throw error;
       } else {
-        conexion.query("SELECT SUM(if(id_trasaccion=2,monto,0))AS retirable,SUM(if(id_trasaccion in(1,2),monto,0)-if(id_trasaccion=3,monto,0))AS prestamo FROM ingresos WHERE id_identidad = ?", [id], (error, resurt) => {
+        conexion.query("SELECT IFNULL(SUM(if(id_trasaccion=2,monto,0)),0)AS retirable,SUM(if(id_trasaccion in(1,2),monto,0)-if(id_trasaccion=3,monto,0))AS prestamo FROM ingresos WHERE id_identidad = ?", [id], (error, resurt) => {
           if (error) {
             throw error;
           } else {
