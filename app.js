@@ -44,6 +44,7 @@ app.post("/auth",(req, res)=> {
             req.session.name = resurt[0].name;
             req.session.email = resurt[0].email;
             req.session.rol = resurt[0].idrole;
+            req.session.img = resurt[0].img;
             req.session.idusers = resurt[0].idusers;
             res.render("login",{
                 alert: true,

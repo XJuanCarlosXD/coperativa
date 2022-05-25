@@ -29,7 +29,7 @@ router.get("/login" || "/auth/login", (req, res) => {
 });
 //INDEX
 router.get("/index", (req, res) => {
-  const { name, email, rol, idusers, ids } = req.session;
+  const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -55,7 +55,8 @@ router.get("/index", (req, res) => {
               name: name,
               email: email,
               role: rol,
-              idusers: idusers
+              idusers: idusers,
+              img: img,
             });
           }
         });
@@ -69,7 +70,7 @@ router.get('/error-page', (req, res) => {
 });
 //BUSCAR SOOCCIOS
 router.get("/buscar/:id", (req, res) => {
-  const { name, email, rol, idusers, ids } = req.session;
+  const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -91,10 +92,10 @@ router.get("/buscar/:id", (req, res) => {
             throw error;
           } else {
             if (rol == 1) {
-              res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers });
+              res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img });
             } else if (rol == 2) {
               if (idusers == id) {
-                res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers });
+                res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img });
               } else {
                 res.redirect("/error-page");
               }
@@ -122,7 +123,7 @@ router.get("/history/:id", (req, res) => {
 });
 //EDITAR
 router.get("/edit/:id", (req, res) => {
-  const { name, email, rol, idusers, ids } = req.session;
+  const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -139,14 +140,14 @@ router.get("/edit/:id", (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.render("edit", { filas: filas, name: name, email: email, role: rol, idusers: idusers });
+        res.render("edit", { filas: filas, name: name, email: email, role: rol, idusers: idusers, img: img });
       }
     });
   }
 });
 //Role mantenimiento
 router.get("/role/:id", (req, res) => {
-  const { name, email, rol, idusers, ids } = req.session;
+  const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -163,7 +164,7 @@ router.get("/role/:id", (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.render("role", { filas: filas, name: name, email: email, role: rol, idusers: idusers });
+        res.render("role", { filas: filas, name: name, email: email, role: rol, idusers: idusers, img: img });
       }
     });
   }
