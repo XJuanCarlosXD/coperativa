@@ -44,9 +44,9 @@
               <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
               <span id="logo-text"></span>
             </a>
-            <a class="navbar-brand brand-logo-mini" href="#" onclick="selecionar();">
-              <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
-            </a>
+            <a class="navbar-brand brand-logo-mini text-white" href="#" onclick="selecionar();">
+              <i class="fa fa-navicon ms-1 small" id="icon"><b>Menu</b></i>
+          </a>
           </div>
           <div class="navbar-menu-wrapper d-flex align-items-center">
             <div class="col-12">
@@ -87,93 +87,85 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
           <!-- partial:public/public/partials/_sidebar.html -->
-          <nav class="sidebar default-layout sidebar-offcanvas" id="sidebar">
+          <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-              <li class="mb-5" id="espacio1">
-                <a class="nav-link mb-4" id="espacio2">
-                  <div class="profile-image">
-                    <div class="dot-indicator"></div>
-                  </div>
-                  <div class="text-wrapper">
-                    <p class="profile-name"></p>
-                    <p class="designation"></p>
+              <li class="mb-5" id="espacio1">                  
+                <a class="nav-link navbar-brand-wrapper d-sm-flex d-lg-none align-items-top justify-content-center" href="/index">
+                  <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
+                  </a>
+                  <div class="text-wrapper mb-4" id="espacio2">
                   </div>
                 </a>
               </li>
               <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
-              <% if(role == 1){ %>
-              <li class="nav-item">
-                <a class="nav-link" href="/register">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" data-target="#card_buscar">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" data-target="#card_history" >
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a class="nav-link" href="#">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
-                </a>
-              </li>
-              <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                  <i class="menu-icon typcn typcn-coffee"></i>
-                  <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
-                  <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users" >
-                        <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar Caracteristica</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item mb-2">
-                <a class="nav-link" href="/exit">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
-                </a>
-              </li>
-              <% }else{ %>
-              <li class="nav-item">
-                <a class="nav-link" href="/buscar/<%= idusers %>">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" data-target="#card_history">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a class="nav-link" href="/exit">
-                  <i class="menu-icon typcn typcn-document-text"></i>
-                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
-                </a>
-              </li>
-              <% } %>
+              <% if(role==1){ %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">
+                    <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/index">
+                    <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" href="#card_history">
+                    <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" href="#">
+                    <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+                  </a>
+                </li>
+                <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" href="#ui-basic">
+                    <i class="menu-icon typcn typcn-coffee"></i>
+                    <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                    <i class="menu-arrow"></i>
+                  </a>
+                  <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
+                          <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
+                            class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
+                          Caracteristica</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" href="/exit">
+                    <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                  </a>
+                </li>
+                <% }else{ %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/buscar/<%= idusers %>">
+                      <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                    </a>
+                  </li>
+                  <li class="nav-item mb-2">
+                    <a class="nav-link" href="/exit">
+  
+                      <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                    </a>
+                  </li>
+                  <% } %>
             </ul>
           </nav>
           <!-- partial -->
@@ -331,20 +323,30 @@
                   </div>
                 </div>
               <script>
-              function selecionar(){
-                var menu = document.getElementById("sidebar");
-                var espacio1 = document.getElementById("espacio1");
-                var espacio2 = document.getElementById("espacio2");
-                if(menu.classList.contains('fixed-top') == true){
-                menu.classList.remove("fixed-top");
-                espacio1.classList.add("mb-5");
-                espacio2.classList.add("mb-4");
-              }else{
-                menu.classList.add("fixed-top");
-                espacio1.classList.remove("mb-5");
-                espacio2.classList.remove("mb-4");
-              }
-            }    
+              function selecionar() {
+                        var menu = document.getElementById("sidebar");
+                        var espacio1 = document.getElementById("espacio1");
+                        var espacio2 = document.getElementById("espacio2");
+                        var icon = document.getElementById("icon");
+                        var icon2 = document.getElementById("div-logo");
+                        if (menu.classList.contains('fixed-top') == true) {
+                          menu.classList.remove("fixed-top");
+                          espacio1.classList.add("mb-5");
+                          espacio2.classList.add("mb-4");
+                          icon2.classList.remove("bg-danger");
+                          icon.classList.remove("fa-times-rectangle-o");
+                          icon.classList.add("fa-navicon");
+                          icon.innerHTML="<b>Menu</b>"
+                        } else {
+                          menu.classList.add("fixed-top");
+                          espacio1.classList.remove("mb-5");
+                          espacio2.classList.remove("mb-4");
+                          icon.classList.remove("fa-navicon");
+                          icon.classList.add("fa-times-rectangle-o");
+                          icon2.classList.add("bg-danger");
+                          icon.innerHTML="<b>Close</b>";
+                        }
+                      }   
               function validar(){
                 const monto = document.getElementById("monto_debito");
                 "<% resurt.forEach((row)=> { %>";  
