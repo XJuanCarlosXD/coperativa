@@ -116,7 +116,7 @@
                 </a>
               </li>
               <li class="nav-item mb-2">
-                <a class="nav-link" data-toggle="collapse" href="#">
+                <a class="nav-link" href="/chart">
                   <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
                 </a>
               </li>
@@ -143,6 +143,11 @@
                     </li>
                   </ul>
                 </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contabilidad">
+                  <span class="menu-title"><i class="fa fa-book"></i> Contabilidad</span>
+                </a>
               </li>
               <li class="nav-item mb-2">
                 <a class="nav-link" href="/exit">
@@ -202,7 +207,7 @@
                             let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
                             return formatted_date;
                             } %>
-                            <tr>
+                            <tr class="text-lowercase">
                               <td>
                                 <%= user.nombre + ' ' + user.apellido %>
                               </td>
@@ -414,7 +419,6 @@
                         let passwordConfi = document.getElementById("passwordConfi");
                         let password = document.getElementById("password");
                         let error = document.getElementById("error");
-                        console.log(password.value)
                         if (password.value != passwordConfi.value) {
                           error.classList.remove("d-none");
                         } else {

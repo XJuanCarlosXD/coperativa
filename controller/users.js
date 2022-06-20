@@ -1,5 +1,5 @@
-const { send } = require("express/lib/response");
 const conexion = require("../database/db");
+const transporter = require("../database/email");
 
 //CREAR USUARIOS
 exports.usersRegister = (req, res) => {
@@ -96,3 +96,46 @@ exports.edit_users = (req, res) => {
     });
     res.redirect("/public/login/registro.html");
   };
+
+//validar cuenta
+exports.SeccionStar = (req, res) => {
+  const {email, password} = req.body;
+  conexion.query("SELECT * FROM users WHERE email = ? AND password = ?",[email,password] ,(error, resurt)=>{
+      if(error){
+          throw error;
+      }else{
+      if(email && password){
+          if(resurt.length == 0){
+              res.render("login",{
+                  alert: true,
+                  alertTitle: "Error",
+                  alertMessage: "Usuario y/o password incorrectas",
+                  alertIcon: "error",
+                  showConfimButton: true,
+                  timer: false,
+                  ruta:"/"
+              });
+          }else{
+            req.session.ids = resurt[0].id;
+            req.session.name = resurt[0].name;
+            req.session.email = resurt[0].email;
+            req.session.rol = resurt[0].idrole;
+            req.session.img = resurt[0].img;
+            req.session.idusers = resurt[0].idusers;
+            res.render("/",transporter.emailStar);      
+            res.render("login",{
+                alert: true,
+                alertTitle: "Conexion Exitosa",
+                alertMessage: "Inicio de Seccion Correcto",
+                alertIcon: "success",
+                showConfimButton: true,
+                timer: 1500,
+                ruta:"/"
+            });
+          }
+      }else{
+          res.send('Por favor ingrese usuario y/o password')
+      }
+    }
+  })
+}

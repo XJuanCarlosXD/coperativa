@@ -186,20 +186,8 @@
                           <p class="text-muted mb-1">
                             <%= user.profecion %>
                           </p>
-                          <p class="text-muted font-size-sm">
+                          <p class="text-muted font-size-sm mb-5">
                             <%= user.ciudad+', '+ user.sector +' '+user.direccion%></p>
-                          <small>Aplica para Prestamo <i class="text-success bi bi-check-circle"></i></small><% resurt.forEach((row)=> { 
-                            let prestamo = row.prestamo/50000*100  
-                            if(prestamo >= 100){
-                              prestamo = 100;
-                              color = "bg-success";
-                            }else{
-                              prestamo = row.prestamo/50000*100;
-                              color = "bg-primary";
-                            }%>
-                          <div class="progress mb-3" style="height: 15px">
-                            <div class="progress-bar <%= color %>  progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= prestamo %>%" aria-valuenow="<%= prestamo %>" aria-valuemin="0" aria-valuemax="100"><%= prestamo %>%</div>
-                          </div><% }); %>
                         </div>
                       </div>
                     </div>
@@ -399,15 +387,18 @@
                     document.getElementById("monto_1").classList.add("d-none"); //
                     document.getElementById("monto_2").disabled = false;
                     document.getElementById("monto_1").required = false;
+                    document.getElementById("comentario").value = "Ahorro Retirable";
                   } else if (retirable.value == 5) {
                     document.getElementById("monto_1").classList.add("d-none"); //
                     document.getElementById("monto_2").disabled = false;
                     document.getElementById("monto_2").value = 500.00;
                     document.getElementById("monto_1").required = false;
+                    document.getElementById("comentario").value = "Cuota de Inscripción a la cooperativa";
                   } else if (retirable.value == 1 ||
                     retirable.value == 2 || retirable.value == 3) {
                     document.getElementById("monto_1").classList.remove("d-none"); //
-                    document.getElementById("monto_1").required = true;
+                    document.getElementById("monto_1").required = true
+                    document.getElementById("comentario").value = "Ahorro aporte a capital";
                   }
                 } function Numeros(string) {
                   var
@@ -421,7 +412,7 @@
                                   <form method="POST" action="/save_ahorros/<%= user.id %>" name="form-ahorro"
                                     id="form-ahorro">
                                       <div class="card">
-                                        <div style="background-color: #5cde87;" class="card-header  p-3">
+                                        <div style="background-color: #7ff06be7;" class="card-header  p-3">
                                           <h4 class="text-title h5 text-dark">
                                             <i class="bi bi-piggy-bank"> </i>Registro de Aporte a Capital
                                           </h4>
@@ -461,7 +452,7 @@
                                                 <div class="col-sm-8">
                                                   <div class="input-group">
                                                     <input type="number" class="form-control text-center"
-                                                      onchange="retirable();" onkeypress="Numeros(this.value)"
+                                                      onchange="retirable();" onkeyup="Numeros(this.value)"
                                                       placeholder="Monto a Ahorrar" name="monto_1" id="monto_1"
                                                       autocomplete="off" aria-label="Monto (al dólar más cercano)"
                                                       required />
@@ -469,7 +460,7 @@
                                                       <span class="input-group-text bg-success text-white">$</span>
                                                     </div>
                                                     <input type="number" class="form-control text-center"
-                                                      onkeypress="Numeros(this.value)" placeholder="Ahorror Retirable"
+                                                       onkeyup="Numeros(this.value)" placeholder="Ahorror Retirable"
                                                       name="monto_2" id="monto_2" autocomplete="off" />
                                                   </div>
                                                 </div>

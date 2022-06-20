@@ -12,7 +12,7 @@ exports.save_ahorro = (req, res) => {
   const tipo = req.body.tipo;
   const metodo = req.body.metodo;
   const comentario = req.body.comentario;
-  if (tipo == 4 || tipo == 5) {
+  if (tipo == 4) {
     conexion.query(
       "SELECT ifnull(SUM(if(id_trasaccion in(1,2),monto,0)-if(id_trasaccion=3,monto,0)),0)as monto FROM ingresos WHERE id_identidad =?",
       [id],
@@ -27,7 +27,7 @@ exports.save_ahorro = (req, res) => {
                 "INSERT INTO ingresos SET ?",
                 {
                   id_identidad: id,
-                  id_trasaccion: 1,
+                  id_trasaccion: 2,
                   tipo_ahorro: tipo,
                   id_metodo: metodo,
                   monto: monto_2,
@@ -45,7 +45,41 @@ exports.save_ahorro = (req, res) => {
         }
       }
     );
-  } else {
+  }else if(tipo == 5){
+    conexion.query(
+      "SELECT ifnull(SUM(if(id_trasaccion in(1,2),monto,0)-if(id_trasaccion=3,monto,0)),0)as monto FROM ingresos WHERE id_identidad =?",
+      [id],
+      (error, filas) => {
+        if (error) {
+          throw error;
+        } else {
+          filas.forEach((filas) => {
+            let mon = filas.monto;
+              const balance = parseFloat(mon) + parseFloat(monto_2);
+              conexion.query(
+                "INSERT INTO ingresos SET ?",
+                {
+                  id_identidad: id,
+                  id_trasaccion: 4,
+                  tipo_ahorro: tipo,
+                  id_metodo: metodo,
+                  monto: monto_2,
+                  comentario: comentario,
+                  fecha: fecha,
+                  balance: balance,
+                },
+                (error) => {
+                  if (error) {
+                    throw error;
+                  }
+                }
+              );
+          });
+        }
+      }
+    );
+  }
+   else {
     conexion.query(
       "SELECT ifnull(SUM(if(id_trasaccion in(1,2),monto,0)-if(id_trasaccion=3,monto,0)),0)as monto FROM ingresos WHERE id_identidad =?",
       [id],

@@ -11,6 +11,10 @@ router.get("/", (req, res) => {
     res.redirect("/index");
   }
 });
+/**router.get("/", (req, res) => {
+    res.redirect("/index");
+});
+*/
 router.get("/login" || "/auth/login", (req, res) => {
   const { ids } = req.session;
   if (ids === undefined) {
@@ -29,7 +33,7 @@ router.get("/login" || "/auth/login", (req, res) => {
 });
 //INDEX
 router.get("/index", (req, res) => {
-  const { name, email, rol, idusers, ids, img } = req.session;
+ const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -62,7 +66,7 @@ router.get("/index", (req, res) => {
         });
       }
     });
-  }
+ }
 });
 // PAGINA ERROR
 router.get('/error-page', (req, res) => {
@@ -176,9 +180,20 @@ router.get("/register", (req, res) => {
 //COMPROBANTE
 router.get("/comprobante/:id", (req, res) => {
   const id = req.params.id;
-  res.redirect('http://localhost/coperativa/templates/views/comprobante.php?id=' + id);
+  res.redirect('/templates/views/comprobante.php?id=' + id);
 });
-
+router.get("/contabilidad", (req, res) => {
+  res.render("contabilidad/views/index");
+});
+/** reporte */
+router.get("/chart", (req, res) => {
+  const { name, email, rol, idusers, ids, img } = req.session;
+  if (ids === undefined) {
+    res.redirect("/login");
+  } else {
+    res.render('chart', { name: name, email: email, role: rol, idusers: idusers, img: img })
+  }
+});
 //CONTROLLER
 const crud = require('./controller/crud');
 const users = require('./controller/users');

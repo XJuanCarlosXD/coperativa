@@ -54,6 +54,8 @@ $(document).ready(function () {
       var transa = "Ahorro Retiable";
     }else if(Trasaccion == 3){
       var transa = "Debito Retirable";
+    }else if(Trasaccion == 4){
+      var transa = "Cuota de inscripcion";
     }
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -89,7 +91,7 @@ $(document).ready(function () {
 });
 const formatDate = (date) => {
   let formatted_date =
-    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   return formatted_date;
 };
 const currency = function (number) {
