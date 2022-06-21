@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const conexion = require("./database/db");
+const query = require('./database/query');
 
 router.get("/", (req, res) => {
   const { ids } = req.session;
@@ -194,6 +195,7 @@ router.get("/chart", (req, res) => {
     res.render('chart', { name: name, email: email, role: rol, idusers: idusers, img: img })
   }
 });
+router.get('/status-User-coopafi', query.statusUsers);
 //CONTROLLER
 const crud = require('./controller/crud');
 const users = require('./controller/users');
