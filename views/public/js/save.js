@@ -64,6 +64,9 @@ function require(event) {
 }
 window.onload = function () {
   //CARGA
+  $('#tabla_cedula').DataTable({
+    order: [[0, 'asc']]
+  });
   let carga = document.getElementById("loader-page");
   carga.style.visibility = "hidden";
   carga.style.opacity = "0";

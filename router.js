@@ -34,7 +34,7 @@ router.get("/login" || "/auth/login", (req, res) => {
 });
 //INDEX
 router.get("/index", (req, res) => {
- const { name, email, rol, idusers, ids, img } = req.session;
+  const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
     res.render("login", {
       alert: true,
@@ -67,7 +67,7 @@ router.get("/index", (req, res) => {
         });
       }
     });
- }
+  }
 });
 // PAGINA ERROR
 router.get('/error-page', (req, res) => {
@@ -97,7 +97,9 @@ router.get("/buscar/:id", (req, res) => {
             throw error;
           } else {
             if (rol == 1) {
-              res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img });
+              conexion.query("SELECT *,LOWER(CONCAT(nombre,' ',apellido))AS fullname FROM registro", (error, busqueda) => {
+                res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img, busqueda: busqueda });
+              });
             } else if (rol == 2) {
               if (idusers == id) {
                 res.render("buscar", { filas: filas, resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img });
@@ -105,6 +107,7 @@ router.get("/buscar/:id", (req, res) => {
                 res.redirect("/error-page");
               }
             }
+
           }
         });
       }
