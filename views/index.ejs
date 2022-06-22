@@ -207,9 +207,9 @@
                             let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
                             return formatted_date;
                             } %>
-                            <tr class="text-lowercase">
+                            <tr class="text-capitalize">
                               <td>
-                                <%= user.nombre + ' ' + user.apellido %>
+                                <%= user.fullname %>
                               </td>
                               <td>
                                 <%= user.cedula %>

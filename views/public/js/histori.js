@@ -88,6 +88,10 @@ $(document).ready(function () {
       tr.addClass("shown");
     }
   });
+  
+  setInterval (function () {
+    t.ajax.reload (null, false);
+  }, 5000);
 });
 const formatDate = (date) => {
   let formatted_date =

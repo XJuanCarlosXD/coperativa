@@ -46,7 +46,7 @@ router.get("/index", (req, res) => {
       ruta: "/login"
     });
   } else {
-    conexion.query("SELECT * FROM registro", (error, filas) => {
+    conexion.query("SELECT *,LOWER(CONCAT(nombre,' ',apellido))AS fullname FROM registro", (error, filas) => {
       if (error) {
         throw error;
       } else {
@@ -88,7 +88,7 @@ router.get("/buscar/:id", (req, res) => {
     });
   } else {
     const id = req.params.id;
-    conexion.query("SELECT *,COUNT(*)as contar FROM registro WHERE id = ?", [id], (error, filas) => {
+    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(nombre,' ',apellido))AS fullname,LOWER(nombre)AS nombre,LOWER(profecion)AS profecion, LOWER(CONCAT(ciudad,' ',sector,' ',direccion))AS direccion  FROM registro WHERE id = ?", [id], (error, filas) => {
       if (error) {
         throw error;
       } else {

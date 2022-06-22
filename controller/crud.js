@@ -99,7 +99,7 @@ exports.save_ahorro = (req, res) => {
                 tipo_ahorro: tipo,
                 id_metodo: metodo,
                 monto: monto_2,
-                comentario: comentario,
+                comentario: "Aporte a ahorro retirables",
                 fecha: fecha,
                 balance: balance,
               },
