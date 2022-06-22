@@ -1,5 +1,5 @@
 const bSubmit = document.querySelector("#btn-ahorro");
-const id = document.querySelector("#id").value;
+const id = document.querySelector("#id").innerHTML;
 bSubmit.addEventListener('click', () => {
   let fecha = document.getElementById("fecha").value;
   let monto_1 = document.getElementById("monto_1").value;

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const id = document.getElementById('id').value;
+  const id = document.getElementById('id').innerHTML;
   const url = "/history/" + id;
   var t = $("#HistoryTable").DataTable({
     ajax: {
