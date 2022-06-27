@@ -125,7 +125,7 @@ bSubmit.addEventListener('click', () => {
                 cedula: cedula,
                 provincia: sProvincia.value,
                 municipio: sMunicipio.value,
-                sector: sSector,
+                sector: sSector.value,
                 calle: calle.trim(),
                 pais: pais.trim(),
                 nacionalidad: nacionalidad,
