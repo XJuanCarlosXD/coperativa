@@ -52,7 +52,7 @@ bSubmit.addEventListener('click', () => {
           }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
               Swal.fire('Datos Guardado con exito', '', 'success').then((result) => {
-                if (result.isConfirmed) {
+                if (result.dismiss) {
                   document.querySelector("#histo").click();
                 }
               });
@@ -106,7 +106,7 @@ bSubmit.addEventListener('click', () => {
             }).then((result) => {
               if (result.dismiss === Swal.DismissReason.timer) {
                 Swal.fire('Datos Guardado con exito', '', 'success').then((result) => {
-                  if (result.isConfirmed) {
+                  if (result.dismiss) {
                     document.querySelector("#histo").click();
                   }
                 });
@@ -123,7 +123,7 @@ bSubmit.addEventListener('click', () => {
     }
   }
 });
-window.onload = function () {
+window.onload = () => {
   //CARGA
   $('#tabla_cedula').DataTable({
     order: [[0, 'asc']]
@@ -160,3 +160,12 @@ function texto() {
     "</span>"
   );
 }
+window.addEventListener("load", () => {
+  const genero = document.querySelector("#genero").innerHTML;
+  if(genero.trim() == "Femenino"){
+    document.getElementById("socio").src = "https://bootdey.com/img/Content/avatar/avatar8.png";
+  }else{
+    document.getElementById("socio").src = "https://bootdey.com/img/Content/avatar/avatar7.png";
+  }
+
+})

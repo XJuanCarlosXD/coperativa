@@ -31,9 +31,9 @@
         <link rel="stylesheet" href="../public/assets/css/shared/style.css" />
         <link rel="stylesheet" href="../public/assets/css/demo_1/style.css" />
         <link rel="stylesheet" href="../public/css/custom.css" />
+        <link rel="stylesheet" href="../public/css/float.css" />
         <link rel="shortcut icon" href="../public/img/logo_d.svg" />
       </head>
-
       <body>
         <div class="loader-page" id="loader-page"></div>
         <div class="container-scroller" id="contener">
@@ -91,7 +91,7 @@
             </div>
           </nav>
           <!-- partial -->
-          <div class="container-fluid page-body-wrapper">
+          <div class="container-fluid page-body-wrapper" id="item-1">
             <!-- partial:public/public/partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
               <ul class="nav">
@@ -224,7 +224,7 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" id="socio"
+                          <img src="#" alt="Admin" id="socio"
                             class="rounded-circle" width="150">
                           <div class="mt-3">
                             <h4 class="text-capitalize">
@@ -235,6 +235,9 @@
                             </p>
                             <p class="text-muted text-capitalize font-size-sm">
                               <%= user.direccion %>
+                            </p>
+                            <p class="text-capitalize d-none" id="genero">
+                              <%= user.genero %>
                             </p>
                           </div>
                         </div>
@@ -296,7 +299,9 @@
                   </div>
                 </div>
                 <!--id-->
-                <label class="d-none" id="id"><%= user.id %></label>
+                <label class="d-none" id="id">
+                  <%= user.id %>
+                </label>
                 <!--parte historico-->
                 <div class="collapse fade show" id="card_history" data-parent="#accordion"
                   aria-labelledby="card_history">
@@ -374,8 +379,7 @@
                       radio = document.querySelector('input[name="search_radio" ]:checked').value; var
                         credito = document.querySelectorAll(".credito"); var
                           egreso = document.querySelectorAll(".egreso"); var i; if (radio == 3) {
-                            for (i = 0; i <
-                              credito.length; i++) {
+                            for (i = 0; i < credito.length; i++) {
                               credito[i].classList.remove("d-none");
                               egreso[i].classList.remove("d-none");
                             }
@@ -480,7 +484,7 @@
                   </div>
                   <% } %>
                     <!--Ahorros-->
-                    <div class="collapse fade" id="card_ahorrar" data-parent="#accordion" aria-labelledby="headingOne">
+                    <div class="collapse fade" id="card_ahorrar" data-parent="#accordion" aria-labelledby="card_ahorrar">
                       <form method="POST" action="/save_ahorros/<%= user.id %>" name="form-ahorro" id="form-ahorro">
                         <div class="card">
                           <div style="background-color: #7ff06be7;" class="card-header  p-3">
@@ -575,7 +579,7 @@
                     </div>
                     <!-- end ahorro-->
                     <!--salida-->
-                    <div class="collapse fade" id="card_salida" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="collapse fade" id="card_salida" aria-labelledby="card_salida" data-parent="#accordion">
                       <div class="card h-100">
                         <div class="card-header col-lg-12 col-12 p-3">
                           <h4 class="text-title text-dark text-center">
@@ -648,7 +652,7 @@
                       </div>
                     </div>
                     <!--Prestamos-->
-                    <div class="collapse fade" id="card_prestamos" aria-labelledby="headingOne"
+                    <div class="collapse fade" id="card_prestamos" aria-labelledby="card_prestamos"
                       data-parent="#accordion">
                       <div class="col-12 grid-margin">
                         <div class="card h-100">
@@ -732,6 +736,21 @@
                       </div>
                     </div>
                     <!-- content-wrapper ends -->
+              </div>
+              <!--button float-->
+              <div id="container-floating">
+                <div class="nd3 nds bg-info" data-toggle="collapse" data-target="#card_buscar">
+                  <a class="letter text-white" href="#tabla_cedula"><i class="fa-solid fa-1x fa fa-search"></i></a>
+                </div>
+                            
+                <div class="nd1 nds bg-primary">
+                  <a class="letter text-white" href="#item-1"><i class="fa-solid fa fa-angle-up fa-1x"></i></a>
+                </div>
+              
+                <div id="floating-button" style="background-color: #20d414;">
+                  <p class="plus">+</p>
+                  <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+                </div>
               </div>
               <!-- partial:public/public/partials/_footer.html -->
               <footer class="footer">

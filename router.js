@@ -88,7 +88,7 @@ router.get("/buscar/:id", (req, res) => {
     });
   } else {
     const id = req.params.id;
-    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(nombre,' ',apellido))AS fullname,LOWER(nombre)AS nombre,LOWER(profecion)AS profecion, LOWER(CONCAT(ciudad,' ',sector,' ',direccion))AS direccion  FROM registro WHERE id = ?", [id], (error, filas) => {
+    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(r.nombre,' ',r.apellido))AS fullname,LOWER(r.nombre)AS nombre,LOWER(r.profecion)AS profecion,LOWER(CONCAT(p.nombre,' ',r.direccion))AS direccion  FROM coopafidb_coperativa.registro r INNER JOIN coopafidb_coperativa.provincias p ON p.provincia_id=r.id_provincia INNER JOIN coopafidb_coperativa.municipios m ON m.municipio_id=r.id_municipio WHERE r.id= ?", [id],(error, filas) => {
       if (error) {
         throw error;
       } else {
@@ -179,7 +179,22 @@ router.get("/role/:id", (req, res) => {
 });
 //REGISTER SOCCIOS
 router.get("/register", (req, res) => {
-  res.redirect("/public/login/registro.html");
+  const { name, email, rol, idusers, ids, img } = req.session;
+  if (ids === undefined) {
+    res.render("login", {
+      alert: true,
+      alertTitle: "Error",
+      alertMessage: "Usuario inactivo o no ha iniciado session",
+      alertIcon: "error",
+      showConfimButton: true,
+      timer: 1500,
+      ruta: "/login"
+    });
+  } else {
+    conexion.query("SELECT * FROM provincias", (error, resurt) => {
+      res.render("registro", { name: name, email: email, role: rol, idusers: idusers, img: img, resurt: resurt });
+    })
+  }
 });
 //COMPROBANTE
 router.get("/comprobante/:id", (req, res) => {
@@ -197,6 +212,24 @@ router.get("/chart", (req, res) => {
   } else {
     res.render('chart', { name: name, email: email, role: rol, idusers: idusers, img: img })
   }
+});
+router.get("/municipio/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT * FROM municipios WHERE provincia_id = ?", [id], (error, row) => {
+    res.send(row);
+  });
+});
+router.get("/sector/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT * FROM distritos_municipales WHERE municipio_id = ?", [id], (error, row) => {
+    res.send(row);
+  });
+});
+router.get("/bancos", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT * FROM bancos", [id], (error, row) => {
+    res.send(row);
+  });
 });
 router.get('/status-User-coopafi', query.statusUsers);
 //CONTROLLER

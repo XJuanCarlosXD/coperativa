@@ -1,0 +1,522 @@
+<% if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } const currency=function(number){ return
+  new Intl.NumberFormat('en-EU', {style: 'currency' ,currency: 'USD' , minimumFractionDigits: 2}).format(number); }; %>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Registro</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="public/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="public/assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
+    <link rel="stylesheet" href="public/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="public/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="public/assets/vendors/css/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css"
+      rel="stylesheet" type="text/css" />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="public/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="public/assets/css/shared/style.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="public/assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="public/css/custom.css">
+    <link rel="stylesheet" href="public/css/float.css" />
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="public/img/logo_d.svg">
+  </head>
+
+  <body>
+    <div class="loader-page" id="loader-page"></div>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div id="div-logo" class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+          <a class="navbar-brand brand-logo" href="/">
+            <img id="logo" src="../public/img/logo_w.svg" alt="logo" />
+            <span id="logo-text"></span>
+          </a>
+          <a class="navbar-brand brand-logo-mini text-white" href="#" onclick="selecionar();">
+            <i class="fa fa-navicon ms-1 small" id="icon"><b>Menu</b></i>
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+          <div class="col-12">
+            <ul class="navbar-nav ml-auto justify-content-end">
+              <li>
+                <h4 class="page-title bg-light">
+                  <b>Registro de Soccios</b>
+                </h4>
+              </li>
+              <li class="nav-item dropdown user-dropdown">
+                <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
+                  aria-expanded="false">
+                  <img class="img-xs rounded-circle" src="<%= img %>" alt="Profile image"> </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                  <div class="dropdown-header text-center">
+                    <img class="img-md rounded-circle" src="<%= img %>" alt="Profile image">
+                    <p class="mb-1 mt-3 font-weight-semibold">
+                      <%= name %>
+                    </p>
+                    <p class="font-weight-light text-muted mb-0">
+                      <%= email %>
+                    </p>
+                    <p class="font-weight-light text-muted mb-0">
+                      <%= rol %>
+                    </p>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item"><i class="fa fa-user-circle"></i> Mi Perfil</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item"><i class="bi bi-chat-dots"></i> Soporte</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/exit"><i class="bi bi-box-arrow-in-right"></i> Salir</a>
+                  <div class="dropdown-divider"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper" id="item-1">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="mb-5" id="espacio1">
+              <a class="nav-link navbar-brand-wrapper d-sm-flex d-lg-none align-items-top justify-content-center"
+                href="/index">
+                <img src="public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
+              </a>
+              <div class="text-wrapper mb-4" id="espacio2">
+              </div>
+              </a>
+            </li>
+            <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+            <% if(role==1){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/register" style="background-color: #0f25d5;">
+                  <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Soccios</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#card_buscar">
+                  <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="/chart">
+                  <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+                </a>
+              </li>
+              <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic">
+                  <i class="menu-icon typcn typcn-coffee"></i>
+                  <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
+                        <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
+                          class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
+                        Caracteristica</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contabilidad">
+                  <span class="menu-title"><i class="fa fa-book"></i> Contabilidad</span>
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a class="nav-link" href="/exit">
+                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                </a>
+              </li>
+              <% }else{ %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/buscar/<%= idusers %>">
+                    <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link" href="/exit">
+
+                    <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+                  </a>
+                </li>
+                <% } %>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="card grid-margin">
+              <div class="card-body">
+                <form action="/register-user" method="POST">
+                  <h4 class="card-title">Formulario Inscripcion a la Cooperativa</h4>
+                  <p class="card-description">Informacion Personal </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Nombre</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="nombre" id="nombre" autocomplete="off" class="form-control input" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Apellido</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="apellido" id="apellido" type="text" autocomplete="off"
+                            class="form-control input" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Correo</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" autocomplete="off" type="text" name="correo" id="correo" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">F.Nacimiento</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" name="fecha_n" id="fecha_n" autocomplete="off" type="date"
+                            placeholder="dd/mm/yyyy" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Estado Civil</label>
+                        <div class="col-sm-9">
+                          <select class="form-control select" name="estado" id="estado" autocomplete="off" required>
+                            <option value="0">Elige un Estado</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Profeccion</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" name="profeccion" id="profeccion" autocomplete="off" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Telefono</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" name="telefono" autocomplete="off" size="10" maxlength="10"
+                            id="telefono" type="text" placeholder="(809) 000-000" required />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Celular</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" name="celular" type="text" size="10" maxlength="10"
+                            autocomplete="off" id="celular" placeholder="(829) 000-0000" required />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Genero</label>
+                        <div class="col-sm-9">
+                          <select class="form-control select" name="genero" id="genero" required>
+                            <option value="0">Elige un Genero</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Cuotas</label>
+                        <div class="col-sm-9">
+                          <input class="form-control input" name="cuotas" autocomplete="off" id="cuotas" type="number" required>
+                          <small class="text-muted d-flex justify-content-center">El monto que se descontara
+                            mensualmente de la cooperativa.</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row">
+                        <div class="input-group">
+                          <label class="col-sm-2 col-form-label">Numero de Identidad</label>
+                          <div class="col-sm-3">
+                            <select class="form-control select" name="id_identidad" id="id_identidad" autocomplete="off"
+                              required>
+                              <option value="0">Elige una Identificacion</option>
+                              <option value="Cedula">Cedula</option>
+                              <option value="RNC">RNC</option>
+                              <option value="Pasaporte">Pasaporte</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control input" autocomplete="off"
+                              name="cedula" id="cedula" placeholder="No.Identificacion" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="card-description">(Opcional)</p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Subir Imagen</label>
+                        <div class="col-sm-9">
+                          <input type="file" autocomplete="off" class="form-control file-upload-info">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <!--parte 2-->
+            <div class="card grid-margin">
+              <div class="card-body">
+                <h4 class="card-title"> Direccion </h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Provincia</label>
+                      <div class="col-sm-9">
+                        <select autocomplete="off" name="provincia" id="provincia" class="form-control select" required>
+                          <option value="0">Elige una Provincia</option>
+                          <% resurt.forEach((row)=> { %>
+                            <option value="<%= row.provincia_id %>">
+                              <%= row.nombre %>
+                            </option>
+                            <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Municipio</label>
+                      <div class="col-sm-9">
+                        <select name="municipio" id="municipio" autocomplete="off" class="form-control select" required>
+                          <option value="0">Elige un Municipio</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Sector</label>
+                      <div class="col-sm-9">
+                        <select name="sector" id="sector" autocomplete="off" class="form-control select" required>
+                          <option value="0">Elige un Sector</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Calle</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="calle" id="calle" autocomplete="off" class="form-control input" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Nacionalidad</label>
+                      <div class="col-sm-9">
+                        <select class="form-control select" autocomplete="off" name="nacionalidad" id="nacionalidad" required>
+                          <option value="0">Elige una Nacionalidad</option>
+                          <option value="1">Dominicano</option>
+                          <option value="2">Haitiano</option>
+                          <option value="999">Otro</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Pais</label>
+                      <div class="col-sm-9">
+                        <input class="form-control input" autocomplete="off" value="Republica Dominicana" name="pais" id="pais" required />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Parte 3-->
+            <div class="card grid-margin">
+              <div class="card-body">
+                <h4 class="card-title"> Informacion Laboral </h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label">Nombre de la Empresa</label>
+                      <div class="col-sm-7">
+                        <input type="text" name="empresa" id="empresa" autocomplete="off"
+                          placeholder="institucion por la cual labora" class="form-control input">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Puesto de Trabajo</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="puesto" id="puesto" autocomplete="off"
+                          placeholder="Puesto en el cual trabaja" class="form-control input">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label">Tiempo en la Empresa</label>
+                      <div class="col-sm-7">
+                        <select class="form-control text-center select" name="tiempo" id="tiempo">
+                          <option value="0">Elige un Tiempo</option>
+                          <option value="Mas de 1 Mes">Mas de 1 Mes</option>
+                          <option value="Mas de 1 Año">Mas de 1 Año</option>
+                          <option value="Mas de 5 Año">Mas de 5 Año</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Ingresos Mensuales</label>
+                      <div class="col-sm-8">
+                        <input type="number" name="salario" id="salario" autocomplete="off"
+                          placeholder="Ingresos mensuales" class="form-control input">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="card-title">En caso de que el Soccio posee cuenta bancaria </h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label" for="banco">Nombre del Banco</label>
+                      <div class="col-sm-8">
+                        <select name="banco" id="banco" autocomplete="off" class="form-control select">
+                          <option value="0">Elige un Banco</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row" id="nCuenta">
+                      <label class="col-sm-3 col-form-label" for="no_cuenta">No.Cuenta</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="no_cuenta" id="no_cuenta" autocomplete="off"
+                          placeholder="Numero de Cuenta" class="form-control input" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-end">
+                  <button type="button" id="bSubmit" class="btn btn-secondary btn-fw">
+                    <i class="fa fa-address-card-o"></i>Registrar Soccio</button>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+          <div id="container-floating">
+            <div class="nd3 nds bg-info">
+              <a class="letter text-white" href="/index"><i class="fa-solid fa-1x fa fa-search"></i></a>
+            </div>
+
+            <div class="nd1 nds bg-primary">
+              <a class="letter text-white" href="#item-1" id="item"><i class="fa-solid fa fa-angle-up fa-1x"></i></a>
+            </div>
+
+            <div id="floating-button" style="background-color: #20d414;">
+              <p class="plus">+</p>
+              <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="text-muted d-none d-xl-inline-block text-center text-sm-left">Copyright
+                ©Informatica
+                Consulting Abreu y Paulino S.R.L</span>
+              <span class="text-muted d-sm-block d-lg-none small text-sm-center">Copyright ©Informatica
+                Consulting Abreu y Paulino S.R.L</span>
+              <span class="float-none float-sm-right d-none d-xl-inline-block mt-1 mt-sm-0 text-center">
+                Diseñando por
+                <a href="#" target="_blank">Informatica Consulting Abreu y Paulino S.R.L</a></span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="public/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="public/assets/vendors/js/vendor.bundle.addons.js"></script>
+    <script src="public/js/main.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="public/assets/js/shared/off-canvas.js"></script>
+    <script src="public/assets/js/shared/misc.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- endinject -->
+    <!-- End custom js for this page-->
+  </body>
+
+  </html>
