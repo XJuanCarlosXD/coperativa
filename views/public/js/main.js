@@ -18,6 +18,7 @@ window.addEventListener("scroll", (event) => {
   var scroll_y = this.scrollY;
 
   posicion = scroll_y;
+  scroller(posicion);
   let logo = document.getElementById("logo");
   if (posicion >= 80) {
     logo.src = "public/img/logo_2_w.svg";
@@ -27,9 +28,20 @@ window.addEventListener("scroll", (event) => {
     logo.src = "public/img/logo_w.svg";
     logo.removeAttribute("style");
     document.getElementById("logo-text").innerHTML = "";
-
   }
 });
+const scroller = (posicion) => {
+  const fa = document.querySelector("#fa-1");
+  if (posicion >= 150) {
+    fa.classList.add("fa-angle-up");
+    fa.classList.remove("fa-angle-down");
+    document.getElementById("item").href= "#item-1";
+  } else {
+    fa.classList.add("fa-angle-down");
+    fa.classList.remove("fa-angle-up");
+    document.getElementById("item").href= "#item-2";
+  }
+}
 function texto() {
   return '<p class="navbar-brand d-xl-inline-block" id="logo-text">' +
     '<b class="text-white">COOPACFI</b>' +
@@ -135,25 +147,27 @@ bSubmit.addEventListener('click', () => {
                 salario: salario,
                 banco: banco,
                 no_cuenta: no_cuenta.trim(),
-                fulldate:formatDate(date)
+                fulldate: formatDate(date)
               })
-            }).then(res => res.text()).then(() => {
-              const input = document.querySelectorAll(".input");
-              const select = document.querySelectorAll(".select");
-              for (i = 0; i < input.length; i++) {
-                input[i].value = "";
-              }
-              for (i = 0; i < select.length; i++) {
-                select[i].value = 0;
-              }
-              document.getElementById("item").click();
-            });
+            }).then(res => res.text())
+              .catch(error => {
+                console.log(error);
+                Swal.fire("Error Hubo un problema al mandar la Informacion", "", "warning");
+              })
           },
           willClose: () => {
             clearInterval(timerInterval);
           }
         }).then((result) => {
           if (result.dismiss === Swal.DismissReason.timer) {
+            const input = document.querySelectorAll(".input");
+            const select = document.querySelectorAll(".select");
+            for (i = 0; i < input.length; i++) {
+              input[i].value = "";
+            }
+            for (i = 0; i < select.length; i++) {
+              select[i].value = 0;
+            }
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -172,7 +186,7 @@ bSubmit.addEventListener('click', () => {
               if (result.dismiss) {
                 Swal.fire({
                   title: "Desea  Imprimir el comprobante de Ingreso",
-                  icon: "warning",
+                  icon: "info",
                   showDenyButton: true,
                   confirmButtonColor: "#19d895",
                   DenyButtonColor: "#d33",

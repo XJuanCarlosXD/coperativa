@@ -31,6 +31,7 @@ bSubmit.addEventListener('click', () => {
           Swal.fire({
             timer: 2000,
             timerProgressBar: true,
+            allowOutsideClick: false,
             didOpen: () => {
               Swal.showLoading();
               fetch('/save_ahorros/' + id, {

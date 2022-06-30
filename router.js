@@ -88,7 +88,7 @@ router.get("/buscar/:id", (req, res) => {
     });
   } else {
     const id = req.params.id;
-    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(r.nombre,' ',r.apellido))AS fullname,LOWER(r.nombre)AS nombre,LOWER(r.profecion)AS profecion,LOWER(CONCAT(p.nombre,' ',r.direccion))AS direccion  FROM coopafidb_coperativa.registro r INNER JOIN coopafidb_coperativa.provincias p ON p.provincia_id=r.id_provincia INNER JOIN coopafidb_coperativa.municipios m ON m.municipio_id=r.id_municipio WHERE r.id= ?", [id],(error, filas) => {
+    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(r.nombre,' ',r.apellido))AS fullname,LOWER(r.nombre)AS nombre,LOWER(r.profecion)AS profecion,LOWER(CONCAT(p.nombre,' ',r.direccion))AS direccion  FROM coopafidb_coperativa.registro r INNER JOIN coopafidb_coperativa.provincias p ON p.provincia_id=r.id_provincia INNER JOIN coopafidb_coperativa.municipios m ON m.municipio_id=r.id_municipio WHERE r.id= ?", [id], (error, filas) => {
       if (error) {
         throw error;
       } else {
@@ -202,7 +202,39 @@ router.get("/comprobante/:id", (req, res) => {
   res.redirect('/templates/views/comprobante.php?id=' + id);
 });
 router.get("/contabilidad", (req, res) => {
-  res.render("contabilidad/views/index");
+  const { name, email, rol, idusers, ids, img } = req.session;
+  res.render("contabilidad/views/index", { name: name, email: email, role: rol, id: ids, img: img });
+});
+router.get("/account-catalogo", (req, res) => {
+  conexion.query("SELECT *,LOWER(nombre)AS nombre FROM catalogo", (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log("ha ocurrido un error");
+      throw error;
+    }
+  })
+});
+router.get("/account-catalogo/:id", (req, res) => {
+  const { id } = req.params
+  conexion.query("SELECT *,LOWER(nombre)AS nombre FROM catalogo where noCuenta = ?", [id], (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log("ha ocurrido un error");
+      throw error;
+    }
+  })
+});
+router.get("/numberCatalogo", (req, res) => {
+  conexion.query("SELECT noCuenta FROM catalogo", (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log("ha ocurrido un error");
+      throw error;
+    }
+  })
 });
 /** reporte */
 router.get("/chart", (req, res) => {
@@ -213,6 +245,7 @@ router.get("/chart", (req, res) => {
     res.render('chart', { name: name, email: email, role: rol, idusers: idusers, img: img })
   }
 });
+/** APIS */
 router.get("/municipio/:id", (req, res) => {
   const { id } = req.params;
   conexion.query("SELECT * FROM municipios WHERE provincia_id = ?", [id], (error, row) => {
@@ -231,6 +264,26 @@ router.get("/bancos", (req, res) => {
     res.send(row);
   });
 });
+router.get("/tipo-cuenta/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query(`SELECT * FROM tipo WHERE noCuenta LIKE '${id}%' `, (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+});
+router.get("/clase-cuenta/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT * FROM clase WHERE id_clase= ?", [id], (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+});
 router.get('/status-User-coopafi', query.statusUsers);
 //CONTROLLER
 const crud = require('./controller/crud');
@@ -240,6 +293,8 @@ router.post('/register-user', users.save_users);
 router.post("/debitar/:id", crud.debitar);
 router.post("/edited/:id", users.edit_users);
 router.post("/users-register", users.usersRegister);
+router.post("/create-account", crud.createAccount);
+router.post("/update-account/:id", crud.UpdateAccount);
 
 //EXPORTAR MODULO
 module.exports = router;
