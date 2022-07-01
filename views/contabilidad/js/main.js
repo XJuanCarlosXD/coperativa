@@ -120,24 +120,20 @@ window.addEventListener("scroll", function (event) {
 
   posicion = scroll_y;
   let logo = document.getElementById("logo");
-  if (posicion >= 100.35088348388672) {
-    logo.src = "../public/img/logo_2_w.svg";
-    logo.style.width = "70px";
-    document.getElementById("logo-text").innerHTML = texto();
+  if (posicion >= 50) {
+    logo.src = "../public/img/olivia2.svg";
+    logo.classList.add("img-fluid")
+    logo.style.width = "200px";
+    logo.style.position = "relative";
+    logo.style.top = "-35px";
   } else {
     logo.src = "../public/img/logo_w.svg";
     logo.removeAttribute("style");
-    document.getElementById("logo-text").innerHTML = "";
 
   }
 });
 const agregar = () => {
   document.getElementById("fila").innerHTML = addRow();
-};
-const texto = () => {
-  return '<p class="navbar-brand d-xl-inline-block text-white" id="logo-text">' +
-    '<b>COOPACFI</b>' +
-    '</p>';
 };
 /** mascara */
 const formato = document.querySelector("#formato");

@@ -3,9 +3,7 @@
   <script>
     window.location = "/error-page";
   </script>
-  <% } else{
-    if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" }
-    const formatDate=(date)=>{
+  <% } else{ if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } const formatDate=(date)=>{
     let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
     return formatted_date; }
     const currency = function(number){
@@ -32,7 +30,7 @@
       <link rel="stylesheet" href="../public/assets/css/shared/style.css" />
       <link rel="stylesheet" href="../public/assets/css/demo_1/style.css" />
       <link rel="stylesheet" href="../public/css/custom.css" />
-      <link rel="shortcut icon" href="../public/img/logo_d.svg" />
+      <link rel="shortcut icon" href="../public/img/logo-w.svg" />
     </head>
 
     <body>
@@ -47,7 +45,7 @@
             </a>
             <a class="navbar-brand brand-logo-mini text-white" href="#" onclick="selecionar();">
               <i class="fa fa-navicon ms-1 small" id="icon"><b>Menu</b></i>
-          </a>
+            </a>
           </div>
           <div class="navbar-menu-wrapper d-flex align-items-center">
             <div class="col-12">
@@ -66,16 +64,22 @@
                       <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                         <div class="dropdown-header text-center">
                           <img class="img-md rounded-circle" src="../<%= img %>" alt="Profile image">
-                          <p class="mb-1 mt-3 font-weight-semibold"><%= name %></p>
-                          <p class="font-weight-light text-muted mb-0"><%= email %></p>
-                          <p class="font-weight-light text-muted mb-0"><%= rol %></p>
+                          <p class="mb-1 mt-3 font-weight-semibold">
+                            <%= name %>
+                          </p>
+                          <p class="font-weight-light text-muted mb-0">
+                            <%= email %>
+                          </p>
+                          <p class="font-weight-light text-muted mb-0">
+                            <%= rol %>
+                          </p>
                         </div>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"><i class="fa fa-user-circle"></i> Mi Perfil</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"><i class="bi bi-chat-dots"></i> Soporte</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/exit" ><i class="bi bi-box-arrow-in-right"></i> Salir</a>
+                        <a class="dropdown-item" href="/exit"><i class="bi bi-box-arrow-in-right"></i> Salir</a>
                         <div class="dropdown-divider"></div>
                       </div>
                     </li>
@@ -90,15 +94,16 @@
           <!-- partial:partials/_sidebar.html -->
           <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-              <li class="mb-5" id="espacio1">                  
-                <a class="nav-link navbar-brand-wrapper d-sm-flex d-lg-none align-items-top justify-content-center" href="/index">
+              <li class="mb-5" id="espacio1">
+                <a class="nav-link navbar-brand-wrapper d-sm-flex d-lg-none align-items-top justify-content-center"
+                  href="/index">
                   <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
-                  </a>
-                  <div class="text-wrapper mb-4" id="espacio2">
-                  </div>
+                </a>
+                <div class="text-wrapper mb-5" id="espacio2">
+                </div>
                 </a>
               </li>
-              <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+              <li class="nav-item nav-category mt-3" id="menu"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
               <% if(role==1){ %>
                 <li class="nav-item">
                   <a class="nav-link" href="/register">
@@ -157,7 +162,7 @@
                   </li>
                   <li class="nav-item mb-2">
                     <a class="nav-link" href="/exit">
-  
+
                       <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
                     </a>
                   </li>
@@ -272,29 +277,29 @@
                       }
                     }
                     function selecionar() {
-                        var menu = document.getElementById("sidebar");
-                        var espacio1 = document.getElementById("espacio1");
-                        var espacio2 = document.getElementById("espacio2");
-                        var icon = document.getElementById("icon");
-                        var icon2 = document.getElementById("div-logo");
-                        if (menu.classList.contains('fixed-top') == true) {
-                          menu.classList.remove("fixed-top");
-                          espacio1.classList.add("mb-5");
-                          espacio2.classList.add("mb-4");
-                          icon2.classList.remove("bg-danger");
-                          icon.classList.remove("fa-times-rectangle-o");
-                          icon.classList.add("fa-navicon");
-                          icon.innerHTML="<b>Menu</b>"
-                        } else {
-                          menu.classList.add("fixed-top");
-                          espacio1.classList.remove("mb-5");
-                          espacio2.classList.remove("mb-4");
-                          icon.classList.remove("fa-navicon");
-                          icon.classList.add("fa-times-rectangle-o");
-                          icon2.classList.add("bg-danger");
-                          icon.innerHTML="<b>Close</b>";
-                        }
-                      }   
+                      var menu = document.getElementById("sidebar");
+                      var espacio1 = document.getElementById("espacio1");
+                      var espacio2 = document.getElementById("espacio2");
+                      var icon = document.getElementById("icon");
+                      var icon2 = document.getElementById("div-logo");
+                      if (menu.classList.contains('fixed-top') == true) {
+                        menu.classList.remove("fixed-top");
+                        espacio1.classList.add("mb-5");
+                        espacio2.classList.add("mb-4");
+                        icon2.classList.remove("bg-danger");
+                        icon.classList.remove("fa-times-rectangle-o");
+                        icon.classList.add("fa-navicon");
+                        icon.innerHTML = "<b>Menu</b>"
+                      } else {
+                        menu.classList.add("fixed-top");
+                        espacio1.classList.remove("mb-5");
+                        espacio2.classList.remove("mb-4");
+                        icon.classList.remove("fa-navicon");
+                        icon.classList.add("fa-times-rectangle-o");
+                        icon2.classList.add("bg-danger");
+                        icon.innerHTML = "<b>Close</b>";
+                      }
+                    }
                     function ubicacion() {
                       var ubicacion = document.querySelectorAll(".ubicacion");
                       var i;
@@ -330,21 +335,17 @@
                       posicion = scroll_y;
                       let logo = document.getElementById("logo");
                       if (posicion >= 100.35088348388672) {
-                        logo.src = "../public/img/logo_2_w.svg";
-                        logo.style.width = "70px";
-                        document.getElementById("logo-text").innerHTML = texto();
+                        logo.src = "../public/img/olivia2.svg";
+                        logo.classList.add("img-fluid")
+                        logo.style.width = "200px";
+                        logo.style.position = "relative";
+                        logo.style.top = "-35px";
                       } else {
                         logo.src = "../public/img/logo_w.svg";
                         logo.removeAttribute("style");
-                        document.getElementById("logo-text").innerHTML = "";
 
                       }
                     });
-                    function texto() {
-                      return '<p class="navbar-brand d-xl-inline-block" id="logo-text">' +
-                        '<b>COOPACFI</b>' +
-                        '</p>';
-                    }
                   </script>
                   <div class="row">
                     <div class="col-md-6 border border-secondary">

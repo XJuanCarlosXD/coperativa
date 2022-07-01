@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="../public/css/float.css" />
         <link rel="shortcut icon" href="../public/img/logo_d.svg" />
       </head>
+
       <body>
         <div class="loader-page" id="loader-page"></div>
         <div class="container-scroller" id="contener">
@@ -100,11 +101,11 @@
                     href="/index">
                     <img src="../public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
                   </a>
-                  <div class="text-wrapper mb-4" id="espacio2">
+                  <div class="text-wrapper mb-5" id="espacio2">
                   </div>
                   </a>
                 </li>
-                <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+                <li class="nav-item nav-category mt-3" id="menu"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
                 <% if(role==1){ %>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic">
@@ -224,8 +225,7 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                          <img src="#" alt="Admin" id="socio"
-                            class="rounded-circle" width="150">
+                          <img src="#" alt="Admin" id="socio" class="rounded-circle" width="150">
                           <div class="mt-3">
                             <h4 class="text-capitalize">
                               <%= user.nombre %>
@@ -353,16 +353,19 @@
                     var icon2 = document.getElementById("div-logo");
                     if (menu.classList.contains(' fixed-top') == true) {
                       menu.classList.remove("fixed-top");
-                      espacio1.classList.add("mb-5"); espacio2.classList.add("mb-4");
+                      espacio1.classList.add("mb-5"); espacio2.classList.add("mb-5");
                       icon2.classList.remove("bg-danger"); icon.classList.remove("fa-times-rectangle-o");
                       icon.classList.add("fa-navicon"); icon.innerHTML = "<b>Menu</b>"
+                      document.querySelector("#menu").classList.add("mt-3");
                     } else {
+                      document.querySelector("#menu").classList.remove("mt-3");
                       menu.classList.add("fixed-top"); espacio1.classList.remove("mb-5");
-                      espacio2.classList.remove("mb-4"); icon.classList.remove("fa-navicon");
+                      espacio2.classList.remove("mb-5"); icon.classList.remove("fa-navicon");
                       icon.classList.add("fa-times-rectangle-o"); icon2.classList.add("bg-danger");
                       icon.innerHTML = "<b>Close</b>";
                     }
-                  } function validar() {
+                  } 
+                  function validar() {
                     const
                       monto = document.getElementById("monto_debito"); "<% resurt.forEach((row)=> { %>"; let
                         balance =<%=row.retirable %>;
@@ -374,29 +377,8 @@
                       }),
                         monto.value = "";
                     } "<%  }); %>"
-                  } function opciones() {
-                    let
-                      radio = document.querySelector('input[name="search_radio" ]:checked').value; var
-                        credito = document.querySelectorAll(".credito"); var
-                          egreso = document.querySelectorAll(".egreso"); var i; if (radio == 3) {
-                            for (i = 0; i < credito.length; i++) {
-                              credito[i].classList.remove("d-none");
-                              egreso[i].classList.remove("d-none");
-                            }
-                          } else if (radio == 2) {
-                            for (i = 0; i <
-                              credito.length; i++) {
-                              credito[i].classList.add("d-none");
-                              egreso[i].classList.remove("d-none");
-                            }
-                          } else if (radio == 1) {
-                            for (i = 0; i <
-                              egreso.length; i++) {
-                              egreso[i].classList.add("d-none");
-                              credito[i].classList.remove("d-none");
-                            }
-                          }
-                  } function retirable() {
+                  }
+                  function retirable() {
                     const
                       ahorro = document.getElementById("monto_1").value; let = numero_1 = 0.7; let = numero_2 = 0.3;
                     num = ahorro * numero_2; num_1 = ahorro * numero_1;
@@ -484,7 +466,8 @@
                   </div>
                   <% } %>
                     <!--Ahorros-->
-                    <div class="collapse fade" id="card_ahorrar" data-parent="#accordion" aria-labelledby="card_ahorrar">
+                    <div class="collapse fade" id="card_ahorrar" data-parent="#accordion"
+                      aria-labelledby="card_ahorrar">
                       <form method="POST" action="/save_ahorros/<%= user.id %>" name="form-ahorro" id="form-ahorro">
                         <div class="card">
                           <div style="background-color: #7ff06be7;" class="card-header  p-3">
@@ -742,14 +725,15 @@
                 <div class="nd3 nds bg-info" data-toggle="collapse" data-target="#card_buscar">
                   <a class="letter text-white" href="#tabla_cedula"><i class="fa-solid fa-1x fa fa-search"></i></a>
                 </div>
-                            
+
                 <div class="nd1 nds bg-primary">
                   <a class="letter text-white" href="#item-1"><i class="fa-solid fa fa-angle-up fa-1x"></i></a>
                 </div>
-              
+
                 <div id="floating-button" style="background-color: #20d414;">
                   <p class="plus">+</p>
-                  <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+                  <img class="edit"
+                    src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
                 </div>
               </div>
               <!-- partial:public/public/partials/_footer.html -->

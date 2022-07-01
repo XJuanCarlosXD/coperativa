@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="public/assets/css/demo_1/style.css">
     <link rel="stylesheet" href="public/css/custom.css">
     <!-- End Layout styles -->
-    <link rel="shortcut icon" href="public/img/logo_d.svg">
+    <link rel="shortcut icon" href="public/img/logo-w.svg">
   </head>
 
   <body>
@@ -103,11 +103,11 @@
                 href="/index">
                 <img src="public/img/logo_w.svg" style="width: 100px; color: #000" alt="logo" />
               </a>
-              <div class="text-wrapper mb-4" id="espacio2">
+              <div class="text-wrapper mb-5" id="espacio2">
               </div>
               </a>
             </li>
-            <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+            <li class="nav-item nav-category mt-3"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
             <% if(role==1){ %>
               <li class="nav-item">
                 <a class="nav-link" href="/register">
@@ -360,31 +360,17 @@
                 posicion = scroll_y;
                 let logo = document.getElementById("logo");
                 if (posicion >= 100.35088348388672) {
-                  logo.src = "public/img/logo_2_w.svg";
-                  logo.style.width = "70px";
-                  document.getElementById("logo-text").innerHTML = texto();
+                  logo.src = "public/img/olivia2.svg";
+                  logo.classList.add("img-fluid")
+                  logo.style.width = "200px";
+                  logo.style.position = "relative";
+                  logo.style.top = "-35px";
                 } else {
                   logo.src = "public/img/logo_w.svg";
                   logo.removeAttribute("style");
-                  document.getElementById("logo-text").innerHTML = "";
 
                 }
               });
-              function texto() {
-                return '<p class="navbar-brand d-xl-inline-block text-white" id="logo-text">' +
-                  '<b>COOPACFI</b>' +
-                  '</p>';
-              }
-              function validar() {
-                let passwordConfi = document.getElementById("passwordConfi");
-                let password = document.getElementById("password");
-                let error = document.getElementById("error");
-                if (password.value != passwordConfi.value) {
-                  error.classList.remove("d-none");
-                } else {
-                  error.classList.add("d-none")
-                }
-              }
               function selecionar() {
                 var menu = document.getElementById("sidebar");
                 var espacio1 = document.getElementById("espacio1");
