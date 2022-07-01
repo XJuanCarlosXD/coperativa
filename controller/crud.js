@@ -209,7 +209,7 @@ exports.UpdateAccount = (req, res) => {
       moneda: moneda,
       nota: nota,
       user_create: ids,
-    },{noCuenta: id}]);
+    }, id]);
     console.log("Cuenta actualizada");
   } catch (error) {
     console.log("Ha ocurrido un error");

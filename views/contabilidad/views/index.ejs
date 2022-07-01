@@ -183,7 +183,7 @@
                               <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="input-group">
                                   <input type="text" class="text-center text-dark page-link input" maxlength="12"
-                                    placeholder="Entrada Cuentas" name="cuenta" id="cuenta">
+                                    placeholder="Entrada Cuentas" autocomplete="off" name="cuenta" id="cuenta">
                                 </div>
                                 <a class="page-link" href="#" id="right"><i class="fa fa-search"></i></a>
                                 <div class="validation"></div>
@@ -274,6 +274,9 @@
                         <button type="button" id="bSubmit" style="background-color: #64d950f3;"
                           class="btn btn-success btn-lg">
                           <i class="fa-regular fa fa-book"></i> Registrar</button>
+                          <button type="button" id="bBack"
+                          class="btn btn-secondary btn-lg d-none" disabled>
+                          <i class="fa-solid fa fa-ban"></i></i> Cacelar</button>
                           <button type="button" id="bUpdate" style="background-color: rgb(61 147 239);"
                           class="btn btn-primary btn-lg d-none" disabled>
                           <i class="fa-solid fa fa-save"></i></i> Actualizar</button>

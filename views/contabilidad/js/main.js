@@ -295,9 +295,19 @@ const input = document.querySelectorAll(".input");
 const select = document.querySelectorAll(".select");
 const validation = document.querySelectorAll(".validation");
 bSubmit.addEventListener('click', () => {
+  const nombre = document.querySelector("#nombre").value;
+  const tipo = document.querySelector("#tipo").value;
+  const clase = document.querySelector("#clase").value;
+  const movimiento = document.querySelector("#movimiento").value;
+  const moneda = document.querySelector("#moneda").value;
+  const activa = document.querySelector("#activa");
+  const nota = document.querySelector("#nota").value;
+  const input = document.querySelectorAll(".input");
+  const select = document.querySelectorAll(".select");
+  const validation = document.querySelectorAll(".validation");
   const cuenta = document.querySelector("#cuenta").value;
   const div1 = document.querySelectorAll(".div");
-  if (cuenta.value > 99 || cuenta.value <= 10) {
+  if (cuenta > 99 || cuenta <= 10) {
     Swal.fire({
       icon: "error",
       title: "Los numeros ingresado no pueden ser menor a 10 o mayor 99",
@@ -333,6 +343,7 @@ bSubmit.addEventListener('click', () => {
         }
       }
       for (i = 0; i < validation.length; i++) {
+        validation[i].classList.remove("d-none");
         if (input[i].value == "" || input[i].value == 0) {
           if (div1.length > 0) {
           } else {
@@ -345,8 +356,7 @@ bSubmit.addEventListener('click', () => {
         } else {
           validation[i].classList.add("d-none");
         }
-      } {
-        for (i = 0; i < select.length; i++)
+        for (i = 0; i < select.length; i++) {
           if (select[i].value == 0) {
             const Toast = Swal.mixin({
               toast: true,
@@ -370,6 +380,7 @@ bSubmit.addEventListener('click', () => {
             select[i].classList.add("border-success");
             select[i].classList.remove("border-danger");
           }
+        }
       }
       stop;
     } else {
@@ -385,6 +396,7 @@ bSubmit.addEventListener('click', () => {
         if (result.isConfirmed) {
           let timerInterval
           Swal.fire({
+            timer: 2000,
             timerProgressBar: true,
             allowOutsideClick: false,
             didOpen: () => {
@@ -399,7 +411,6 @@ bSubmit.addEventListener('click', () => {
                   console.log(error);
                   Swal.fire("Error Hubo un problema al mandar la Informacion", "", "warning");
                 });
-              Swal.close();
             },
             willClose: () => {
               clearInterval(timerInterval)
@@ -416,23 +427,21 @@ bSubmit.addEventListener('click', () => {
               input[i].classList.remove("border-success");
             }
             document.getElementById("nota").value = "";
-            if (result.dismiss === Swal.DismissReason.timer) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-              })
-              Toast.fire({
-                icon: 'success',
-                title: 'Cuenta Creada Satisfactoriamente'
-              })
-            }
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            Toast.fire({
+              icon: 'success',
+              title: 'Cuenta Creada Satisfactoriamente'
+            })
           })
         } else if (result.isDenied) {
           Swal.fire("Cambios no Guardados", "", "info");
@@ -442,7 +451,7 @@ bSubmit.addEventListener('click', () => {
   }
 });
 const right = document.querySelector("#right");
-const left = document.querySelector("#left");
+const bBack = document.querySelector("#bBack");
 let a = -1;
 right.addEventListener('click', () => {
   let timerInterval
@@ -452,6 +461,17 @@ right.addEventListener('click', () => {
     allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading()
+      for (i = 0; i < validation.length; i++) {
+        validation[i].classList.add("d-none");
+      }
+      for (i = 0; i < select.length; i++) {
+        select[i].classList.remove("border-danger");
+        select[i].classList.remove("border-success");
+      }
+      for (i = 0; i < input.length; i++) {
+        input[i].classList.remove("border-danger");
+        input[i].classList.remove("border-success");
+      }
       applyInputMask('cuenta', '00.00.00.00', 4);
       document.querySelector("#formato").classList.add("d-none")
       fetch("/numberCatalogo").then(res => res.ok ? res.json() : Promise.reject(res))
@@ -478,6 +498,8 @@ right.addEventListener('click', () => {
           bSubmit.disabled = true;
           bUpdate.classList.remove("d-none");
           bUpdate.disabled = false;
+          bBack.disabled = false;
+          bBack.classList.remove("d-none");
           const id = document.querySelector("#cuenta").value;
           sCuenta(id.slice(0, -10));
           sClase(id.slice(0, -10));
@@ -512,19 +534,48 @@ right.addEventListener('click', () => {
 });
 const bUpdate = document.querySelector("#bUpdate")
 bUpdate.addEventListener('click', () => {
-  const id = document.querySelector("#cuenta").value;
-  fetch("/account-catalogo/" + id).then(res => res.ok ? res.json() : Promise.reject(res))
-    .then(json => {
-      json.forEach(e => {
-        /*if (document.querySelector("#nombre").value !== e.nombre || document.querySelector("#tipo").value !== e.tipo || document.querySelector("#movimiento").value !== e.acMovimiento || document.querySelector("#moneda").value !== e.moneda || document.querySelector("#nota").value !== e.nota || document.querySelector("#activa") !== e.estado) {
-          Swal.fire({
-            icon: "info",
-            title: "Ningun cambio realizado",
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-        } else {*/
+  const nombre = document.querySelector("#nombre").value;
+  const tipo = document.querySelector("#tipo").value;
+  const movimiento = document.querySelector("#movimiento").value;
+  if (cuenta == "" || cuenta == 0 || nombre.trim() == "" || tipo == 0 || movimiento == 0 || moneda == 0) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: 'error',
+      title: 'Campos vacios revise'
+    })
+    for (i = 0; i < input.length; i++) {
+      if (input[i].value == "" || input[i].value == 0) {
+        input[i].classList.add("border-danger");
+        input[i].classList.remove("border-success");
+      } else {
+        input[i].classList.add("border-success");
+        input[i].classList.remove("border-danger");
+      }
+    }
+    for (i = 0; i < select.length; i++) {
+      if (select[i].value == 0) {
+        select[i].classList.add("border-danger");
+        select[i].classList.remove("border-success");
+      } else {
+        select[i].classList.add("border-success");
+        select[i].classList.remove("border-danger");
+      }
+    }
+  } else {
+    const id = document.querySelector("#cuenta").value;
+    fetch("/account-catalogo/" + id).then(res => res.ok ? res.json() : Promise.reject(res))
+      .then(json => {
+        json.forEach(e => {
           Swal.fire({
             title: "Confirma guardar el registro?",
             icon: "warning",
@@ -544,6 +595,7 @@ bUpdate.addEventListener('click', () => {
               Swal.fire({
                 timerProgressBar: true,
                 allowOutsideClick: false,
+                timer: 2000,
                 didOpen: () => {
                   Swal.showLoading();
                   const nClase = cuenta.value.slice(0, -10);
@@ -558,9 +610,7 @@ bUpdate.addEventListener('click', () => {
                   }).then(res => res.text())
                     .catch(error => {
                       console.log(error);
-                      Swal.fire("Error Hubo un problema al mandar la Informacion", "", "warning");
                     });
-                  Swal.close();
                 },
                 willClose: () => {
                   clearInterval(timerInterval)
@@ -577,29 +627,49 @@ bUpdate.addEventListener('click', () => {
                   input[i].classList.remove("border-success");
                 }
                 document.getElementById("nota").value = "";
-                if (result.dismiss === Swal.DismissReason.timer) {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer)
-                      toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                  })
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Cuenta Actualizada Satisfactoriamente'
-                  })
-                }
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Cuenta Actualizada Satisfactoriamente'
+                })
               })
             } else if (result.isDenied) {
               Swal.fire("Cambios no Guardados", "", "info");
             }
           })
-        //}
+        })
       })
-    })
-})
+  }
+});
+bBack.addEventListener('click', () => {
+  bBack.disabled = true;
+  bUpdate.disabled = true;
+  bBack.classList.add("d-none");
+  bUpdate.classList.add("d-none");
+  bSubmit.classList.remove("d-none");
+  bSubmit.disabled = false;
+  for (i = 0; i < validation.length; i++) {
+    validation[i].classList.remove("d-none");
+  }
+  for (i = 0; i < select.length; i++) {
+    select[i].value = 0;
+    select[i].classList.remove("border-danger");
+    select[i].classList.remove("border-success");
+  }
+  for (i = 0; i < input.length; i++) {
+    input[i].value = "";
+    input[i].classList.remove("border-danger");
+    input[i].classList.remove("border-success");
+  }
+});
+
