@@ -284,6 +284,36 @@ router.get("/clase-cuenta/:id", (req, res) => {
     }
   })
 });
+router.get("/number/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT * FROM numeraciones WHERE id_number = ?", [id], (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+});
+router.get("/seat-account-accountant-detail/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT *,e.nombre AS estado,u.name AS userName,i.name AS userCreate FROM detalle_asiento d INNER JOIN estado e ON e.id_estado=d.status_id INNER JOIN users u ON u.id=d.user_nulo INNER JOIN users i ON i.id=d.user_create WHERE noAsiento = ?", [id], (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+});
+router.get("/seat-account-accountant-asiento/:id", (req, res) => {
+  const { id } = req.params;
+  conexion.query("SELECT c.nombre as cuenta,a.descripcion,IF(a.costo = 1,'Principal',0)AS costo,IF(a.tipo = 1,monto,0)AS debito,IF(a.tipo = 2,monto,0)AS credito,(SELECT SUM(monto) FROM asientos WHERE tipo = 1 AND id_noAsiento= ?)AS tDebito,(SELECT SUM(monto) FROM asientos WHERE tipo = 2 AND id_noAsiento= ?)AS tCredito FROM asientos a INNER JOIN catalogo c ON a.id_noCuenta=c.id_catalogo WHERE id_noAsiento= ?", [id,id,id], (error, resurt) => {
+    try {
+      res.send(resurt);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+});
 router.get('/status-User-coopafi', query.statusUsers);
 //CONTROLLER
 const crud = require('./controller/crud');
@@ -295,6 +325,9 @@ router.post("/edited/:id", users.edit_users);
 router.post("/users-register", users.usersRegister);
 router.post("/create-account", crud.createAccount);
 router.post("/update-account/:id", crud.UpdateAccount);
+router.post("/save-asiento-Detalle/:id", crud.save_AsientDetalle);
+router.post("/save-asientoCuenta/:id", crud.save_cuentaAsiento);
+router.post("/anular-asiento-contable/:id", crud.anularAccount);
 
 //EXPORTAR MODULO
 module.exports = router;

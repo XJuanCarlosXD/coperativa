@@ -216,3 +216,70 @@ exports.UpdateAccount = (req, res) => {
     throw error;
   }
 };
+exports.save_AsientDetalle = (req, res) => {
+  const { id } = req.params;
+  const { ids } = req.session;
+  const { fecha, referencia, observa, sMoneda } = req.body;
+  try {
+    conexion.query("INSERT INTO detalle_asiento SET ?", {
+      noAsiento: id,
+      date: fecha,
+      referencia: referencia,
+      observaciones: observa,
+      moneda: sMoneda,
+      date_create: fulldate,
+      user_create: ids,
+      status_id: 3,
+    });
+    console.log("detalle de asiento guardado");
+  } catch (error) {
+    console.log("Ha ocurrido un error");
+    throw error;
+  }
+};
+exports.save_cuentaAsiento = (req, res) => {
+  const { id } = req.params;
+  const { sCuenta, descripcion, sCosto, tipo, monto } = req.body;
+  try {
+    conexion.query("INSERT INTO asientos SET ?", {
+      id_noAsiento: id,
+      id_noCuenta: sCuenta,
+      descripcion: descripcion,
+      costo: sCosto,
+      tipo: tipo,
+      monto: monto,
+    });
+    conexion.query("UPDATE numeraciones SET ? WHERE id_number = ?", [{
+      numeracion: parseFloat(id) + 1,
+    }, 1]);
+    console.log("Asiento guardado exito");
+  } catch (error) {
+    console.log("Ha ocurrido un error");
+    throw error;
+  }
+};
+exports.anularAccount = (req, res) => {
+  const { ids } = req.session;
+  const { id } = req.params;
+  const { detalle } = req.body;
+  try {
+    conexion.query("UPDATE detalle_asiento SET ? WHERE noAsiento = ?", [{
+      user_nulo: ids,
+      status_id: 5,
+    }, id]);
+    conexion.query("INSERT INTO anulacion SET ?", {
+      noAnulacion: id,
+      detalle: detalle,
+      user_create: ids,
+    });
+    conexion.query("SELECT * FROM numeraciones WHERE id_number = ?", [2], (error, resurt) => {
+    conexion.query("UPDATE numeraciones SET ? WHERE id_number = ?", [{
+      numeracion: parseFloat(resurt[0].numeracion) + 1,
+    }, 2]);
+  })
+    console.log("asiento anulado");
+  } catch (error) {
+    console.log("Ha ocurrido un error");
+    throw error;
+  }
+};

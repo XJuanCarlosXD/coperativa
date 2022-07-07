@@ -94,7 +94,6 @@ exports.save_users = (req, res) => {
     }
   });
 };
-
 //validar cuenta
 exports.SeccionStar = (req, res) => {
   const { email, password } = req.body;

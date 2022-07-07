@@ -1,121 +1,476 @@
-const contenerdor = document.querySelector("#fila");
-const btn_agregar = document.querySelector("#btn_agregar");
-const entrada = document.querySelector("#entrada");
+const table = document.querySelector("#tEntrada");
+const btn_agregar = document.querySelector("#bAdd");
+const entradaD = document.querySelector("#entrada");
+const bSave = document.querySelector("#bSave");
+const bConsu = document.querySelector("#bConsu");
+const search = document.querySelector("#search");
+const bNuloo = document.querySelector("#bNuloo")
 
-let total = 1;
-let j = 1;
-entrada.addEventListener('click', e => {
-  let div = document.createElement('ul');
-  div.classList.add("d-flex");
-  div.classList.add("flex-row");
-  div.id = "row" + j++;
-  div.innerHTML = addRow();
-  contenerdor.appendChild(div);
+bNuloo.addEventListener('click', () => {
+  const detalle = $("#detalle").val()
+  if (detalle == 0 || detalle == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Campo de detalle vacio",
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+  } else {
+    Swal.fire({
+      title: "Se anulara el siguiente asiento",
+      text: "Desea Continuar!",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonColor: "#19d895",
+      DenyButtonColor: "#d33",
+      confirmButtonText: "Confirmar",
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const numero = $("#numero").val();
+        try {
+          fetch(`/anular-asiento-contable/${numero}`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ detalle: detalle })
+          })
+        } catch (error) {
+          console.log(error);
+        }
+        $("#closee").click();
+        $("#numero").val(numero);
+        search.click();
+      } else {
+        Swal.fire("Cambios no Guardados", "", "info");
+      }
+    })
+  }
 });
-btn_agregar.addEventListener('click', e => {
-  let div = document.createElement('ul');
-  div.classList.add("d-flex");
-  div.classList.add("flex-row");
-  div.id = "row" + j++;
-  div.innerHTML = addRow();
-  contenerdor.appendChild(div);
+search.addEventListener('click', () => {
+  const number = document.querySelector("#numero").value
+  if (number == "" || number == 0) {
+    document.querySelector("#numero").value = 0;
+    Swal.fire({
+      icon: "error",
+      title: "Campo vacio!",
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    })
+  } else {
+    let timerInterval
+    Swal.fire({
+      timerProgressBar: true,
+      timer: 2000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        table.classList.add("d-none");
+        const input = document.querySelectorAll(".input");
+        for (let i = 0; i < input.length; i++) {
+          input[i].classList.remove("border-success")
+        }
+        try {
+          see();
+          fetch(`/seat-account-accountant-detail/${number}`).then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(json => {
+              if (json.length == 0) {
+                Swal.fire({
+                  icon: "error",
+                  title: "Sin resultado!",
+                  text: "No se ha encontrado asiento",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  showConfirmButton: false,
+                })
+                const consu = document.querySelectorAll(".consu");
+                for (let i = 0; i < consu.length; i++) {
+                  consu[i].value = "";
+                }
+              } else {
+                json.forEach(e => {
+                  let d = new Date(e.date)
+                  $("#fecha").attr("type", "text");
+                  $("#fecha").val(Datee(d));
+                  $("#referencia").val(e.referencia);
+                  $("#observa").val(e.observaciones);
+                  $("#sMoneda").val(e.moneda);
+                  if (e.id_estado == 5) {
+                    $("#bNulo").attr("disabled", true);
+                    $("#bNulo").addClass("d-none");
+                    $("#person").text(e.userName);
+                    $("#person1").addClass("d-flex");
+                    $("#person1").removeClass("d-none");
+                    $("#perso").text(e.userCreate);
+                    $("#person2").addClass("d-flex");
+                    $("#person2").removeClass("d-none")
+                  } else {
+                    $("#person1").removeClass("d-flex");
+                    $("#person1").addClass("d-none");
+                    $("#perso").text(e.userCreate);
+                    $("#person2").addClass("d-flex");
+                    $("#person2").removeClass("d-none");
+                    $("#bNulo").attr("disabled", false);
+                    $("#bNulo").removeClass("d-none");
+                  }
+                  document.querySelector("#statu").innerHTML = e.estado;
+                })
+              }
+              $("#tEntrada").find("tr:gt(1)").remove();
+              fetch(`/seat-account-accountant-asiento/${number}`).then(res => res.ok ? res.json() : Promise.reject(res))
+                .then(array => {
+                  array.forEach(e => {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = addRows(e)
+                    table.appendChild(tr);
+                  })
+                  document.querySelector("#tTotal").innerHTML = currency(parseFloat(array[0].tCredito) - parseFloat(array[0].tDebito))
+                  document.querySelector("#tCredito").innerHTML = currency(array[0].tCredito)
+                  document.querySelector("#tDebito").innerHTML = currency(array[0].tDebito)
+                })
+            })
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+        table.classList.remove("d-none");
+      }
+    })
+  }
 });
-/**
- * @param {this} e
- */
-const eliminar = (e) => {
-  const divPadre = e.parentNode;
-  contenerdor.removeChild(divPadre);
-  UpdateCount();
+const addRows = (e) => {
+  return `<td>${e.cuenta}</td>
+<td>${e.descripcion}</td>
+<td>${e.costo}</td>
+<td class="text-warning">${currency(e.debito)}</td>
+<td class="text-primary">${currency(e.credito)}</td>`
 };
-const UpdateCount = () => {
-  let divs = contenerdor.children;
-  total = 1;
-  for (let i = 0; i < divs.length; i++) {
-    divs[i].children[0].innerHTML = total++ + '.';
+const see = () => {
+  $("#bNulo").removeClass("d-none");
+  $("#bNulo").attr("disabled", false);
+  $("#bPrint").removeClass("d-none");
+  $("#bPrint").attr("disabled", false);
+  $("#status").removeClass("d-none");
+  $("#status").addClass("d-flex");
+}
+const Datee = (date) => {
+  let formatted_date =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+  return formatted_date;
+};
+bConsu.addEventListener('click', () => {
+  const consu = document.querySelectorAll(".consu");
+  bConsu.classList.add("d-none");
+  bConsu.disabled = true;
+  $("#numero").val("");
+  $("#numero").attr('disabled', false);
+  $("#bSave").attr('disabled', true);
+  $("#bSave").addClass("d-none");
+  $("#back").attr("disabled", false);
+  $("#back").removeClass("d-none");
+  $("#search").removeClass("d-none");
+  $("#numero").removeClass("form-control-sm");
+  $("#search").attr("disabled", false);
+  $("#bAdd").attr("disabled", false);
+  $("#add1").addClass("d-none");
+  table.classList.add("d-none");
+  $("#thead").addClass("table-success");
+  $("#tEntrada").addClass("table-bordered");
+  table.classList.remove("table-responsive");
+  deleteRows();
+  deleteRows();
+  for (let i = 0; i < consu.length; i++) {
+    consu[i].disabled = true;
+  }
+});
+bSave.addEventListener('click', () => {
+  const numero = $('#numero').val();
+  const fecha = $('#fecha').val();
+  const referencia = $('#referencia').val();
+  const observa = $('#observa').val();
+  const sMoneda = $('#sMoneda').val();
+  const sCuenta = document.querySelectorAll(".sCuenta");
+  const descripcion = document.querySelectorAll(".descripcion");
+  const sCosto = document.querySelectorAll(".sCosto");
+  const iDebito = document.querySelectorAll(".iDebito");
+  const iCredito = document.querySelectorAll(".iCredito");
+  const input = document.querySelectorAll(".input");
+  for (let i = 0; i < input.length; i++) {
+    if (input[i].value == 0 || input[i].value == "") {
+      input[i].classList.remove("border-success");
+      input[i].classList.add("border-danger");
+    } else {
+      input[i].classList.add("border-remove");
+      input[i].classList.add("border-success");
+    }
+  }
+  for (let i = 0; i < sCuenta.length; i++) {
+    if (numero == 0 || fecha == "" || observa == "" || sMoneda == 0 || sCosto[i].value == 0 || sCuenta[i].value == 0 || iDebito[i].value == "" || iCredito[i].value == "") {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Campos vacio revise'
+      })
+    } else {
+      Swal.fire({
+        title: "Confirma guardar el asiento?",
+        icon: "warning",
+        showDenyButton: true,
+        confirmButtonColor: "#19d895",
+        DenyButtonColor: "#dd6b55",
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          numeracion()
+          let timerInterval
+          Swal.fire({
+            timer: 2000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+              try {
+                fetch('/save-asiento-Detalle/' + numero, {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
+                  body: JSON.stringify({ fecha: fecha, referencia: referencia, observa: observa, sMoneda: sMoneda })
+                })
+                for (let i = 0; i < sCuenta.length; i++) {
+                  if (iCredito[i].value == 0 || iCredito[i].value == "") {
+                    fetch(`/save-asientoCuenta/${numero}`, {
+                      method: "POST",
+                      headers: { "Content-type": "application/json" },
+                      body: JSON.stringify({ sCuenta: sCuenta[i].value, descripcion: descripcion[i].value, sCosto: sCosto[i].value, tipo: 1, monto: iDebito[i].value })
+                    })
+                  } else {
+                    fetch(`/save-asientoCuenta/${numero}`, {
+                      method: "POST",
+                      headers: { "Content-type": "application/json" },
+                      body: JSON.stringify({ sCuenta: sCuenta[i].value, descripcion: descripcion[i].value, sCosto: sCosto[i].value, tipo: 2, monto: iCredito[i].value })
+                    })
+                  }
+                }
+                for (let i = 0; i < sCuenta.length; i++) {
+                  sCuenta[i].value = "";
+                  descripcion[i].value = "";
+                  sCosto[i].value = 0;
+                  iCredito[i].value = "";
+                  iDebito[i].value = ""
+                  iCredito[i].disabled = false;
+                  iDebito[i].disabled = false;
+                }
+                $('#fecha').val("")
+                $('#referencia').val("")
+                $('#observa').val("")
+                $('#sMoneda').val(0)
+              } catch (error) {
+                console.log(error)
+              }
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            Toast.fire({
+              icon: 'success',
+              title: `Asiento #${numero} Registrado Satisfactoriamente`
+            })
+            numeracion()
+          })
+        } else if (result.isDenied) {
+          Swal.fire("Cambios no Guardados", "", "info");
+        }
+      });
+    }
+  }
+});
+entradaD.addEventListener('click', () => {
+  account();
+  ocultar();
+  numeracion();
+});
+const account = () => {
+  const sCuenta = document.querySelectorAll(".sCuenta");
+  fetch("/account-catalogo").then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(json => {
+      let option = `<option value="0">Elige una cuenta</option>`;
+      json.forEach(e => { option += `<option value="${e.id_catalogo}">${e.noCuenta + " " + e.nombre}</option>` });
+      fillS(option, sCuenta);
+    }).catch(error => {
+      console.log(error);
+      let message = error.statusText || "Ocurrio un error";
+      let err = `Error ${error.status}: ${message}`;
+      fillS(err, sCuenta);
+    })
+}
+const fillS = (option, select) => {
+  for (let i = 0; i < select.length; i++) {
+    const valor = select[i].value
+    select[i].innerHTML = option;
+    select[i].value = valor
   }
 }
-const diferencia = () => {
-  const totalC = document.getElementById("total_Credito").value;
-  const totalD = document.getElementById("totaDebito").value;
-  if (totalC.match(/[0-9]*\.[0-9]*/g) == "" || totalC.match(/[0-9]*\.[0-9]*/g) == null || totalD.match(/[0-9]*\.[0-9]*/g) == "" || totalD.match(/[0-9]*\.[0-9]*/g) == null) {
-    w = 0;
-    document.getElementById("diferencia").value = currency(w);
-  } else {
-    let w = parseFloat(totalC.match(/[0-9]*\.[0-9]*/g)) - parseFloat(totalD.match(/[0-9]*\.[0-9]*/g));
-    document.getElementById("diferencia").value = currency(w);
+let c = 2
+btn_agregar.addEventListener('click', e => {
+  let tr = document.createElement('tr');
+  tr.innerHTML = addRow()
+  table.appendChild(tr);
+  account()
+  $(`#sCuenta${c = c + 1}`).select2();
+});
+const deleteRows = () => {
+  var rowCount = table.rows.length - 1;
+  if (rowCount <= 1) {
+    console.log('No se puede eliminar el encabezado');
   }
+  else {
+    table.deleteRow(rowCount - 1);
+  }
+  credito()
+  debito()
+}
+const diferencia = () => {
+  const totalC = document.getElementById("toCredito").innerHTML;
+  const totalD = document.getElementById("toDebito").innerHTML;
+  const iCredito = document.querySelectorAll("iCredito");
+  const iDebito = document.querySelectorAll("iDebito");
+  for (let i = 0; i < iCredito.length; i++) {
+    if (iCredito[i].value == "" || iCredito[i].value == null || iCredito[i].value == 0) {
+      totalC = 0;
+    }
+  }
+  for (let i = 0; i < iDebito.length; i++) {
+    if (iDebito[i].value == "" || iDebito[i].value == null || iDebito[i].value == 0) {
+      totalD = 0;
+    }
+  }
+  let w = parseFloat(totalC) - parseFloat(totalD);
+  document.getElementById("tTotal").innerHTML = currency(w);
 };
 const credito = () => {
   var total2 = 0;
-  $(".credito").each(function () {
+  $(".iCredito").each(function () {
     if (isNaN(parseFloat($(this).val()))) {
       total2 += 0;
     } else {
       total2 += parseFloat($(this).val());
     }
   });
-  document.getElementById("total_Credito").value = currency(total2);
+  document.getElementById("tCredito").innerHTML = currency(total2);
+  document.getElementById("toCredito").innerHTML = total2;
+  diferencia()
+  ocultar()
 };
 const debito = () => {
   var total1 = 0;
-  $(".debito").each(function () {
+  $(".iDebito").each(function () {
     if (isNaN(parseFloat($(this).val()))) {
       total1 += 0;
     } else {
       total1 += parseFloat($(this).val());
     }
   });
-  document.getElementById("totaDebito").value = currency(total1);
+  document.getElementById("tDebito").innerHTML = currency(total1);
+  document.getElementById("toDebito").innerHTML = total1;
+  diferencia()
+  ocultar()
+};
+const vali = () => {
+  const iCredito = document.querySelectorAll(".iCredito");
+  const iDebito = document.querySelectorAll(".iDebito");
+  for (let i = 0; i < iCredito.length; i++) {
+    if (iDebito[i].value == "") {
+      iDebito[i].disabled = true;
+      iDebito[i].value = 0;
+    } else if (iCredito[i].value == "") {
+      iCredito[i].disabled = true;
+      iCredito[i].value = 0;
+    } else {
+      iCredito[i].disabled = false;
+      iDebito[i].disabled = false;
+    }
+  }
+}
+const ocultar = () => {
+  const sCuenta = document.querySelectorAll(".sCuenta");
+  const iCredito = document.querySelectorAll(".iCredito");
+  const iDebito = document.querySelectorAll(".iDebito");
+  for (let i = 0; i < sCuenta.length; i++) {
+    iDebito[i].min = 1;
+    iCredito[i].min = 1;
+  }
 };
 const currency = (number) => {
   return new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(number);
 };
+const numeracion = () => {
+  fetch("/number/" + 1).then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(json => {
+      json.forEach(e => { document.querySelector("#numero").value = e.numeracion; });
+    }).catch(error => {
+      console.log(error);
+      let message = error.statusText || "Ocurrio un error";
+      document.querySelector("#numero").value = `Error ${error.status}: ${message}`;
+    })
+};
+let b = 2;
 const addRow = () => {
-  return '<li>' +
-    total++ + '.' +
-    '</li>' +
-    '<div class="col-md-2">' +
-    '<li>' +
-    '<small class="text-muted">Numero de Cuenta</small>' +
-    '<input type="text" name="cuenta" id="cuenta" autocomplete="off" class="form-control text-center" placeholder="Cuenta">' +
-    '</li>' +
-    '</div>' +
-    '<div class="col-md-3">' +
-    '<li>' +
-    '<small class="text-muted">Nombre de la Cuenta</small>' +
-    '<input type="text" name="nombre" id="nombre" autocomplete="off" class="form-control text-center" placeholder="Nombre de Cuentas" />' +
-    '</li>' +
-    '</div>' +
-    '<li>' +
-    '<small class="text-muted">AP</small>' +
-    '<input type="checkbox" name="ap" id="ap" autocomplete="off" class="form-control text-center" />' +
-    '</li>' +
-    '<div class="col-md-2">' +
-    '<li>' +
-    '<small class="text-muted">Credito</small>' +
-    `<input type="number" name="credito" autocomplete="off" onkeyup="credito();" onchange="diferencia(); credito();" class="form-control text-center credito" placeholder="Credito" />` +
-    '</li>' +
-    '</div>' +
-    '<div class="col-md-2">' +
-    '<li>' +
-    '<small class="text-muted">Debito</small>' +
-    `<input type="number" name="debito" autocomplete="off" onkeyup="debito();" onchange="diferencia(); debito();" class="form-control text-center debito" placeholder="Debito" />` +
-    ' </li>' +
-    '</div>' +
-    '<div class="col-md-2" onclick="eliminar(this)">' +
-    '<small class="invisible">Debito</small>' +
-    '<button class="btn btn-inverse-danger btn-faw btn-sm"><i class="fa fa-times"> Eliminar fila</i></button>' +
-    '</div>';
+  return `<td style="width: 25%;"><select class="form-control form-control-sm sCuenta" autocomplete="off"
+  id="sCuenta${b = b + 1}">
+  <option value="0">Elige cuenta</option>
+</select></td>
+<td><textarea class="form-control descripcion" id="descripcion" name="descripcion"
+  placeholder="Observaciones de asiento" rows="3"></textarea></td>
+<td style="width: 20%;"><select class="form-control form-control-sm sCosto" autocomplete="off"
+  id="sCosto">
+  <option value="0">Elige centro costo</option>
+  <option value="1">Principal</option>
+</select></td>
+<td style="width: 13%;"><input type="number" autocomplete="off" onkeyup="debito()" onfocus="ocultar()" onblur="vali()" class="form-control form-control-sm iDebito" id="iDebito" />
+</td>
+<td style="width: 13%;"><input type="number" autocomplete="off" onkeyup="credito()" onfocus="ocultar()" onblur="vali()" class="form-control form-control-sm iCredito" id="iCredito" />
+</td>
+<td><button class="badge badge-danger border border-white" onclick="deleteRows()"><i
+    class="fa fa-times"></i></button></td>`
 };
 window.onload = () => {
   let carga = document.getElementById("loader-page");
   carga.style.visibility = 'hidden';
   carga.style.opacity = '0';
-  applyInputMask('cuenta', '00', 1)
+  applyInputMask('cuenta', '00', 1);
+  $('#sCuenta1').select2();
+  $('#sCuenta2').select2();
+  scroll()
 };
 window.addEventListener("scroll", function (event) {
-
+  scroll()
+});
+const scroll = () => {
   var scroll_y = this.scrollY;
 
   posicion = scroll_y;
@@ -131,7 +486,7 @@ window.addEventListener("scroll", function (event) {
     logo.removeAttribute("style");
 
   }
-});
+}
 const agregar = () => {
   document.getElementById("fila").innerHTML = addRow();
 };
@@ -653,6 +1008,7 @@ bBack.addEventListener('click', () => {
   bBack.classList.add("d-none");
   bUpdate.classList.add("d-none");
   bSubmit.classList.remove("d-none");
+  formato.classList.remove("d-none");
   bSubmit.disabled = false;
   for (i = 0; i < validation.length; i++) {
     validation[i].classList.remove("d-none");
