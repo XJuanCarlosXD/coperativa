@@ -145,11 +145,9 @@ window.addEventListener("scroll", function (event) {
   posicion = scroll_y;
   let logo = document.getElementById("logo");
   if (posicion >= 50) {
-    logo.src = "../public/img/olivia2.svg";
+    logo.src = "../public/img/logo-w1.svg";
     logo.classList.add("img-fluid")
-    logo.style.width = "200px";
-    logo.style.position = "relative";
-    logo.style.top = "-35px";
+    logo.style.width = "100%";
   } else {
     logo.src = "../public/img/logo_w.svg";
     logo.removeAttribute("style");
@@ -163,4 +161,56 @@ window.addEventListener("load", () => {
     document.getElementById("socio").src = "https://bootdey.com/img/Content/avatar/avatar7.png";
   }
 
-})
+});
+function selecionar() {
+  var menu = document.getElementById("sidebar");
+  var espacio1 = document.getElementById("espacio1");
+  var espacio2 = document.getElementById("espacio2");
+  var icon = document.getElementById("icon");
+  var icon2 = document.getElementById("div-logo");
+  if (menu.classList.contains(' fixed-top') == true) {
+    menu.classList.remove("fixed-top");
+    espacio1.classList.add("mb-5"); espacio2.classList.add("mb-5");
+    icon2.classList.remove("bg-danger"); icon.classList.remove("fa-times-rectangle-o");
+    icon.classList.add("fa-navicon"); icon.innerHTML = "<b>Menu</b>"
+    document.querySelector("#menu").classList.add("mt-3");
+  } else {
+    document.querySelector("#menu").classList.remove("mt-3");
+    menu.classList.add("fixed-top"); espacio1.classList.remove("mb-5");
+    espacio2.classList.remove("mb-5"); icon.classList.remove("fa-navicon");
+    icon.classList.add("fa-times-rectangle-o"); icon2.classList.add("bg-danger");
+    icon.innerHTML = "<b>Close</b>";
+  }
+};
+function retirable() {
+  const
+    ahorro = document.getElementById("monto_1").value; let = numero_1 = 0.7; let = numero_2 = 0.3;
+  num = ahorro * numero_2; num_1 = ahorro * numero_1;
+  document.getElementById("monto_2").value = num;
+  document.getElementById("monto_1").value = num_1;
+};
+function radio_retirable() {
+  let
+    retirable = document.getElementById("tipo"); if (retirable.value == 4) {
+      document.getElementById("monto_1").classList.add("d-none"); //
+      document.getElementById("monto_2").disabled = false;
+      document.getElementById("monto_1").required = false;
+      document.getElementById("comentario").value = "Ahorro Retirable";
+    } else if
+    (retirable.value == 5) {
+    document.getElementById("monto_1").classList.add("d-none"); //
+    document.getElementById("monto_2").disabled = false;
+    document.getElementById("monto_2").value = 500.00;
+    document.getElementById("monto_1").required = false;
+    document.getElementById("comentario").value = "Cuota de Inscripción a la cooperativa";
+  } else if (retirable.value == 1 || retirable.value == 2 || retirable.value == 3) {
+    document.getElementById("monto_1").classList.remove("d-none"); //
+    document.getElementById("monto_1").required = true
+    document.getElementById("comentario").value = "Ahorro aporte a capital";
+  }
+};
+function Numeros(string) {
+  var out = ""; var filtro = "1234567890."; for (var i = 0; i <
+    string.length; i++) if (filtro.indexOf(string.charAt(i)) != -1) out += string.charAt(i);
+  return out;
+};

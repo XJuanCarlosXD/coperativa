@@ -105,7 +105,7 @@
                   </div>
                   </a>
                 </li>
-                <li class="nav-item nav-category mt-3" id="menu"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+                <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
                 <% if(role==1){ %>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic">
@@ -143,7 +143,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#card_prestamos" data-toggle="collapse">
+                    <a class="nav-link" href="#card_prestamos" id="prestamo" data-toggle="collapse">
                       <span class="menu-title"><i class="fa fa-dollar"></i></i> Prestamos</span>
                     </a>
                   </li>
@@ -298,7 +298,6 @@
                     </div>
                   </div>
                 </div>
-                <!--id-->
                 <label class="d-none" id="id">
                   <%= user.id %>
                 </label>
@@ -306,12 +305,10 @@
                 <div class="collapse fade show" id="card_history" data-parent="#accordion"
                   aria-labelledby="card_history">
                   <div class="card">
-                    <div style="background-color: #8cc8f9;" class="card-header  p-3">
-                      <h4 class="text-title h5 text-dark">
+                    <div class="card-body">
+                      <h4 class="text-title h5 mb-2">
                         <i class="fa fa-history"></i> Historico de Transacciones del Soccio
                       </h4>
-                    </div>
-                    <div class="card-body">
                       <table id="HistoryTable" class="table table-striped table-sm table-bordered text-center"
                         style="width:100%">
                         <thead class="table-primary">
@@ -345,26 +342,6 @@
                   </div>
                 </div>
                 <script>
-                  function selecionar() {
-                    var menu = document.getElementById("sidebar");
-                    var espacio1 = document.getElementById("espacio1");
-                    var espacio2 = document.getElementById("espacio2");
-                    var icon = document.getElementById("icon");
-                    var icon2 = document.getElementById("div-logo");
-                    if (menu.classList.contains(' fixed-top') == true) {
-                      menu.classList.remove("fixed-top");
-                      espacio1.classList.add("mb-5"); espacio2.classList.add("mb-5");
-                      icon2.classList.remove("bg-danger"); icon.classList.remove("fa-times-rectangle-o");
-                      icon.classList.add("fa-navicon"); icon.innerHTML = "<b>Menu</b>"
-                      document.querySelector("#menu").classList.add("mt-3");
-                    } else {
-                      document.querySelector("#menu").classList.remove("mt-3");
-                      menu.classList.add("fixed-top"); espacio1.classList.remove("mb-5");
-                      espacio2.classList.remove("mb-5"); icon.classList.remove("fa-navicon");
-                      icon.classList.add("fa-times-rectangle-o"); icon2.classList.add("bg-danger");
-                      icon.innerHTML = "<b>Close</b>";
-                    }
-                  } 
                   function validar() {
                     const
                       monto = document.getElementById("monto_debito"); "<% resurt.forEach((row)=> { %>"; let
@@ -378,37 +355,7 @@
                         monto.value = "";
                     } "<%  }); %>"
                   }
-                  function retirable() {
-                    const
-                      ahorro = document.getElementById("monto_1").value; let = numero_1 = 0.7; let = numero_2 = 0.3;
-                    num = ahorro * numero_2; num_1 = ahorro * numero_1;
-                    document.getElementById("monto_2").value = num;
-                    document.getElementById("monto_1").value = num_1;
-                  } function radio_retirable() {
-                    let
-                      retirable = document.getElementById("tipo"); if (retirable.value == 4) {
-                        document.getElementById("monto_1").classList.add("d-none"); //
-                        document.getElementById("monto_2").disabled = false;
-                        document.getElementById("monto_1").required = false;
-                        document.getElementById("comentario").value = "Ahorro Retirable";
-                      } else if
-                      (retirable.value == 5) {
-                      document.getElementById("monto_1").classList.add("d-none"); //
-                      document.getElementById("monto_2").disabled = false;
-                      document.getElementById("monto_2").value = 500.00;
-                      document.getElementById("monto_1").required = false;
-                      document.getElementById("comentario").value = "Cuota de Inscripción a la cooperativa";
-                    } else if (retirable.value == 1 || retirable.value == 2 || retirable.value == 3) {
-                      document.getElementById("monto_1").classList.remove("d-none"); //
-                      document.getElementById("monto_1").required = true
-                      document.getElementById("comentario").value = "Ahorro aporte a capital";
-                    }
-                  } function
-                    Numeros(string) {
-                    var out = ""; var filtro = "1234567890."; for (var i = 0; i <
-                      string.length; i++) if (filtro.indexOf(string.charAt(i)) != -1) out += string.charAt(i);
-                    return out;
-                  } </script>
+                   </script>
                 <!--buscar-->
                 <% if(role==1){ %>
                   <div class="collapse fade" id="card_buscar" data-parent="#accordion" aria-labelledby="card_buscar">
@@ -560,7 +507,6 @@
                         </div>
                       </form>
                     </div>
-                    <!-- end ahorro-->
                     <!--salida-->
                     <div class="collapse fade" id="card_salida" aria-labelledby="card_salida" data-parent="#accordion">
                       <div class="card h-100">
@@ -637,88 +583,102 @@
                     <!--Prestamos-->
                     <div class="collapse fade" id="card_prestamos" aria-labelledby="card_prestamos"
                       data-parent="#accordion">
-                      <div class="col-12 grid-margin">
-                        <div class="card h-100">
+                      <div class="card-group">
+                        <div class="col-3 grid-margin cCard"></div>
+                      <div class="col-6 grid-margin cCardp">
+                        <div class="card">
                           <div class="card-header bg-info col-lg-12 col-12 p-3">
-                            <h4 class="text-title text-dark">Prestamos</h4>
+                            <h4 class="text-title text-white">Prestamos</h4>
                           </div>
                           <div class="card-body">
-                            <div class="row">
-                              <div class="col-md-3">
-                                <div class="form-group row">
-                                  <label class="col-sm-4 col-form-label">Fecha</label>
-                                  <div class="col-sm-8 text-center">
-                                    <input type="text" name="nombre" autocomplete="off" value=""
-                                      class="form-control text-center" disabled />
-                                  </div>
+                            <div class="row d-flex justify-content-center">
+                              <h4 class="h4 font-weight-light">Calculadora de Prestamo</h4>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                              <div class="col-lg-12">
+                                <label class="col-form-label">Monto</label>
+                                <div class="form-group">
+                                  <input type="number" class="form-control form-control-lg" min="1" id="amountLoan" name="amountLoan"
+                                    placeholder="Ingrese monto" autocomplete="off" disabled />
                                 </div>
                               </div>
-                              <div class="col-md-9">
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Aporte a Capital</label>
-                                  <div class="col-sm-4 mb-3">
-                                    <div class="input-group">
-                                      <input type="text" class="form-control text-center"
-                                        value="<?php echo number_format($aporte, 2); ?>" id="aporte"
-                                        aria-label="Monto (al dólar más cercano)" disabled />
-                                      <div class="input-group-append">
-                                        <span class="input-group-text bg-info text-white">$</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Ahorro Retirable</label>
-                                  <div class="col-sm-4 mb-3">
-                                    <div class="input-group">
-                                      <input type="text" class="form-control text-center"
-                                        value="<?php echo number_format($aporte_retirable, 2); ?>" id="retirable"
-                                        aria-label="Monto (al dólar más cercano)" disabled />
-                                      <div class="input-group-append">
-                                        <span class="input-group-text bg-info text-white">$</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Prestamo Generado</label>
-                                  <div class="col-sm-4 mb-3">
-                                    <div class="input-group">
-                                      <input type="text" class="form-control text-center" id="total"
-                                        aria-label="Monto (al dólar más cercano)" disabled />
-                                      <div class="input-group-append">
-                                        <span class="input-group-text bg-info text-white">$</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Cuotas Autorizadas</label>
-                                  <div class="col-sm-4 mb-3">
-                                    <select class="form-control text-center">
-                                      <option>18 Meses</option>
-                                      <option>14 Meses</option>
-                                    </select>
-                                  </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                              <div class="col-lg-12">
+                                <label class="col-form-label">Cuotas</label>
+                                <div class="form-group">
+                                  <input type="number" class="form-control form-control-lg" min="1"  name="loansPayments" id="loansPayments"
+                                    placeholder="Ingrese cuotas" autocomplete="off" />
                                 </div>
                               </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group row">
-                                    <button type="button" data-toggle="collapse" data-target="#card_cargar"
-                                      onclick="setTimeout('myFun()',3000);" class="btn btn-info btn-fw">
-                                      <i class="fa fa fa-handshake-o"></i>Generar
-                                      Prestamos
-                                    </button>
-                                  </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                              <div class="col-lg-12">
+                                <label class="col-form-label">Interes Anual</label>
+                                <div class="form-group">
+                                  <input type="number" class="form-control form-control-lg" min="1" id="yearInterest" name="yearInterest" 
+                                    placeholder="Ingrese interes" autocomplete="off" />
                                 </div>
                               </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="form-group row">
+                                  <button type="button" class="btn btn-info btn-lg" onclick="calculateLoans()" id="calculate_button">
+                                    <i class="fa fa fa-handshake-o"></i>Generar
+                                    Prestamos
+                                  </button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 grid-margin d-none cCardt">
+                        <div class="card">
+                          <div class="card-header bg-info col-lg-12 col-12 p-3">
+                            <h4 class="text-title text-white">Tabla de amortización</h4>
+                          </div>
+                          <div class="card-body">
+                            <div class="loans_calculator_container negative_top_margin bottom_left_border_radius mb-4">
+                              <div class="amortization_table_container negative_top_margin">
+                                <div class="amortization_table">
+                                  <table class="table table-bordered table-responsive-sm table-sm">
+                                    <thead class="table-info text-center">
+                                      <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Cuota</th>
+                                        <th scope="col">Capital</th>
+                                        <th scope="col">Interes</th>
+                                        <th scope="col">Balance</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="form-group">
+                                <div class="row d-flex justify-content-center">
+                                <a type="button" class="text-info " onclick="calculateLoans()" id="calculate_button">
+                                  <i class="bi bi-arrow-return-left"></i> Volver A Generar
+                                </a>
+                              </div>
+                              <div class="row d-flex justify-content-end">
+                                <button class="btn btn-info btn-lg" id="bAutori"><i class="bi bi-hand-index-thumb"></i> Autorizar Prestamo</button>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="card-footer">
+                            <div class="result_container">
+                              <h3 class="h3 font-weight-light">Resultado:</h3>
+                              <label class="result_message"></label>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <!-- content-wrapper ends -->
+                  </div>
+                    <!-- content-wrapper ends-->
               </div>
               <!--button float-->
               <div id="container-floating">
@@ -772,6 +732,7 @@
         <script src="../public/js/table.min.js"></script>
         <script src="../public/js/table.js"></script>
         <script src="../public/js/histori.js"></script>
+        <script src="../public/js/calculadora.js"></script>
         <!-- End custom js for this page-->
       </body>
 

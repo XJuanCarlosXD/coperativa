@@ -15,3 +15,19 @@ exports.statusUsers = (req, res) => {
         }
     }
 };
+exports.statusUsersId = (req, res) => {
+    const { ids } = req.session;
+    if (ids === undefined) {
+        res.redirect("/login");
+    } else {
+        const { id } = req.params
+        const SQL = "SELECT SUM(IF(t.id_trasaccion=1,monto,0)+IF(t.id_trasaccion=2,monto,0)-IF(t.id_trasaccion=3,monto,0))AS balance FROM ingresos t INNER JOIN registro r on t.id_identidad=r.id WHERE r.id = ?"
+        try {
+            conexion.query(SQL, [id], (error, rows) => {
+                res.send(rows);
+            })
+        } catch (error) {
+            res.redirect('/error-page');
+        }
+    }
+};

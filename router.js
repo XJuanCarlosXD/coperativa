@@ -315,6 +315,7 @@ router.get("/seat-account-accountant-asiento/:id", (req, res) => {
   })
 });
 router.get('/status-User-coopafi', query.statusUsers);
+router.get('/status-User-balance/:id', query.statusUsersId);
 //CONTROLLER
 const crud = require('./controller/crud');
 const users = require('./controller/users');

@@ -179,7 +179,7 @@ bConsu.addEventListener('click', () => {
   table.classList.add("d-none");
   $("#thead").addClass("table-success");
   $("#tEntrada").addClass("table-bordered");
-  table.classList.remove("table-responsive");
+  table.classList.remove("table-responsive-sm");
   deleteRows();
   deleteRows();
   for (let i = 0; i < consu.length; i++) {
@@ -476,15 +476,12 @@ const scroll = () => {
   posicion = scroll_y;
   let logo = document.getElementById("logo");
   if (posicion >= 50) {
-    logo.src = "../public/img/olivia2.svg";
+    logo.src = "../public/img/logo-w1.svg";
     logo.classList.add("img-fluid")
-    logo.style.width = "200px";
-    logo.style.position = "relative";
-    logo.style.top = "-35px";
+    logo.style.width = "100%";
   } else {
     logo.src = "../public/img/logo_w.svg";
     logo.removeAttribute("style");
-
   }
 }
 const agregar = () => {

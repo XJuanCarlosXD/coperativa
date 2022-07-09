@@ -105,7 +105,7 @@
               </div>
               </a>
             </li>
-            <li class="nav-item nav-category mt-3" id="menu"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
+            <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
             <% if(role==1){ %>
               <li class="nav-item">
                 <a class="nav-link" href="/register">
@@ -400,11 +400,9 @@
                         posicion = scroll_y;
                         let logo = document.getElementById("logo");
                         if (posicion >= 50) {
-                          logo.src = "public/img/olivia2.svg";
+                          logo.src = "public/img/logo-w1.svg";
                           logo.classList.add("img-fluid")
-                          logo.style.width = "200px";
-                          logo.style.position = "relative";
-                          logo.style.top = "-35px";
+                          logo.style.width = "100%";
                         } else {
                           logo.src = "public/img/logo_w.svg";
                           logo.removeAttribute("style");
@@ -423,11 +421,9 @@
                           icon2.classList.remove("bg-danger");
                           icon.classList.remove("fa-times-rectangle-o");
                           icon.classList.add("fa-navicon");
-                          document.querySelector("#menu").classList.add("mt-3");
                           icon.innerHTML = "<b>Menu</b>"
                         } else {
                           menu.classList.add("fixed-top");
-                          document.querySelector("#menu").classList.remove("mt-3");
                           espacio1.classList.remove("mb-5");
                           espacio2.classList.remove("mb-5");
                           icon.classList.remove("fa-navicon");
