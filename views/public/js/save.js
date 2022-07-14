@@ -132,6 +132,7 @@ window.onload = () => {
   let carga = document.getElementById("loader-page");
   carga.style.visibility = "hidden";
   carga.style.opacity = "0";
+  num()
   //FECHA
   var hoy = new Date();
   var fecha =
@@ -155,9 +156,9 @@ window.addEventListener("scroll", function (event) {
 });
 window.addEventListener("load", () => {
   const genero = document.querySelector("#genero").innerHTML;
-  if(genero.trim() == "Femenino"){
+  if (genero.trim() == "Femenino") {
     document.getElementById("socio").src = "https://bootdey.com/img/Content/avatar/avatar8.png";
-  }else{
+  } else {
     document.getElementById("socio").src = "https://bootdey.com/img/Content/avatar/avatar7.png";
   }
 

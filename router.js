@@ -325,6 +325,8 @@ router.post("/debitar/:id", crud.debitar);
 router.post("/edited/:id", users.edit_users);
 router.post("/users-register", users.usersRegister);
 router.post("/create-account", crud.createAccount);
+router.post("/create-lend%Lease/cuota/:id", crud.createLease_cuota);
+router.post("/create-lend%Lease/detail/:id", crud.createLease_detail);
 router.post("/update-account/:id", crud.UpdateAccount);
 router.post("/save-asiento-Detalle/:id", crud.save_AsientDetalle);
 router.post("/save-asientoCuenta/:id", crud.save_cuentaAsiento);

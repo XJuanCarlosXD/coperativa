@@ -273,13 +273,51 @@ exports.anularAccount = (req, res) => {
       user_create: ids,
     });
     conexion.query("SELECT * FROM numeraciones WHERE id_number = ?", [2], (error, resurt) => {
-    conexion.query("UPDATE numeraciones SET ? WHERE id_number = ?", [{
-      numeracion: parseFloat(resurt[0].numeracion) + 1,
-    }, 2]);
-  })
+      conexion.query("UPDATE numeraciones SET ? WHERE id_number = ?", [{
+        numeracion: parseFloat(resurt[0].numeracion) + 1,
+      }, 2]);
+    })
     console.log("asiento anulado");
   } catch (error) {
     console.log("Ha ocurrido un error");
+    throw error;
+  }
+};
+exports.createLease_cuota = (req, res) => {
+  const { id } = req.params;
+  const { noCuota, mCuota, mCapital, noPrestamo, mInteres, mBalance,dDate } = req.body;
+  try {
+    conexion.query("INSERT INTO cuotas SET ?", {
+      noSocio: id,
+      noPrestamo: noPrestamo,
+      id_cuota: noCuota,
+      mCuota: mCuota.replace(/[,]/g, ''),
+      mCapital: mCapital.replace(/[,]/g, ''),
+      mInteres: mInteres.replace(/[,]/g, ''),
+      mBalance: mBalance.replace(/[,]/g, ''),
+      dDate:dDate,
+    });
+    console.log("Cuotas creada exitoxamente!");
+  } catch (error) {
+    console.log("A occurrido un error al crear el prestamo");
+    throw error;
+  }
+};
+exports.createLease_detail = (req, res) => {
+  const { id } = req.params;
+  const { ids } = req.session;
+  const { noPrestamo, mBalance } = req.body;
+  try {
+    conexion.query("INSERT INTO detalle_prestamo SET ?", {
+      noSocio: id,
+      user_create:ids,
+      noPrestamo:noPrestamo,
+      balance: mBalance.replace(/[,]/g, ''),
+      date_create:fulldate,
+    });
+    console.log("detalle prestamo creado exitoxamente!");
+  } catch (error) {
+    console.log("A occurrido un error al crear el prestamo");
     throw error;
   }
 };
