@@ -12,7 +12,6 @@
     <% if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } %>
       <!DOCTYPE html>
       <html lang="es">
-
       <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
@@ -28,13 +27,15 @@
         <link rel="stylesheet" href="../public/css/table.css" />
         <link rel="stylesheet" href="../public/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
+          type="text/css" />
         <link rel="stylesheet" href="../public/assets/css/shared/style.css" />
+        <link rel="stylesheet" href="../public/css/customTable.css" />
         <link rel="stylesheet" href="../public/assets/css/demo_1/style.css" />
         <link rel="stylesheet" href="../public/css/custom.css" />
         <link rel="stylesheet" href="../public/css/float.css" />
         <link rel="shortcut icon" href="../public/img/logo-w.svg" />
       </head>
-
       <body>
         <div class="loader-page" id="loader-page"></div>
         <div class="container-scroller" id="contener">
@@ -106,7 +107,6 @@
                   </a>
                 </li>
                 <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
-                <% if(role==1){ %>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic">
                       <i class="menu-icon typcn typcn-coffee"></i>
@@ -143,9 +143,23 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#card_prestamos" id="prestamo" data-toggle="collapse">
-                      <span class="menu-title"><i class="fa fa-dollar"></i></i> Prestamos</span>
+                    <a class="nav-link" data-toggle="collapse" href="#ui-pres">
+                      <i class="menu-icon typcn typcn-coffee"></i>
+                      <span class="menu-title"><i class="bi bi-bank2"></i> Prestamos</span>
+                      <i class="menu-arrow"></i>
                     </a>
+                    <div class="collapse" id="ui-pres">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" href="#card_estatus" id="statuu">
+                            <i class="bi bi-activity"></i> &nbsp;Estado</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" id="prestamo" href="#card_prestamos">
+                            <i class="bi bi-file-text"></i>&nbsp;Solicitar</a>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="collapse">
@@ -196,24 +210,6 @@
                       <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
                     </a>
                   </li>
-                  <% }else{ %>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/buscar/<%= idusers %>">
-                        <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
-                      </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                      <a class="nav-link" href="/exit">
-
-                        <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
-                      </a>
-                    </li>
-                    <% } %>
               </ul>
             </nav>
             <!-- partial -->
@@ -222,7 +218,7 @@
                 <!--cuerpo-->
                 <div class="row gutters-sm">
                   <div class="col-md-4 mb-3">
-                    <div class="card">
+                    <div class="card rounded">
                       <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                           <img src="#" alt="Admin" id="socio" class="rounded-circle" width="150">
@@ -245,7 +241,7 @@
                     </div>
                   </div>
                   <div class="col-md-8">
-                    <div class="card mb-3">
+                    <div class="card rounded mb-3">
                       <div class="card-body">
                         <div class="row">
                           <div class="col-sm-3">
@@ -304,39 +300,26 @@
                 <!--parte historico-->
                 <div class="collapse fade show" id="card_history" data-parent="#accordion"
                   aria-labelledby="card_history">
-                  <div class="card">
+                  <div class="card rounded">
                     <div class="card-body">
-                      <h4 class="text-title h5 mb-2">
+                      <h4 class="h2 font-weight-bold mb-3">
                         <i class="fa fa-history"></i> Historico de Transacciones del Soccio
                       </h4>
-                      <table id="HistoryTable" class="table table-striped table-sm table-bordered text-center"
+                      <table id="HistoryTable" class="table table-striped boder-nonee text-center"
                         style="width:100%">
-                        <thead class="table-primary">
+                        <thead>
                           <tr>
-                            <th>#</th>
+                            <th></th>
                             <th>No.Transaccion</th>
                             <th>Comentario</th>
                             <th>Fecha</th>
                             <th class="text-dark">Credito</th>
                             <th class="text-dark">Debito</th>
                             <th>Balance</th>
-                            <th class="d-none">#</th>
                           </tr>
                         </thead>
                         <tbody>
                         </tbody>
-                        <tfoot class="table-primary">
-                          <tr>
-                            <th>#</th>
-                            <th>No.Transaccion</th>
-                            <th>Comentario</th>
-                            <th>Fecha</th>
-                            <th class="text-dark">Credito</th>
-                            <th class="text-dark">Debito</th>
-                            <th>Balance</th>
-                            <th class="d-none">#</th>
-                          </tr>
-                        </tfoot>
                       </table>
                     </div>
                   </div>
@@ -355,11 +338,11 @@
                         monto.value = "";
                     } "<%  }); %>"
                   }
-                   </script>
+                </script>
                 <!--buscar-->
                 <% if(role==1){ %>
                   <div class="collapse fade" id="card_buscar" data-parent="#accordion" aria-labelledby="card_buscar">
-                    <div class="card">
+                    <div class="card rounded">
                       <div class="card-header col-lg-12 col-12 p-3">
                         <h4 class="text-title text-dark">Buscar Soccios de la Cooperativa</h4>
                       </div>
@@ -416,13 +399,11 @@
                     <div class="collapse fade" id="card_ahorrar" data-parent="#accordion"
                       aria-labelledby="card_ahorrar">
                       <form method="POST" action="/save_ahorros/<%= user.id %>" name="form-ahorro" id="form-ahorro">
-                        <div class="card">
-                          <div style="background-color: #7ff06be7;" class="card-header  p-3">
-                            <h4 class="text-title h5 text-dark">
+                        <div class="card rounded">
+                          <div class="card-body">
+                            <h4 class="h2 font-weight-bold mb-3">
                               <i class="bi bi-piggy-bank"> </i>Registro de Aporte a Capital
                             </h4>
-                          </div>
-                          <div class="card-body">
                             <div class="row mb-2">
                               <div class="col-md-6">
                                 <div class="form-group row">
@@ -509,13 +490,11 @@
                     </div>
                     <!--salida-->
                     <div class="collapse fade" id="card_salida" aria-labelledby="card_salida" data-parent="#accordion">
-                      <div class="card h-100">
-                        <div class="card-header col-lg-12 col-12 p-3">
-                          <h4 class="text-title text-dark text-center">
-                            <i class="text-danger fa fa-arrow-circle-o-down"></i> Ahorros Retirables
-                          </h4>
-                        </div>
+                      <div class="card rounded h-100">
                         <div class="card-body">
+                          <h4 class="h2 font-weight-bold mb-3">
+                            <i class="fa fa-arrow-circle-o-down"></i> Ahorros Retirables
+                          </h4>
                           <form method="POST" action="/debitar/<%= user.id %>">
                             <div class="row">
                               <div class="col-md-6">
@@ -583,105 +562,220 @@
                     <!--Prestamos-->
                     <div class="collapse fade" id="card_prestamos" aria-labelledby="card_prestamos"
                       data-parent="#accordion">
-                      <div class="card-group">
-                        <div class="col-3 grid-margin cCard"></div>
-                      <div class="col-6 grid-margin cCardp">
-                        <div class="card">
-                          <div class="card-header bg-info col-lg-12 col-12 p-3">
-                            <h4 class="text-title text-white">Prestamos</h4>
-                          </div>
+                      <div class="grid-margin">
+                        <div class="card rounded">
                           <div class="card-body">
-                            <div class="row d-flex justify-content-center">
-                              <h4 class="h4 font-weight-light">Calculadora de Prestamo</h4>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                              <div class="col-lg-12">
-                                <label class="col-form-label">Monto</label>
-                                <div class="form-group">
-                                  <input type="number" class="form-control form-control-lg" min="1" id="amountLoan" name="amountLoan"
-                                    placeholder="Ingrese monto" autocomplete="off" disabled />
+                            <h4 class="h2 font-weight-bold">Solicitar Prestamo</h4>
+                            <div id="smartwizard">
+                              <ul class="nav">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#step-1">
+                                    <div class="num">1</div>
+                                    Selecione el Prestamo
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#step-2">
+                                    <span class="num">2</span>
+                                    Generador de Prestamo
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#step-3">
+                                    <span class="num">3</span>
+                                    Tabla de amortización
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link " href="#step-4">
+                                    <span class="num">4</span>
+                                    Informacion Extra
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link " href="#step-5">
+                                    <span class="num">5</span>
+                                    Confirmacion
+                                  </a>
+                                </li>
+                              </ul>
+                              <div class="tab-content">
+                                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                                  <form id="form-1" class="needs-validation">
+                                  <div class="radio-group row justify-content-between px-3 text-center a">
+                                    <div class="col-auto mr-sm-2 mx-1 card-block  py-0 text-center radio ">
+                                      <div class="flex-row">
+                                        <div class="col">
+                                          <div class="pic"><input name="radio" type="radio" value="1" hidden required> <img
+                                              class="irc_mut img-fluid" src="../public/img/factura1.png" width="100"
+                                              height="100"> </div>
+                                          <p>Prestamo 2x1</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-auto ml-sm-2 mx-1 card-block  py-0 text-center radio  ">
+                                      <div class="flex-row">
+                                        <div class="col">
+                                          <div class="pic"><input name="radio" value="2" type="radio" hidden required><img
+                                              class="irc_mut img-fluid" src="../public/img/factura.png" width="100"
+                                              height="100"> </div>
+                                          <p>Prestamo Factory</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-auto ml-sm-2 mx-1 card-block  py-0 text-center radio  ">
+                                      <div class="flex-row">
+                                        <div class="col">
+                                          <div class="pic"><input name="radio" value="3" type="radio" hidden required><img
+                                              class="irc_mut img-fluid" src="../public/img/factura3.png" width="100"
+                                              height="100"> </div>
+                                          <p>Prestamo Gerencial</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                                </div>
+                                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                                  <form id="form-2" class="needs-validation">
+                                  <div class="row d-flex justify-content-center">
+                                    <div class="col-md-6">
+                                      <div class="row d-flex justify-content-center">
+                                        <div class="col-lg-12">
+                                          <label class="col-form-label">Monto</label>
+                                          <div class="form-group">
+                                            <input type="number" class="form-control form-control-lg" min="1"
+                                              id="amountLoan" name="amountLoan" placeholder="Ingrese monto"
+                                              autocomplete="off" disabled />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row d-flex justify-content-center">
+                                        <div class="col-lg-12">
+                                          <label class="col-form-label">Cuotas</label>
+                                          <div class="form-group">
+                                            <input type="number" class="form-control form-control-lg" min="1"
+                                              name="loansPayments" id="loansPayments" placeholder="Ingrese cuotas"
+                                              autocomplete="off" required />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row d-flex justify-content-center">
+                                        <div class="col-lg-12">
+                                          <label class="col-form-label">Interes Anual</label>
+                                          <div class="form-group">
+                                            <input type="number" class="form-control form-control-lg" min="1"
+                                              id="yearInterest" name="yearInterest" placeholder="Ingrese interes"
+                                              autocomplete="off" required />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                                </div>
+                                <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                                  <div
+                                    class="loans_calculator_container negative_top_margin bottom_left_border_radius mb-4">
+                                    <div class="amortization_table_container negative_top_margin">
+                                      <div class="amortization_table">
+                                        <table class="table table-bordered table-responsive-sm table-sm" id="tEntrada">
+                                          <thead class="table-info text-center">
+                                            <tr>
+                                              <th scope="col">No.</th>
+                                              <th scope="col">Cuota</th>
+                                              <th scope="col">Capital</th>
+                                              <th scope="col">Interes</th>
+                                              <th scope="col">Balance</th>
+                                              <th scope="col">Vencimiento</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody class="text-center">
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group" hidden>
+                                    <div class="row">
+                                      <label id="nume"></label>
+                                    </div>
+                                  </div>
+                                  <div class="result_container">
+                                    <h3 class="h3 font-weight-light">Resultado:</h3>
+                                    <label class="result_message"></label>
+                                  </div>
+                                </div>
+                                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                                  <form id="form-4" class="needs-validation">
+                                    <div class="row d-flex justify-content-center">
+                                      <div class="col-lg-12">
+                                        <label class="col-form-label">Motivo</label>
+                                        <div class="form-group">
+                                          <select class="form-control form-control-lg" name="motivo" id="motivo" autocomplete="off" required>
+                                            <option value="0">Elige Motivo</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row d-flex justify-content-center">
+                                      <div class="col-lg-12">
+                                        <label class="col-form-label">Observaciones</label>
+                                        <div class="form-group">
+                                          <textarea name="mComen" class="form-control form-control-lg" id="mComen" rows="10" placeholder="Escribe aqui tu observacion" required></textarea>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                                <div id="step-5" class="tab-pane" role="tabpanel" aria-labelledby="step-5">
+                                  <form id="form-5" class="needs-validation" novalidate="">
+                                    <div class="col">
+                                        <div class="mb-3 text-muted">Por favor, confirme los detalles de su Solicitud</div>
+                                        <div id="order-details"></div>
+                                        <div class="row gy-3">
+                                          <div class="col">
+                                            <div class="col-auto">
+                                            <input type="checkbox" class="form-check-input" id="save-info" required>
+                                            <label class="form-check-label" for="save-info">Estoy de acuerdo con los términos y condiciones</label>
+                                          </div>
+                                          </div>                      
+                                          <small class="text-muted">Los datos ingresados se mandara a verficacion por un tercero</small>
+                                        </div>
+                                      </div>
+                                    </form>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                              <div class="col-lg-12">
-                                <label class="col-form-label">Cuotas</label>
-                                <div class="form-group">
-                                  <input type="number" class="form-control form-control-lg" min="1"  name="loansPayments" id="loansPayments"
-                                    placeholder="Ingrese cuotas" autocomplete="off" />
-                                </div>
+                              <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                              <div class="col-lg-12">
-                                <label class="col-form-label">Interes Anual</label>
-                                <div class="form-group">
-                                  <input type="number" class="form-control form-control-lg" min="1" id="yearInterest" name="yearInterest" 
-                                    placeholder="Ingrese interes" autocomplete="off" />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                                <div class="form-group row">
-                                  <button type="button" class="btn btn-info btn-lg" onclick="calculateLoans()" id="calculate_button">
-                                    <i class="fa fa fa-handshake-o"></i>Generar
-                                    Prestamos
-                                  </button>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-12 grid-margin d-none cCardt">
-                        <div class="card">
-                          <div class="card-header bg-info col-lg-12 col-12 p-3">
-                            <h4 class="text-title text-white">Tabla de amortización</h4>
-                          </div>
-                          <div class="card-body">
-                            <div class="loans_calculator_container negative_top_margin bottom_left_border_radius mb-4">
-                              <div class="amortization_table_container negative_top_margin">
-                                <div class="amortization_table">
-                                  <table class="table table-bordered table-responsive-sm table-sm">
-                                    <thead class="table-info text-center">
-                                      <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Cuota</th>
-                                        <th scope="col">Capital</th>
-                                        <th scope="col">Interes</th>
-                                        <th scope="col">Balance</th>
-                                        <th scope="col">Vencimiento</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody class="text-center">
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                              <div class="form-group">
-                                <div class="row d-flex justify-content-start">
-                                  <label id="nume"></label>
-                                </div>
-                                <div class="row d-flex justify-content-center">
-                                <a type="button" class="text-info " onclick="calculateLoans()" id="calculate_button">
-                                  <i class="bi bi-arrow-return-left"></i> Volver A Generar
-                                </a>
-                              </div>
-                              <div class="row d-flex justify-content-end">
-                                <button class="btn btn-info btn-lg" id="bAutori"><i class="bi bi-hand-index-thumb"></i> Autorizar Prestamo</button>
-                              </div>
-                          </div>
-                          </div>
-                          <div class="card-footer">
-                            <div class="result_container">
-                              <h3 class="h3 font-weight-light">Resultado:</h3>
-                              <label class="result_message"></label>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <div class="collapse fade" id="card_estatus" aria-labelledby="card_estatus"
+                      data-parent="#accordion">
+                      <div class="card rounded bg-white">
+                        <div class="card-body">
+                        <div class="h2 font-weight-bold">Estados de Prestamo</div>
+                            <table class="table table-responsive-sm" id="tStatus" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                      <th scope="col"></th> 
+                                        <th scope="col">No.Prestamo</th>                    
+                                        <th scope="col">Fecha</th>                    
+                                        <th scope="col">Balance</th>                    
+                                        <th scope="col">Estado</th>                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                          </div>
+                        </div>
+                    </div>
                     <!-- content-wrapper ends-->
               </div>
               <!--button float-->
@@ -737,6 +831,8 @@
         <script src="../public/js/table.js"></script>
         <script src="../public/js/histori.js"></script>
         <script src="../public/js/calculadora.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js"
+          type="text/javascript"></script>
         <!-- End custom js for this page-->
       </body>
 

@@ -304,9 +304,32 @@ router.get("/seat-account-accountant-detail/:id", (req, res) => {
     }
   })
 });
+router.get("/get-prestamos/:id", (req, res) => {
+  const { id } = req.params;
+  try {
+    conexion.query("SELECT * FROM detalle_prestamo d INNER JOIN estado es ON d.id_status=es.id_estado WHERE noSocio = ?", [id], (error, array1) => {
+      conexion.query("SELECT * FROM motivo_prestamo", [id], (error, array2) => {
+        res.send({ array1: array1, array2: array2 });
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.get("/get-prestamo/:id", (req, res) => {
+  const { id } = req.params;
+  const { ids } = req.session;
+  try {
+    conexion.query("SELECT * FROM cuotas WHERE noPrestamo = ? ORDER BY id", [id], (error, array) => {
+      res.send(array);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 router.get("/seat-account-accountant-asiento/:id", (req, res) => {
   const { id } = req.params;
-  conexion.query("SELECT c.nombre as cuenta,a.descripcion,IF(a.costo = 1,'Principal',0)AS costo,IF(a.tipo = 1,monto,0)AS debito,IF(a.tipo = 2,monto,0)AS credito,(SELECT SUM(monto) FROM asientos WHERE tipo = 1 AND id_noAsiento= ?)AS tDebito,(SELECT SUM(monto) FROM asientos WHERE tipo = 2 AND id_noAsiento= ?)AS tCredito FROM asientos a INNER JOIN catalogo c ON a.id_noCuenta=c.id_catalogo WHERE id_noAsiento= ?", [id,id,id], (error, resurt) => {
+  conexion.query("SELECT c.nombre as cuenta,a.descripcion,IF(a.costo = 1,'Principal',0)AS costo,IF(a.tipo = 1,monto,0)AS debito,IF(a.tipo = 2,monto,0)AS credito,(SELECT SUM(monto) FROM asientos WHERE tipo = 1 AND id_noAsiento= ?)AS tDebito,(SELECT SUM(monto) FROM asientos WHERE tipo = 2 AND id_noAsiento= ?)AS tCredito FROM asientos a INNER JOIN catalogo c ON a.id_noCuenta=c.id_catalogo WHERE id_noAsiento= ?", [id, id, id], (error, resurt) => {
     try {
       res.send(resurt);
     } catch (error) {
@@ -326,7 +349,6 @@ router.post("/edited/:id", users.edit_users);
 router.post("/users-register", users.usersRegister);
 router.post("/create-account", crud.createAccount);
 router.post("/create-lend%Lease/cuota/:id", crud.createLease_cuota);
-router.post("/create-lend%Lease/detail/:id", crud.createLease_detail);
 router.post("/update-account/:id", crud.UpdateAccount);
 router.post("/save-asiento-Detalle/:id", crud.save_AsientDetalle);
 router.post("/save-asientoCuenta/:id", crud.save_cuentaAsiento);

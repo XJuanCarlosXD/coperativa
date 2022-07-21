@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Poppins:wght@600&display=swap');
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+}
+.h2{
+    color: #444;
+    font-family: 'PT Sans', sans-serif;
+}
+thead{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    font-size: 20px;
+    color: #666;
+}
+.selecTable{
+    background-color: #EBF5FB;
+    border-radius: 8px;
+}
+.fa-check,.fa-minus{
+    color: blue;
+}
+.tex-color-white:hover{
+    color: #eee;
+}
+.selecTable:hover{
+    background-color: #5778ff;
+    cursor: pointer;
+}
+.selecTable:hover .fa-check,
+.selecTable:hover .fa-minus{
+    background-color: #3e64ff;
+    color: #eee;
+}
+
+.table thead th,.table td{
+    border: none;
+};
+.boder-nonee{
+    border: none;
+}
+.table tbody td:first-child{
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.table tbody td:last-child{
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#spacing-row{
+    height: 10px;
+}
+.spa-row{
+    height: 5px;
+}
+@media(max-width:575px){
+    .container{
+        width: 125%;
+        padding: 20px 10px;
+    }
+}

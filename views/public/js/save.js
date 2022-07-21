@@ -129,10 +129,8 @@ window.onload = () => {
   $('#tabla_cedula').DataTable({
     order: [[0, 'asc']]
   });
-  let carga = document.getElementById("loader-page");
-  carga.style.visibility = "hidden";
-  carga.style.opacity = "0";
-  num()
+  $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+  num();
   //FECHA
   var hoy = new Date();
   var fecha =
@@ -140,6 +138,14 @@ window.onload = () => {
   var hora = hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
   document.getElementById("fecha").value = fecha + " " + hora;
 };
+var tex_1;
+$('.radio-group .radio').click(function (e) {
+  $('.selected .fa').removeClass('fa-check');
+  $('.radio').removeClass('selected');
+  $(this).addClass('selected');
+  $(this).find('input').click();
+  tex_1 = $(this).text().trim();
+});
 window.addEventListener("scroll", function (event) {
   var scroll_y = this.scrollY;
 
@@ -184,10 +190,12 @@ function selecionar() {
   }
 };
 function retirable() {
-  const
-    ahorro = document.getElementById("monto_1").value; let = numero_1 = 0.7; let = numero_2 = 0.3;
-  num = ahorro * numero_2; num_1 = ahorro * numero_1;
-  document.getElementById("monto_2").value = num;
+  const ahorro = document.getElementById("monto_1").value;
+  let = numero_1 = 0.7;
+  let = numero_2 = 0.3;
+  nume = ahorro * numero_2;
+  num_1 = ahorro * numero_1;
+  document.getElementById("monto_2").value = nume;
   document.getElementById("monto_1").value = num_1;
 };
 function radio_retirable() {

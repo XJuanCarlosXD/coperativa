@@ -1,4 +1,5 @@
 const conexion = require("../database/db");
+const transporter = require("../database/email");
 
 var hoy = new Date();
 var fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate();
@@ -285,37 +286,40 @@ exports.anularAccount = (req, res) => {
 };
 exports.createLease_cuota = (req, res) => {
   const { id } = req.params;
-  const { noCuota, mCuota, mCapital, noPrestamo, mInteres, mBalance,dDate } = req.body;
+  const { name, email, rol, idusers, ids, img } = req.session;
+  const { noPrestamo, array, motivo, mComen } = req.body;
+  var u = 0;
   try {
-    conexion.query("INSERT INTO cuotas SET ?", {
-      noSocio: id,
-      noPrestamo: noPrestamo,
-      id_cuota: noCuota,
-      mCuota: mCuota.replace(/[,]/g, ''),
-      mCapital: mCapital.replace(/[,]/g, ''),
-      mInteres: mInteres.replace(/[,]/g, ''),
-      mBalance: mBalance.replace(/[,]/g, ''),
-      dDate:dDate,
-    });
-    console.log("Cuotas creada exitoxamente!");
-  } catch (error) {
-    console.log("A occurrido un error al crear el prestamo");
-    throw error;
-  }
-};
-exports.createLease_detail = (req, res) => {
-  const { id } = req.params;
-  const { ids } = req.session;
-  const { noPrestamo, mBalance } = req.body;
-  try {
+    for (let i = 0; i < array.length; i++) {
+      conexion.query("INSERT INTO cuotas SET ?", {
+        noSocio: id,
+        noPrestamo: noPrestamo,
+        id_cuota: array[i].noCuota,
+        mCuota: array[i].mCuota,
+        mCapital: array[i].mCapital,
+        mInteres: array[i].mInteres,
+        mBalance: array[i].mBalance,
+        dDate: array[i].dDate,
+      });
+      u += array[i].mCuota;
+    };
     conexion.query("INSERT INTO detalle_prestamo SET ?", {
       noSocio: id,
-      user_create:ids,
-      noPrestamo:noPrestamo,
-      balance: mBalance.replace(/[,]/g, ''),
-      date_create:fulldate,
+      user_create: ids,
+      balance: u,
+      noPrestamo: noPrestamo,
+      date_create: fulldate,
+      id_status: 8,
+      motivo: motivo,
+      comentario: mComen,
     });
-    console.log("detalle prestamo creado exitoxamente!");
+    conexion.query("SELECT * FROM numeraciones WHERE id_number = ?", [3], (error, resurt) => {
+      conexion.query("UPDATE numeraciones SET ? WHERE id_number = ?", [{
+        numeracion: parseFloat(resurt[0].numeracion) + 1,
+      }, 3]);
+    });
+    console.log("Prestamo generado exitoxamente!");
+    transporter.emailSolicitud(email,name);
   } catch (error) {
     console.log("A occurrido un error al crear el prestamo");
     throw error;
