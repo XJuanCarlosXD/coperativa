@@ -108,8 +108,11 @@ const bvalidity = () => {
       Toast.fire({
         icon: data.icon,
         title: data.text,
-        text:data.t,
+        text: data.t,
       })
+      if (data.vali == 0) {
+        $("#password-field").val(undefined);
+      }
     })
     .catch(error => console.error('Error:', error))
 };

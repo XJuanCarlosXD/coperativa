@@ -16,15 +16,7 @@ router.get("/", (req, res) => {
 router.get("/index", (req, res) => {
   const { name, email, rol, idusers, ids, img } = req.session;
   if (ids === undefined) {
-    res.render("login", {
-      alert: true,
-      alertTitle: "Error",
-      alertMessage: "Usuario inactivo o no ha iniciado session",
-      alertIcon: "error",
-      showConfimButton: true,
-      timer: 1500,
-      ruta: "/login"
-    });
+    res.redirect("/");
   } else {
     conexion.query("SELECT *,LOWER(CONCAT(nombre,' ',apellido))AS fullname FROM registro", (error, filas) => {
       if (error) {
