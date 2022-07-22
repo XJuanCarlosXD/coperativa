@@ -40,7 +40,10 @@
   </head>
 
   <body>
-    <div class="loader-page" id="loader-page"></div>
+    <div class="loader-page" id="loader-page">
+      <i class="h2">0%</i>
+      <span class="Loading"></span>
+    </div>
     <div class="container-scroller" id="contener">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -190,7 +193,8 @@
                     <h4 class="text-title text-dark">Buscar Soccios de la Cooperativa</h4>
                   </div>
                   <div class="card-body">
-                    <table id="tabla_cedula" class="table table-striped table-responsive-sm table-bordered" style="width:100%">
+                    <table id="tabla_cedula" class="table table-striped table-responsive-sm table-bordered"
+                      style="width:100%">
                       <thead>
                         <tr>
                           <th>Nombre</th>
@@ -376,10 +380,6 @@
                         $('#userTable').DataTable({
                           order: [[0, 'asc']]
                         });
-                        let carga = document.getElementById("loader-page");
-                        carga.style.visibility = 'hidden';
-                        carga.style.opacity = '0';
-
                         $('.radio-group .radio').click(function () {
                           $('.selected .fa').removeClass('fa-check');
                           $('.radio').removeClass('selected');
@@ -392,6 +392,20 @@
                           transitionEffect: 'fade',
                           showPasoURLhash: false,
                         });
+                        $('.Loading').animate({
+                          width: $('.Loading').data('charge') + '%'
+                        }, 1000);
+
+                        var getCounter = parseInt($('.loader-page i').text());
+
+                        var MyCounter = setInterval(function () {
+                          if (getCounter !== 101) {
+                            $('.loader-page i').text(getCounter++ + '%');
+                          } else {
+                            $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+                          };
+
+                        }, 10);
                       };
                       window.addEventListener("scroll", function (event) {
 

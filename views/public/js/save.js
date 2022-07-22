@@ -129,7 +129,6 @@ window.onload = () => {
   $('#tabla_cedula').DataTable({
     order: [[0, 'asc']]
   });
-  $("#loader-page").css({ visibility: "hidden", opacity: "0" });
   num();
   //FECHA
   var hoy = new Date();
@@ -223,3 +222,21 @@ function Numeros(string) {
     string.length; i++) if (filtro.indexOf(string.charAt(i)) != -1) out += string.charAt(i);
   return out;
 };
+$(document).ready(()=>{
+
+  $('.Loading').animate({
+    width : $('.Loading').data('charge') + '%'
+  },1000);
+
+  var getCounter = parseInt($('.loader-page i').text());
+
+  var MyCounter = setInterval(function(){
+    if(getCounter !== 101){
+      $('.loader-page i').text(getCounter++ + '%');
+    }else{
+      $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+    };
+
+  },10);
+
+});

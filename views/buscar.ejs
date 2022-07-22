@@ -37,7 +37,10 @@
         <link rel="shortcut icon" href="../public/img/logo-w.svg" />
       </head>
       <body>
-        <div class="loader-page" id="loader-page"></div>
+        <div class="loader-page" id="loader-page">
+          <i class="h2">0%</i>	
+          <span class="Loading"></span>
+        </div>
         <div class="container-scroller" id="contener">
           <!-- partial:public/public/partials/_navbar.html -->
           <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -665,8 +668,8 @@
                                           <label class="col-form-label">Interes Anual</label>
                                           <div class="form-group">
                                             <input type="number" class="form-control form-control-lg" min="1"
-                                              id="yearInterest" name="yearInterest" placeholder="Ingrese interes"
-                                              autocomplete="off" required />
+                                              id="yearInterest" value="12" name="yearInterest" placeholder="Ingrese interes"
+                                              autocomplete="off" required disabled/>
                                           </div>
                                         </div>
                                       </div>

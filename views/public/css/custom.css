@@ -1,16 +1,7 @@
-svg{
-  width: 600px;
-  height: 120px;
-  display: block;
-  position: relative;
-  overflow: hidden; 
-  margin: 0 auto;
-  background: black;
-}
 #loader-page {
   position: fixed;
   z-index: 25000;
-  background: rgb(255, 255, 255);
+  background: rgba(236, 236, 236, 0.571);
   left: 0px;
   top: 0px;
   height: 100%;
@@ -23,13 +14,13 @@ svg{
 #loader-page::before {
   content: "";
   position: absolute;
-  border: 3px solid rgb(88,216,163);
-  width: 60px;
-  height: 60px;
+  border: 4px solid rgb(88,216,163);
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   box-sizing: border-box;
-  border-left: 2px solid rgba(50, 150, 176,0);
-  border-top: 2px solid rgba(50, 150, 176,0);
+  border-left: 3px solid rgba(50, 150, 176,0);
+  border-top: 3px solid rgba(50, 150, 176,0);
   animation: rotarload 1s linear infinite;
   transform: rotate(0deg);
 }
@@ -40,13 +31,13 @@ svg{
 #loader-page::after {
   content: "";
   position: absolute;
-  border: 3px solid rgba(88,216,163.5);
-  width: 60px;
-  height: 60px;
+  border: 4px solid rgba(88,216,163.5);
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   box-sizing: border-box;
-  border-left: 2px solid rgba(50, 150, 176, 0);
-  border-top: 2px solid rgba(50, 150, 176, 0);
+  border-left: 3px solid rgba(50, 150, 176, 0);
+  border-top: 3px solid rgba(50, 150, 176, 0);
   animation: rotarload 1s ease-out infinite;
   transform: rotate(0deg);
 }
