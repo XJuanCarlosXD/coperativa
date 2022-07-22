@@ -89,7 +89,7 @@ exports.save_users = (req, res) => {
   }, (error, resurt) => {
     if (error) {
       throw error
-    }else{
+    } else {
       console.log("Datos Guardados");
     }
   });
@@ -103,15 +103,7 @@ exports.SeccionStar = (req, res) => {
     } else {
       if (email && password) {
         if (resurt.length == 0) {
-          res.render("login", {
-            alert: true,
-            alertTitle: "Error",
-            alertMessage: "Usuario y/o password incorrectas",
-            alertIcon: "error",
-            showConfimButton: true,
-            timer: false,
-            ruta: "/"
-          });
+          res.send({ icon: "error", text: "Usuario y/o password incorrectas", vali: 0, t: "" });
         } else {
           req.session.ids = resurt[0].id;
           req.session.name = resurt[0].name;
@@ -119,16 +111,8 @@ exports.SeccionStar = (req, res) => {
           req.session.rol = resurt[0].idrole;
           req.session.img = resurt[0].img;
           req.session.idusers = resurt[0].idusers;
-          res.render("/", transporter.emailStar);
-          res.render("login", {
-            alert: true,
-            alertTitle: "Conexion Exitosa",
-            alertMessage: "Inicio de Seccion Correcto",
-            alertIcon: "success",
-            showConfimButton: true,
-            timer: 1500,
-            ruta: "/"
-          });
+          transporter.emailStar();
+          res.send({ icon: "success", text: "Inicio de Seccion Correcto", vali: 1, t: "Redirigiendo.." });
         }
       } else {
         res.send('Por favor ingrese usuario y/o password')

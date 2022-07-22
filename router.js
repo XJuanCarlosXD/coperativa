@@ -12,26 +12,6 @@ router.get("/", (req, res) => {
     res.redirect("/index");
   }
 });
-/**router.get("/", (req, res) => {
-    res.redirect("/index");
-});
-*/
-router.get("/login" || "/auth/login", (req, res) => {
-  const { ids } = req.session;
-  if (ids === undefined) {
-    res.render("login", {
-      alert: "underfine",
-      alertTitle: "",
-      alertMessage: "",
-      alertIcon: "",
-      showConfimButton: true,
-      timer: false,
-      ruta: ""
-    });
-  } else {
-    res.redirect("/index");
-  }
-});
 //INDEX
 router.get("/index", (req, res) => {
   const { name, email, rol, idusers, ids, img } = req.session;

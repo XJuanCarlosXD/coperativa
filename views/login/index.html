@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+	<title>Iniciar Session</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/custm.css">
+	<link rel="stylesheet" href="../public/css/custom.css">
+	<link rel="shortcut icon" href="../public/img/logo-w.svg">
+
+</head>
+
+<body class="img js-fullheight" style="background-image: url(images/login.jpg); opacity: 1;">
+	<div class="loader-page" id="loader-page">
+		<i class="h2">0%</i>
+		<span class="Loading"></span>
+	</div>
+	<section class="ftco-section">
+		<div class="container rounded p-md-5 col-md-6" style="background-color: rgba(50, 52, 51, 0.388);">
+			<div class="row justify-content-center">
+				<div class="col-md-4 col-lg-10">
+					<div class="login-wrap p-0">
+						<h3 class="mb-4 text-center">Tienes una cuenta?</h3>
+						<form id="form-login" class="signin-form needs-validation">
+							<div class="form-group">
+								<input type="email" id="email-fiel" class="form-control" placeholder="Email" autocomplete="off" required>
+							</div>
+							<div class="form-group">
+								<input id="password-field" type="password" class="form-control" autocomplete="off"
+									placeholder="Contraseña" required>
+								<button type="button" toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password btn text-white"></button>
+							</div>
+							<div class="form-group">
+								<button class="tip-button">
+									<span class="tip-button__text">Iniciar Session</span>
+									<div class="coin-wrapper">
+										<div class="coin">
+											<div class="coin__middle"></div>
+											<div class="coin__back"></div>
+											<div class="coin__front"></div>
+										</div>
+									</div>
+								</button>
+							</div>
+							<div class="form-group d-md-flex">
+								<div class="w-50">
+									<label class="checkbox-wrap checkbox-primary">Recordarme
+										<input type="checkbox" checked>
+										<span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="#" style="color: #fff">Forgot Password</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		window.onload = function () {
+		  $('.Loading').animate({
+			width: $('.Loading').data('charge') + '%'
+		  }, 1000);
+		  var getCounter = parseInt($('.loader-page i').text());
+		  var MyCounter = setInterval(function () {
+			if (getCounter !== 101) {
+			  $('.loader-page i').text(getCounter++ + '%');
+			} else {
+			  $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+			};
+		  },);
+		}
+	  </script>
+	<script src="js/jquery.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>
