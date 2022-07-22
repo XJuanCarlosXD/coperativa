@@ -21,7 +21,10 @@
     <link rel="shortcut icon" href="public/img/logo_d.svg" />
   </head>
   <body background="public/img/login.jpg" style="background-size: cover;">
-    <div class="loader-page" id="loader-page"></div>
+    <div class="loader-page" id="loader-page">
+      <i class="h2">0%</i>
+      <span class="Loading"></span>
+    </div>
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth theme-one">
@@ -84,9 +87,17 @@
             <% } %>
           <script>
             window.onload = function () {
-              let carga = document.getElementById("loader-page");
-              carga.style.visibility = 'hidden';
-              carga.style.opacity = '0';
+              $('.Loading').animate({
+                width: $('.Loading').data('charge') + '%'
+              }, 1000);
+              var getCounter = parseInt($('.loader-page i').text());
+              var MyCounter = setInterval(function () {
+                if (getCounter !== 101) {
+                  $('.loader-page i').text(getCounter++ + '%');
+                } else {
+                  $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+                };
+              }, 10);
 
               <% if(alert == true) { %>
                 Swal.fire({
