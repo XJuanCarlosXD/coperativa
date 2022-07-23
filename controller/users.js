@@ -112,7 +112,7 @@ exports.SeccionStar = (req, res) => {
           req.session.img = resurt[0].img;
           req.session.idusers = resurt[0].idusers;
           transporter.emailStar();
-          res.send({ icon: "success", text: "Inicio de Seccion Correcto", vali: 1, t: "Redirigiendo.." });
+          res.send({ icon: "success", text: "Inicio de Seccion Correcto", vali: 1, t: "Redirigiendo..." });
         }
       } else {
         res.send('Por favor ingrese usuario y/o password')
