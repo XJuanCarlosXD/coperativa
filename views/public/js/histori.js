@@ -120,7 +120,7 @@ $(document).ready(function () {
 });
 const formatDate = (date) => {
   let formatted_date =
-    (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   return formatted_date;
 };
 const currency = function (number) {

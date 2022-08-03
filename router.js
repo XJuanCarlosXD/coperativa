@@ -15,30 +15,27 @@ router.get("/", (req, res) => {
 //INDEX
 router.get("/index", (req, res) => {
   const { name, email, rol, idusers, ids, img } = req.session;
-  if (ids === undefined) {
-    res.redirect("/");
-  } else {
-    conexion.query("SELECT *,LOWER(CONCAT(nombre,' ',apellido))AS fullname FROM registro", (error, filas) => {
-      if (error) {
-        throw error;
-      } else {
-        conexion.query("SELECT id,name,idrole FROM users", (error, resurt) => {
-          if (error) {
-            throw error;
-          } else {
-            res.render("index", {
-              resurt: resurt,
-              filas: filas,
-              name: name,
-              email: email,
-              role: rol,
-              idusers: idusers,
-              img: img,
-            });
-          }
-        });
-      }
+  try {
+    conexion.query("SELECT id,name,idrole FROM users", (error, resurt) => {
+      res.render("index", {
+        resurt: resurt, name: name, email: email, role: rol, idusers: idusers, img: img
+      });
     });
+  } catch (error) {
+    console.log("error pagina inicio");
+    throw error;
+  }
+});
+router.get("/get-socios-inco", (req, res) => {
+  try {
+    conexion.query("SELECT *,LOWER(CONCAT(nombre,' ',apellido))AS fullname FROM registro", (error, filas) => {
+      conexion.query("SELECT id,name,idrole FROM users", (error, resurt) => {
+        res.send({ resurt: resurt, filas: filas });
+      });
+    });
+  } catch (error) {
+    console.log("error pagina inicio");
+    throw error;
   }
 });
 // PAGINA ERROR
@@ -60,7 +57,7 @@ router.get("/buscar/:id", (req, res) => {
     });
   } else {
     const id = req.params.id;
-    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(r.nombre,' ',r.apellido))AS fullname,LOWER(r.nombre)AS nombre,LOWER(r.profecion)AS profecion,LOWER(CONCAT(p.nombre,' ',r.direccion))AS direccion  FROM coopafidb_coperativa.registro r INNER JOIN coopafidb_coperativa.provincias p ON p.provincia_id=r.id_provincia INNER JOIN coopafidb_coperativa.municipios m ON m.municipio_id=r.id_municipio WHERE r.id= ?", [id], (error, filas) => {
+    conexion.query("SELECT *,COUNT(*)as contar,LOWER(CONCAT(r.nombre,' ',r.apellido))AS fullname,LOWER(r.nombre)AS nombre,LOWER(r.profecion)AS profecion,LOWER(CONCAT(p.nombre,' ',r.direccion))AS direccion  FROM registro r INNER JOIN provincias p ON p.provincia_id=r.id_provincia INNER JOIN municipios m ON m.municipio_id=r.id_municipio WHERE r.id= ?", [id], (error, filas) => {
       if (error) {
         throw error;
       } else {
@@ -281,7 +278,9 @@ router.get("/get-prestamos/:id", (req, res) => {
   try {
     conexion.query("SELECT * FROM detalle_prestamo d INNER JOIN estado es ON d.id_status=es.id_estado WHERE noSocio = ?", [id], (error, array1) => {
       conexion.query("SELECT * FROM motivo_prestamo", [id], (error, array2) => {
-        res.send({ array1: array1, array2: array2 });
+        conexion.query("SELECT * FROM detalle_prestamo d INNER JOIN estado es ON d.id_status=es.id_estado", (error, array3) => {
+          res.send({ array1: array1, array2: array2, array3: array3 });
+        });
       });
     });
   } catch (error) {

@@ -1,6 +1,4 @@
-<% if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } const currency=function(number){ return
-  new Intl.NumberFormat('en-EU', {style: 'currency' ,currency: 'USD' , minimumFractionDigits: 2}).format(number); }; %>
-  %>
+<% if(role==1){var rol="Administrador" }else if(role==2){var rol="Digitardor" } %>
   <!DOCTYPE html>
   <html lang="en">
 
@@ -8,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Index</title>
+    <title>Inicio Administrativo</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="public/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="public/assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
@@ -34,11 +32,11 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="public/assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="public/css/customTable.css" />
     <link rel="stylesheet" href="public/css/custom.css">
     <!-- End Layout styles -->
-    <link rel="shortcut icon" href="../public/img/logo-w.svg">
+    <link rel="shortcut icon" href="public/img/logo-w.svg">
   </head>
-
   <body>
     <div class="loader-page" id="loader-page">
       <i class="h2">0%</i>
@@ -109,345 +107,266 @@
               </a>
             </li>
             <li class="nav-item nav-category"><i class=" fa fa-list"></i> &nbsp;Menu Principal</li>
-            <% if(role==1){ %>
-              <li class="nav-item">
-                <a class="nav-link" href="/register">
-                  <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Socios</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#card_buscar">
-                  <span class="menu-title"><i class=" fa fa-search"></i> Buscar</span>
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a class="nav-link" href="/chart">
-                  <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
-                </a>
-              </li>
-              <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" id="subMenu1">
-                  <i class="menu-icon typcn typcn-coffee"></i>
-                  <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
-                  <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
-                        <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
-                          class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
-                        Caracteristica</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/contabilidad">
-                  <span class="menu-title"><i class="fa fa-book"></i> Contabilidad</span>
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a class="nav-link" href="/exit">
-                  <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
-                </a>
-              </li>
-              <% }else{ %>
-                <li class="nav-item">
-                  <a class="nav-link" href="/buscar/<%= idusers %>">
-                    <span class="menu-title"><i class=" fa fa-bank"></i> Transacciones</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <span class="menu-title"><i class="fa fa-history"></i> Historial</span>
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a class="nav-link" href="/exit">
-
-                    <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
-                  </a>
-                </li>
-                <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">
+                <span class="menu-title"><i class=" fa fa-users"></i> &nbsp;Registrar Socios</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" id="searching" href="#card_buscar">
+                <span class="menu-title"><i class=" fa fa-search"></i> Consultar</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/chart">
+                <span class="menu-title"><i class="bi bi-bar-chart-line"></i> Reportes</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="statuu" data-toggle="collapse" href="#card_aut">
+                <span class="menu-title"><i class="bi bi-bank2"></i> Prestamos</span>
+              </a>
+            </li>
+            <li class="nav-item nav-category"><i class=" fa fa-gear"></i> &nbsp;Menu de Mantenimiento</li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" id="subMenu1">
+                <i class="menu-icon typcn typcn-coffee"></i>
+                <span class="menu-title"><i class="fa fa-gears"></i> Configuraciones</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#create-users">
+                      <i class="fa fa-user-circle"></i> &nbsp;Crear Usuario</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#card_role"><i
+                        class="fa fa-vcard"></i> &nbsp;Administrar Roles</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-window-maximize"></i> &nbsp;Ajustar
+                      Caracteristica</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contabilidad">
+                <span class="menu-title"><i class="fa fa-book"></i> Contabilidad</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" href="/exit">
+                <span class="menu-title"><i class="bi bi-box-arrow-in-right"></i> Salir</span>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- partial -->
         <div class="main-panel" id="accordion">
-          <div class="content-wrapper text-center">
+          <div class="content-wrapper">
             <div class="collapse fade show" id="index" data-parent="#accordion" aria-labelledby="index">
               <video class="img-fluid" src="../public/img/olivia.mp4" preload="auto" autoplay muted></video>
             </div>
             <!--buscar-->
-            <% if(role==1){ %>
-              <div class="collapse fade" id="card_buscar" data-parent="#accordion" aria-labelledby="card_buscar">
-                <div class="card">
-                  <div class="card-header col-lg-12 col-12 p-3">
-                    <h4 class="text-title text-dark">Buscar Soccios de la Cooperativa</h4>
-                  </div>
-                  <div class="card-body">
-                    <table id="tabla_cedula" class="table table-striped table-responsive-sm table-bordered"
-                      style="width:100%">
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Cedula</th>
-                          <th>Oficio</th>
-                          <th>Fecha Ingreso</th>
-                          <th>Buscar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% filas.forEach((user)=> {
-                          let date = user.fecha_entrada;
-                          const formatDate = (date)=>{
-                          let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-                          return formatted_date;
-                          } %>
-                          <tr class="text-capitalize">
-                            <td>
-                              <%= user.fullname %>
-                            </td>
-                            <td>
-                              <%= user.cedula %>
-                            </td>
-                            <td>
-                              <%= user.profecion %>
-                            </td>
-                            <td class="fecha">
-                              <%= formatDate(date) %>
-                            </td>
-                            <td>
-                              <a class='text-primary' href="/buscar/<%= user.id %>"><i
-                                  class='fa fa-search fa-1x'></i></a>
-                              <a class='text-dark' href="/edit/<%= user.id %>"><i class='fa fa-edit fa-1x'></i></a>
-                            </td>
-                          </tr>
-                          <% }); %>
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Cedula</th>
-                          <th>Oficio</th>
-                          <th>Fecha Ingreso</th>
-                          <th>Buscar</th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
+            <div class="collapse fade" id="card_buscar" data-parent="#accordion" aria-labelledby="card_buscar">
+              <div class="card rounded">
+                <div class="card-body">
+                  <div class="h2 font-weight-bold mb-3">Consultar Socios</div>
+                  <table id="tabla_cedula" class="table rounded table-responsive-sm" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Nombre Completo</th>
+                        <th>Cedula</th>
+                        <th>Oficio</th>
+                        <th>Fecha Ingreso</th>
+                      </tr>
+                    </thead>
+                  </table>
                 </div>
               </div>
-              <!--end buscar-->
-              <!--Roles de usuarios-->
-              <div class="collapse fade" id="card_role" data-parent="#accordion" aria-labelledby="card_role">
+            </div>
+            <!--end buscar-->
+            <!--Roles de usuarios-->
+            <div class="collapse fade" id="create-users" role="dialog" aria-labelledby="create-usersLabel"
+              aria-hidden="true" data-parent="#accordion" aria-labelledby="card_buscar">
+              <form action="/users-register" method="post">
                 <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-header col-lg-12 col-12 p-3">
-                      <h4 class="text-title text-dark"><i class="fa fa-vcard"></i> Mantenimiento Roles de Usuarios</h4>
+                      <h4 class="text-title text-dark" id="create-usersLabel"><i class="fa fa-user-circle"></i>
+                        Mantenimiento de Usuarios</h4>
                     </div>
                     <div class="card-body">
-                      <table id="userTable" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Rol</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% resurt.forEach((row)=> {
-                            if(row.idrole == 1){var Role = "Administrador"}else{var Role = "Digitador"}%>
-                            <tr>
-                              <td>
-                                <a class="btn btn-primary" href="/role/<%= row.id %>"><i class="fa fa-search"></i></a>
-                              </td>
-                              <td>
-                                <%= row.name %>
-                              </td>
-                              <td>
-                                <%= Role %>
-                              </td>
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-                <!--MODAL CONFIG-->
-                <% if(role==1){ %>
-                  <div class="collapse fade" id="create-users" role="dialog" aria-labelledby="create-usersLabel"
-                    aria-hidden="true" data-parent="#accordion" aria-labelledby="card_buscar">
-                    <form action="/users-register" method="post">
-                      <div class="col-12 grid-margin">
-                        <div class="card">
-                          <div class="card-header col-lg-12 col-12 p-3">
-                            <h4 class="text-title text-dark" id="create-usersLabel"><i class="fa fa-user-circle"></i>
-                              Mantenimiento de Usuarios</h4>
+                      <div id="smartwizard">
+                        <ul>
+                          <li><a href="#step-1">Paso 1<br /><small>Cuenta</small></a></li>
+                          <li><a href="#step-2">Paso 2<br /><small>Role</small></a></li>
+                          <li><a href="#step-3">Paso 3<br /><small>Verificacion</small></a></li>
+                        </ul>
+                        <div class="mt-4">
+                          <div id="step-1">
+                            <div class="row">
+                              <div class="col-md-6"> <input type="text" name="name" class="form-control"
+                                  placeholder="Name" required>
+                              </div>
+                              <div class="col-md-6"> <input type="text" name="email" class="form-control"
+                                  placeholder="Email" required>
+                              </div>
+                            </div>
+                            <div class="row mt-3 mb-2">
+                              <div class="col-md-6"> <input type="password" name="password" id="password"
+                                  class="form-control" placeholder="Contraseña" required> </div>
+                              <div class="col-md-6"> <input type="password" name="passwordConfi" id="passwordConfi"
+                                  onkeydown="validar();" onkeyup="validar();" class="form-control"
+                                  placeholder="Repita Contraseña" required> </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 text-center"><span class="small text-danger d-none"
+                                  id="error">Contraseña no Coinciden</span>
+                              </div>
+                            </div>
                           </div>
-                          <div class="card-body">
-                            <div id="smartwizard">
-                              <ul>
-                                <li><a href="#step-1">Paso 1<br /><small>Cuenta</small></a></li>
-                                <li><a href="#step-2">Paso 2<br /><small>Role</small></a></li>
-                                <li><a href="#step-3">Paso 3<br /><small>Verificacion</small></a></li>
-                              </ul>
-                              <div class="mt-4">
-                                <div id="step-1">
-                                  <div class="row">
-                                    <div class="col-md-6"> <input type="text" name="name" class="form-control"
-                                        placeholder="Name" required>
+                          <div id="step-2" class="">
+                            <div class="radio-group row justify-content-between px-3 text-center a">
+                              <div class="col-auto mr-sm-2 mx-1 card-block  py-0 text-center radio selected ">
+                                <div class="flex-row">
+                                  <div class="col">
+                                    <div class="pic"><input name="radio" type="radio" value="1"> <img
+                                        class="irc_mut img-fluid" src="./public/img/admin.png" width="100" height="100">
                                     </div>
-                                    <div class="col-md-6"> <input type="text" name="email" class="form-control"
-                                        placeholder="Email" required>
-                                    </div>
-                                  </div>
-                                  <div class="row mt-3 mb-2">
-                                    <div class="col-md-6"> <input type="password" name="password" id="password"
-                                        class="form-control" placeholder="Contraseña" required> </div>
-                                    <div class="col-md-6"> <input type="password" name="passwordConfi"
-                                        id="passwordConfi" onkeydown="validar();" onkeyup="validar();"
-                                        class="form-control" placeholder="Repita Contraseña" required> </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-md-12 text-center"><span class="small text-danger d-none"
-                                        id="error">Contraseña no Coinciden</span>
-                                    </div>
+                                    <p>Administrador</p>
                                   </div>
                                 </div>
-                                <div id="step-2" class="">
-                                  <div class="radio-group row justify-content-between px-3 text-center a">
-                                    <div class="col-auto mr-sm-2 mx-1 card-block  py-0 text-center radio selected ">
-                                      <div class="flex-row">
-                                        <div class="col">
-                                          <div class="pic"><input name="radio" type="radio" value="1"> <img
-                                              class="irc_mut img-fluid" src="./public/img/admin.png" width="100"
-                                              height="100"> </div>
-                                          <p>Administrador</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="col-auto ml-sm-2 mx-1 card-block  py-0 text-center radio  ">
-                                      <div class="flex-row">
-                                        <div class="col">
-                                          <div class="pic"><input name="radio" value="2" type="radio"><img
-                                              class="irc_mut img-fluid" src="./public/img/digita.png" width="100"
-                                              height="100"> </div>
-                                          <p>Digitardor</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div id="step-3" class="">
-                                  <div class="row mb-2">
-                                    <div class="col-md-10">
-                                      <span>Se Creara el usuario con las siguientes informaciones. Desea Continuar
-                                        ?</span>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-md-12">
-                                      <button class="btn btn-primary btn-faw" type="submit"><i
-                                          class="fa fa-user-circle-o"></i> Crear</button>
-                                    </div>
+                              </div>
+                              <div class="col-auto ml-sm-2 mx-1 card-block  py-0 text-center radio  ">
+                                <div class="flex-row">
+                                  <div class="col">
+                                    <div class="pic"><input name="radio" value="2" type="radio"><img
+                                        class="irc_mut img-fluid" src="./public/img/digita.png" width="100"
+                                        height="100"> </div>
+                                    <p>Digitardor</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div id="step-3" class="">
+                            <div class="row mb-2">
+                              <div class="col-md-10">
+                                <span>Se Creara el usuario con las siguientes informaciones. Desea Continuar
+                                  ?</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <button class="btn btn-primary btn-faw" type="submit"><i
+                                    class="fa fa-user-circle-o"></i> Crear</button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </form>
+                    </div>
                   </div>
-                  <% } %>
-                    <!--END MODAL CONFIG-->
-                    <script>
-                      window.onload = function () {
-                        $('#tabla_cedula').DataTable({
-                          order: [[0, 'asc']]
-                        });
-                        $('#userTable').DataTable({
-                          order: [[0, 'asc']]
-                        });
-                        $('.radio-group .radio').click(function () {
-                          $('.selected .fa').removeClass('fa-check');
-                          $('.radio').removeClass('selected');
-                          $(this).addClass('selected');
-                        });
-                        $('#smartwizard').smartWizard({
-                          selected: 0,
-                          theme: 'arrows',
-                          autoAdjustHeight: true,
-                          transitionEffect: 'fade',
-                          showPasoURLhash: false,
-                        });
-                        $('.Loading').animate({
-                          width: $('.Loading').data('charge') + '%'
-                        }, 1000);
+                </div>
+              </form>
+            </div>
+            <div class="collapse fade" id="card_aut" aria-labelledby="card_aut" data-parent="#accordion">
+              <div class="card rounded bg-white">
+                <div class="card-body">
+                  <div class="h2 font-weight-bold">Solicitudes de Prestamos</div>
+                  <table class="table table-responsive-sm table-striped" id="tStatus" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">No.Prestamo</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <script>
+              window.onload = function () {
+                $('#userTable').DataTable({
+                  order: [[0, 'asc']]
+                });
+                $('.radio-group .radio').click(function () {
+                  $('.selected .fa').removeClass('fa-check');
+                  $('.radio').removeClass('selected');
+                  $(this).addClass('selected');
+                });
+                $('#smartwizard').smartWizard({
+                  selected: 0,
+                  theme: 'arrows',
+                  autoAdjustHeight: true,
+                  transitionEffect: 'fade',
+                  showPasoURLhash: false,
+                });
+                $('.Loading').animate({
+                  width: $('.Loading').data('charge') + '%'
+                }, 1000);
 
-                        var getCounter = parseInt($('.loader-page i').text());
+                var getCounter = parseInt($('.loader-page i').text());
 
-                        var MyCounter = setInterval(function () {
-                          if (getCounter !== 101) {
-                            $('.loader-page i').text(getCounter++ + '%');
-                          } else {
-                            $("#loader-page").css({ visibility: "hidden", opacity: "0" });
-                          };
+                var MyCounter = setInterval(function () {
+                  if (getCounter !== 101) {
+                    $('.loader-page i').text(getCounter++ + '%');
+                  } else {
+                    $("#loader-page").css({ visibility: "hidden", opacity: "0" });
+                  };
 
-                        }, 10);
-                      };
-                      window.addEventListener("scroll", function (event) {
+                }, 10);
+              };
+              window.addEventListener("scroll", function (event) {
 
-                        var scroll_y = this.scrollY;
+                var scroll_y = this.scrollY;
 
-                        posicion = scroll_y;
-                        let logo = document.getElementById("logo");
-                        if (posicion >= 50) {
-                          logo.src = "public/img/logo-w1.svg";
-                          logo.classList.add("img-fluid")
-                          logo.style.width = "100%";
-                        } else {
-                          logo.src = "public/img/logo_w.svg";
-                          logo.removeAttribute("style");
-                        }
-                      });
-                      function selecionar() {
-                        var menu = document.getElementById("sidebar");
-                        var espacio1 = document.getElementById("espacio1");
-                        var espacio2 = document.getElementById("espacio2");
-                        var icon = document.getElementById("icon");
-                        var icon2 = document.getElementById("div-logo");
-                        if (menu.classList.contains('fixed-top') == true) {
-                          menu.classList.remove("fixed-top");
-                          espacio1.classList.add("mb-5");
-                          espacio2.classList.add("mb-5");
-                          icon2.classList.remove("bg-danger");
-                          icon.classList.remove("fa-times-rectangle-o");
-                          icon.classList.add("fa-navicon");
-                          icon.innerHTML = "<b>Menu</b>"
-                        } else {
-                          menu.classList.add("fixed-top");
-                          espacio1.classList.remove("mb-5");
-                          espacio2.classList.remove("mb-5");
-                          icon.classList.remove("fa-navicon");
-                          icon.classList.add("fa-times-rectangle-o");
-                          icon2.classList.add("bg-danger");
-                          icon.innerHTML = "<b>Close</b>";
-                        }
-                      }
-                    </script>
-                    <!-- content-wrapper ends -->
+                posicion = scroll_y;
+                let logo = document.getElementById("logo");
+                if (posicion >= 50) {
+                  logo.src = "public/img/logo-w1.svg";
+                  logo.classList.add("img-fluid")
+                  logo.style.width = "100%";
+                } else {
+                  logo.src = "public/img/logo_w.svg";
+                  logo.removeAttribute("style");
+                }
+              });
+              function selecionar() {
+                var menu = document.getElementById("sidebar");
+                var espacio1 = document.getElementById("espacio1");
+                var espacio2 = document.getElementById("espacio2");
+                var icon = document.getElementById("icon");
+                var icon2 = document.getElementById("div-logo");
+                if (menu.classList.contains('fixed-top') == true) {
+                  menu.classList.remove("fixed-top");
+                  espacio1.classList.add("mb-5");
+                  espacio2.classList.add("mb-5");
+                  icon2.classList.remove("bg-danger");
+                  icon.classList.remove("fa-times-rectangle-o");
+                  icon.classList.add("fa-navicon");
+                  icon.innerHTML = "<b>Menu</b>"
+                } else {
+                  menu.classList.add("fixed-top");
+                  espacio1.classList.remove("mb-5");
+                  espacio2.classList.remove("mb-5");
+                  icon.classList.remove("fa-navicon");
+                  icon.classList.add("fa-times-rectangle-o");
+                  icon2.classList.add("bg-danger");
+                  icon.innerHTML = "<b>Close</b>";
+                }
+              }
+            </script>
+            <!-- content-wrapper ends -->
           </div>
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
@@ -480,6 +399,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="public/js/table.min.js"></script>
     <script src="public/js/table.js"></script>
+    <script src="public/js/presta.js"></script>
     <script type="text/javascript"
       src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
     <!-- End custom js for this page-->

@@ -31,7 +31,6 @@ thead{
 }
 .selecTable:hover .fa-check,
 .selecTable:hover .fa-minus{
-    background-color: #3e64ff;
     color: #eee;
 }
 
