@@ -600,6 +600,13 @@ const maskIt = (pattern, value) => {
   }
   return masked;
 };
+let io = 0;
+$("#bSubmit").click(()=>{
+  io = io + 1;
+  if(io == 5){
+    window.location.reload();
+  }
+});
 const isNumeric = (char) => {
   return !isNaN(char - parseInt(char));
 };
@@ -820,22 +827,10 @@ right.addEventListener('click', () => {
         input[i].classList.remove("border-danger");
         input[i].classList.remove("border-success");
       }
-      applyInputMask('cuenta', '00.00.00.00', 4);
-      document.querySelector("#formato").classList.add("d-none")
       fetch("/numberCatalogo").then(res => res.ok ? res.json() : Promise.reject(res))
         .then(json => {
           if (document.querySelector("#cuenta").value.length < 4) {
-            const acumulador = () => {
-              if (a >= json.length - 1) {
-                a = 0;
-              }
-              else {
-                a = a + 1;
-              }
-              return a;
-            }
-            const numero = json[acumulador()].noCuenta
-            document.querySelector("#cuenta").value = numero;
+            document.querySelector("#cuenta").value = 0;
           }
         }).catch(error => {
           console.log(error);
@@ -886,21 +881,6 @@ bUpdate.addEventListener('click', () => {
   const tipo = document.querySelector("#tipo").value;
   const movimiento = document.querySelector("#movimiento").value;
   if (cuenta == "" || cuenta == 0 || nombre.trim() == "" || tipo == 0 || movimiento == 0 || moneda == 0) {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    Toast.fire({
-      icon: 'error',
-      title: 'Campos vacios revise'
-    })
     for (i = 0; i < input.length; i++) {
       if (input[i].value == "" || input[i].value == 0) {
         input[i].classList.add("border-danger");
@@ -947,14 +927,14 @@ bUpdate.addEventListener('click', () => {
                 didOpen: () => {
                   Swal.showLoading();
                   const nClase = cuenta.value.slice(0, -10);
-                  const ids = cuenta.value
+                  const ids = cuenta.value;
                   const Nombre = document.querySelector("#nombre").value
                   const Nota = document.querySelector("#nota").value
                   const Tipo = document.querySelector("#tipo").value
                   fetch('/update-account/' + ids, {
                     method: "POST",
                     headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({ nCuenta: Nombre, tipo: Tipo, clase: nClase, movimiento: movimiento, moneda: moneda, nota: Nota, estado: cheked })
+                    body: JSON.stringify({ noCuenta:$("#cuenta").val(),nCuenta: Nombre, tipo: Tipo, clase: nClase, movimiento: movimiento, moneda: moneda, nota: Nota, estado: cheked })
                   }).then(res => res.text())
                     .catch(error => {
                       console.log(error);

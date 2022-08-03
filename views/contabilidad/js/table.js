@@ -42,7 +42,6 @@ $(document).ready(function () {
     }, 5000);
 });
 const buscar = (id) => {
-    console.log(id);
     document.querySelector("#cuenta").value = id;
     document.querySelector("#right").click();
 }

@@ -199,10 +199,11 @@ exports.createAccount = (req, res) => {
 exports.UpdateAccount = (req, res) => {
   const { ids } = req.session;
   const { id } = req.params;
-  const { nCuenta, tipo, clase, movimiento, moneda, nota, estado } = req.body
+  const { noCuenta, nCuenta, tipo, clase, movimiento, moneda, nota, estado } = req.body
   try {
     conexion.query("UPDATE catalogo SET ? WHERE noCuenta = ?", [{
       nombre: nCuenta,
+      noCuenta:noCuenta,
       tipo: tipo,
       clase: clase,
       acMovimiento: movimiento,
@@ -319,7 +320,7 @@ exports.createLease_cuota = (req, res) => {
       }, 3]);
     });
     console.log("Prestamo generado exitoxamente!");
-    transporter.emailSolicitud(email,name);
+    transporter.emailSolicitud(email, name);
   } catch (error) {
     console.log("A occurrido un error al crear el prestamo");
     throw error;

@@ -92,7 +92,7 @@ router.get("/history/:id", (req, res) => {
     res.send("No se encontraron resultados");
   } else {
     const id = req.params.id;
-    conexion.query("SELECT *,if(id_trasaccion in(1,2),monto,0)as ingreso,if(id_trasaccion=3,monto,0)as debito FROM ingresos WHERE id_identidad = ?", [id], (error, resurt) => {
+    conexion.query("SELECT *,if(id_trasaccion in(1,2,4),monto,0)as ingreso,if(id_trasaccion=3,monto,0)as debito FROM ingresos WHERE id_identidad = ?", [id], (error, resurt) => {
       if (error) {
         throw error;
       } else {
